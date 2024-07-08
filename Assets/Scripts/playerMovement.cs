@@ -3,44 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class playerMovement : MonoBehaviour
+public class playerMovement : PlayerScript, InputReceiver
 {
-
+    private GameController gameController;
     Rigidbody2D rb;
-    float hori;
-    float vert;
+    
+    public float moveSpd = 10f;
+    private Vector2 oriPos;
 
-    Vector2 oriPos;
-    [SerializeField] private float moveSpeed = 10f;
-  
-    // Start is called before the first frame update
-    void Start()
+    public override void Initialize(GameController gameController)
     {
-        rb = GetComponent<Rigidbody2D>();
+        this.gameController = gameController;
         oriPos = Vector2.zero;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    public void PlayerMovement(Vector2 newPos)
     {
-        hori = Input.GetAxisRaw("Horizontal");
-        vert = Input.GetAxisRaw("Vertical");
-        Vector2 movement = new Vector2(hori, vert);
-        MovePlayer(movement);
-    }
-
-   void MovePlayer(Vector2 newPos)
-   {
         oriPos = newPos;
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+
         oriPos.Normalize();
-        Vector2 movePos = rb.position + oriPos*moveSpeed*Time.fixedDeltaTime;
+        Vector2 movePos = rb.position + oriPos*moveSpd*Time.fixedDeltaTime;
         rb.MovePosition(movePos);
+
         if(oriPos.magnitude!=0)
         {
             rb.transform.up = oriPos;
         }
-   }
-
-
-
+    }
 }
