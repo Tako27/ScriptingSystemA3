@@ -32,4 +32,6 @@ public class playerMovement : PlayerScript, InputReceiver
             rb.transform.up = oriPos;
         }
     }
+
+    
 }

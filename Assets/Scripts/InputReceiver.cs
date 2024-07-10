@@ -5,4 +5,5 @@ using UnityEngine;
 public interface InputReceiver
 {
     void PlayerMovement(Vector2 newPos); //player movement
+    
 }

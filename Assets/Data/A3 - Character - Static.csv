@@ -1,0 +1,26 @@
+charID,character,health,moveSpeed,attackSpeed,attackMultiplier,weaponID
+C01,Magician,70,4,1.2,1.5,W01
+C02,Gunner,80,3.5,1.5,1,W03
+C03,Swordsmen,100,3,1,1.2,W02
+C04,Ranger,75,4.5,1.3,1.3,W04
+C05,Berserker,120,2.5,0.8,1.8,W06
+C06,Assasin,65,5,1.6,1.4,W05
+C07,Summoner,70,3,1,1.3,W07
+C08,Engineer,75,3,1.2,1.1,W08
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+Column Name,Type,Description,,,,
+charID,string,Unique identifier to keep track of character class,,,,
+character,string,Name of character class,,,,
+health,integer,Health of character,,,,
+moveSpeed,float,Movement speed of character,,,,
+attackSpeed,float,Attack speed multplier of character. Rate of attack for each equipped weapon is calsculated by multiplying attackSpeed with the base fireRate of the respective weapons.,,,,
+attackMultiplier,float,"Damage multiplier of character. Damage dealt by character is calculated by multiplying attackMultiplier with base damage of weapons, as well as the necessary effects",,,,
+weaponID,string,Reference from Weapns table,,,,
