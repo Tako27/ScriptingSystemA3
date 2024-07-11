@@ -11,6 +11,7 @@ public static class Game
     private static List<Character> charList;
     private static List<Weapon> weaponList;
     private static List<item> itemList;
+    private static List<EnemyStats> enemyStatsList;
 
 
     public static Character GetChar()
@@ -84,5 +85,18 @@ public static class Game
         return itemList;
     }
 
+    public static EnemyStats GetEnemyByID(string id)
+    {
+        return enemyStatsList.Find(x => x.enemyID == id);
+    }
+
+    public static void SetEnemyStatsList(List<EnemyStats> aList)
+    {
+        enemyStatsList = aList;
+    }
+    public static List<EnemyStats> GetEnemyStatsList()
+    {
+        return enemyStatsList;
+    }
 
 }

@@ -10,14 +10,89 @@ public class DataManager : MonoBehaviour
     public List<Weapon> weaponList = new List<Weapon>();
 
     public List<item> itemList = new List<item>();
-    
-    
+
+    // creating list of enemy
+    public List<EnemyStats> enemyStatsList = new List<EnemyStats>();
+
     public void LoadAllData()
     {
         LoadCharacterData();
         LoadItemData();
         LoadWeaponData();
+        LoadEnemyStatsData();
     }
+
+    #region Load Wave Data
+    public void LoadWaveData()
+    {
+        /*
+        string filePath = Path.Combine(Application.dataPath, "Data/A3 - Enemy - Static.csv");
+        string[] fileData = File.ReadAllLines(filePath);
+        for (int i = 1; i < fileData.Length; i++)
+        {
+            string[] columnData = fileData[i].Split(new char[] { ',' });
+
+            // Create new EnemyStats object and populate with data from the csv
+            EnemyStats enemyStats = new EnemyStats
+            {
+                enemyID = columnData[0],
+                enemyName = columnData[1],
+                maxHealth = int.Parse(columnData[2]),
+                moveSpeed = float.Parse(columnData[3]),
+                damage = int.Parse(columnData[4]),
+                enemyPrefabNo = int.Parse(columnData[5])
+            };
+
+            // add the populated EnemyStats object to a list
+            enemyStatsList.Add(enemyStats);
+        }
+
+        // setting enemy list
+        Game.SetEnemyStatsList(enemyStatsList);
+
+        // debug purposes
+        //foreach (var e in enemyStatsList)
+        //{
+        //    Debug.Log(e.enemyName);
+        //}
+        */
+    }
+    #endregion Load Wave Data
+
+    #region Load Enemy Stats Data
+    public void LoadEnemyStatsData()
+    {
+        string filePath = Path.Combine(Application.dataPath, "Data/A3 - Enemy - Static.csv");
+        string[] fileData = File.ReadAllLines(filePath);
+        for (int i = 1; i < fileData.Length; i++)
+        {
+            string[] columnData = fileData[i].Split(new char[] { ',' });
+
+            // Create new EnemyStats object and populate with data from the csv
+            EnemyStats enemyStats = new EnemyStats
+            {
+                enemyID = columnData[0],
+                enemyName = columnData[1],
+                maxHealth = int.Parse(columnData[2]),
+                moveSpeed = float.Parse(columnData[3]),
+                damage = int.Parse(columnData[4]),
+                enemyPrefabNo = int.Parse(columnData[5])
+            };
+            
+            // add the populated EnemyStats object to a list
+            enemyStatsList.Add(enemyStats);
+        }
+
+        // setting enemy list
+        Game.SetEnemyStatsList(enemyStatsList);
+
+        // debug purposes
+        //foreach (var e in enemyStatsList)
+        //{
+        //    Debug.Log(e.enemyName);
+        //}
+    }
+    #endregion Load Enemy Stats Data
 
     #region Load Character Data
     public void LoadCharacterData()

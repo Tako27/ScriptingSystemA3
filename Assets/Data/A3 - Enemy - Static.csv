@@ -1,0 +1,6 @@
+enemyID,enemyName,health,moveSpeed,damage,prefabID
+E01,Ratoto,40,3,1,0
+E02,Batoto,50,1,2,1
+E03,Spitoto,55,2,3,2
+E04,Scortoto,45,2,5,3
+E05,Slimtoto,60,1,2,4
