@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class playerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-
     Rigidbody2D rb;
     float hori;
     float vert;
 
     Vector2 oriPos;
     [SerializeField] private float moveSpeed = 10f;
-  
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +39,4 @@ public class playerMovement : MonoBehaviour
             rb.transform.up = oriPos;
         }
    }
-
-
-
 }

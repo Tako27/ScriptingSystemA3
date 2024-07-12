@@ -2,15 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemy : MonoBehaviour
+
+public struct EnemyStats
 {
-    [SerializeField] private float moveSpd = 5.0f;
+    public string enemyID;
+    public string enemyName;
+    public int maxHealth;
+    public int damage;
+    public float moveSpeed;
+} 
 
-    Rigidbody2D rb;
+public abstract class Enemy : MonoBehaviour
+{
+    protected EnemyStats enemyStats;
 
-    Transform player;
+    protected int currentHealth;
 
-    Vector2 moveDir;
+    protected Rigidbody2D rb;
+
+    protected Transform player;
+
+    protected Vector2 moveDir;
 
     // Start is called before the first frame update
     void Start()
@@ -20,19 +32,34 @@ public class enemy : MonoBehaviour
         moveDir = Vector2.zero;
     }
 
+    public void InitializeEnemyStats(EnemyStats initStats)
+    {
+        this.enemyStats = initStats;
+        this.currentHealth = enemyStats.maxHealth;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        // Sprite Rotation
         moveDir = (player.position - transform.position).normalized;
-        if(moveDir.magnitude!=0)
+        if (moveDir.magnitude != 0)
         {
             rb.transform.up = moveDir;
         }
 
+        //EnemyAttack();
     }
 
     void FixedUpdate()
     {
-        rb.velocity = new Vector2 (moveDir.x*moveSpd, moveDir.y*moveSpd);
+        EnemyMovement();
     }
+
+    protected virtual void EnemyMovement()
+    {
+        rb.velocity = new Vector2(moveDir.x * enemyStats.moveSpeed, moveDir.y * enemyStats.moveSpeed);
+    }
+
+    protected virtual void EnemyAttack() { }
 }
