@@ -5,13 +5,19 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     // Enemy stats
-    public string enemyID { get; private set; }
-    public string enemyName { get; private set; }
-    public int maxHealth { get; private set; }
-    public float moveSpeed { get; private set; }
-    public int damage { get; private set; }
-    public int enemyPrefabNo { get; private set; }
-
+    EnemyStats stats;
+    /*
+    public string enemyID { get;}
+    public string enemyName { get;}
+    public int maxHealth { get;}
+    public float moveSpeed { get;}
+    public int damage { get;}
+    public int enemyPrefabNo { get;}
+    */
+    public Enemy(EnemyStats stats)
+    {
+        this.
+    }
     // current health of enemy
     protected int currentHealth;
 
@@ -23,16 +29,16 @@ public class Enemy : MonoBehaviour
     protected Vector2 moveDir;
 
     // Initialize enemy stats
-    public void Initialize(string enemyID, string enemyName, int maxHealth, float moveSpeed, int damage, int enemyPrefabNo)
-    {
-        this.enemyID = enemyID;
-        this.enemyName = enemyName;
-        this.maxHealth = maxHealth;
-        this.moveSpeed = moveSpeed;
-        this.damage = damage;
-        this.enemyPrefabNo = enemyPrefabNo;
-        this.currentHealth = maxHealth;
-    }
+    //public void InitializeEnemy(EnemyStats stats)
+    //{
+    //    enemyID = stats.enemyID;
+    //    enemyName = stats.enemyName;
+    //    maxHealth = stats.maxHealth;
+    //    moveSpeed = stats.moveSpeed;
+    //    damage = stats.damage;
+    //    enemyPrefabNo = stats.enemyPrefabNo;
+    //    currentHealth = maxHealth;
+    //}
 
     // Start is called before the first frame update
     void Start()
