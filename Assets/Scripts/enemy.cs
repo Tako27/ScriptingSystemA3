@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour
     protected Vector2 moveDir;
 
     // Initialize enemy stats
+<<<<<<< Updated upstream
     //public void InitializeEnemy(EnemyStats stats)
     //{
     //    enemyID = stats.enemyID;
@@ -39,6 +40,18 @@ public class Enemy : MonoBehaviour
     //    enemyPrefabNo = stats.enemyPrefabNo;
     //    currentHealth = maxHealth;
     //}
+=======
+    public void InitializeEnemy(string enemyID, string enemyName, int maxHealth, float moveSpeed, int damage, int enemyPrefabNo)
+    {
+        this.enemyID = enemyID;
+        this.enemyName = enemyName;
+        this.maxHealth = maxHealth;
+        this.moveSpeed = moveSpeed;
+        this.damage = damage;
+        this.enemyPrefabNo = enemyPrefabNo;
+        this.currentHealth = maxHealth;
+    }
+>>>>>>> Stashed changes
 
     // Start is called before the first frame update
     void Start()

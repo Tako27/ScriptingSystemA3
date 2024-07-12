@@ -87,10 +87,10 @@ public class DataManager : MonoBehaviour
         Game.SetEnemyStatsList(enemyStatsList);
 
         // debug purposes
-        //foreach (var e in enemyStatsList)
-        //{
-        //    Debug.Log(e.enemyName);
-        //}
+        foreach (var e in enemyStatsList)
+        {
+            Debug.Log(e.enemyID + e.enemyName + e.maxHealth);
+        }
     }
     #endregion Load Enemy Stats Data
 
