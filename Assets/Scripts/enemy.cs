@@ -14,12 +14,6 @@ public class Enemy : MonoBehaviour
     public int damage { get;}
     public int enemyPrefabNo { get;}
     */
-    public Enemy(EnemyStats stats)
-    {
-        this.
-    }
-    // current health of enemy
-    protected int currentHealth;
 
     // rigidbody of enemy
     protected Rigidbody2D rb;
@@ -28,8 +22,16 @@ public class Enemy : MonoBehaviour
 
     protected Vector2 moveDir;
 
+    // current health of enemy
+    protected int currentHealth;
+
+    public Enemy(EnemyStats initstats)
+    {
+        this.stats = initstats;
+        this.currentHealth = stats.maxHealth;
+    }
+
     // Initialize enemy stats
-<<<<<<< Updated upstream
     //public void InitializeEnemy(EnemyStats stats)
     //{
     //    enemyID = stats.enemyID;
@@ -40,18 +42,17 @@ public class Enemy : MonoBehaviour
     //    enemyPrefabNo = stats.enemyPrefabNo;
     //    currentHealth = maxHealth;
     //}
-=======
-    public void InitializeEnemy(string enemyID, string enemyName, int maxHealth, float moveSpeed, int damage, int enemyPrefabNo)
-    {
-        this.enemyID = enemyID;
-        this.enemyName = enemyName;
-        this.maxHealth = maxHealth;
-        this.moveSpeed = moveSpeed;
-        this.damage = damage;
-        this.enemyPrefabNo = enemyPrefabNo;
-        this.currentHealth = maxHealth;
-    }
->>>>>>> Stashed changes
+
+    //public void InitializeEnemy(string enemyID, string enemyName, int maxHealth, float moveSpeed, int damage, int enemyPrefabNo)
+    //{
+    //    this.enemyID = enemyID;
+    //    this.enemyName = enemyName;
+    //    this.maxHealth = maxHealth;
+    //    this.moveSpeed = moveSpeed;
+    //    this.damage = damage;
+    //    this.enemyPrefabNo = enemyPrefabNo;
+    //    this.currentHealth = maxHealth;
+    //}
 
     // Start is called before the first frame update
     void Start()
@@ -82,7 +83,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void EnemyMovement()
     {
-        rb.velocity = new Vector2(moveDir.x * moveSpeed, moveDir.y * moveSpeed);
+        rb.velocity = new Vector2(moveDir.x * stats.moveSpeed, moveDir.y * stats.moveSpeed);
     }
 
     protected virtual void EnemyAttack()

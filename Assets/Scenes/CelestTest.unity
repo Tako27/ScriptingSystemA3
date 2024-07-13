@@ -299,6 +299,7 @@ MonoBehaviour:
   player: {fileID: 405414982}
   inputHandler: {fileID: 482162247}
   dataManager: {fileID: 116283945}
+  gameActive: 0
 --- !u!4 &116283944
 Transform:
   m_ObjectHideFlags: 0
@@ -536,7 +537,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c0049a5722ab640adf6b4a7170b622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   exp: 400
+  level: {fileID: 0}
 --- !u!212 &214400947
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -683,7 +686,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c0049a5722ab640adf6b4a7170b622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   exp: 400
+  level: {fileID: 0}
 --- !u!212 &338675312
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1038,7 +1043,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c0049a5722ab640adf6b4a7170b622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   exp: 400
+  level: {fileID: 0}
 --- !u!212 &367265277
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1234,7 +1241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e290627b59a4d94b8868bed7806c9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpd: 10
+  moveSpeed: 10
 --- !u!61 &405414988
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1292,6 +1299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043692efad30a08489445d1f471075b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exp: 0
+  level: 1
   expBar: {fileID: 115270040}
   upgradeMenu: {fileID: 116283946}
 --- !u!1 &482162246
@@ -1698,7 +1707,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36bce49bb479c7d4fbe09bdc47e8e606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpd: 5
+  <enemyID>k__BackingField: 
+  <enemyName>k__BackingField: 
+  <maxHealth>k__BackingField: 0
+  <moveSpeed>k__BackingField: 0
+  <damage>k__BackingField: 0
+  <enemyPrefabNo>k__BackingField: 0
+  currentHealth: 0
+  rb: {fileID: 0}
+  player: {fileID: 0}
+  moveDir: {x: 0, y: 0}
 --- !u!58 &845269921
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2185,7 +2203,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36bce49bb479c7d4fbe09bdc47e8e606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpd: 5
+  <enemyID>k__BackingField: 
+  <enemyName>k__BackingField: 
+  <maxHealth>k__BackingField: 0
+  <moveSpeed>k__BackingField: 0
+  <damage>k__BackingField: 0
+  <enemyPrefabNo>k__BackingField: 0
+  currentHealth: 0
+  rb: {fileID: 0}
+  player: {fileID: 0}
+  moveDir: {x: 0, y: 0}
 --- !u!58 &1654117353
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2395,7 +2422,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c0049a5722ab640adf6b4a7170b622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   exp: 400
+  level: {fileID: 0}
 --- !u!212 &1729405321
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2631,7 +2660,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36bce49bb479c7d4fbe09bdc47e8e606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpd: 5
+  <enemyID>k__BackingField: 
+  <enemyName>k__BackingField: 
+  <maxHealth>k__BackingField: 0
+  <moveSpeed>k__BackingField: 0
+  <damage>k__BackingField: 0
+  <enemyPrefabNo>k__BackingField: 0
+  currentHealth: 0
+  rb: {fileID: 0}
+  player: {fileID: 0}
+  moveDir: {x: 0, y: 0}
 --- !u!58 &1792544296
 CircleCollider2D:
   m_ObjectHideFlags: 0

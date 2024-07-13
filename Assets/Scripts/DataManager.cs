@@ -11,8 +11,9 @@ public class DataManager : MonoBehaviour
 
     public List<item> itemList = new List<item>();
 
-    // creating list of enemy
+    // creating list of enemystats & spawninfo
     public List<EnemyStats> enemyStatsList = new List<EnemyStats>();
+    public List<EnemySpawnInfo> enemySpawnInfoList = new List<EnemySpawnInfo>();
 
     public void LoadAllData()
     {
@@ -20,42 +21,41 @@ public class DataManager : MonoBehaviour
         LoadItemData();
         LoadWeaponData();
         LoadEnemyStatsData();
+        LoadWaveData();
     }
 
     #region Load Wave Data
     public void LoadWaveData()
     {
-        /*
-        string filePath = Path.Combine(Application.dataPath, "Data/A3 - Enemy - Static.csv");
+        string filePath = Path.Combine(Application.dataPath, "Data/A3 - Waves - Static.csv");
         string[] fileData = File.ReadAllLines(filePath);
         for (int i = 1; i < fileData.Length; i++)
         {
             string[] columnData = fileData[i].Split(new char[] { ',' });
 
-            // Create new EnemyStats object and populate with data from the csv
-            EnemyStats enemyStats = new EnemyStats
+            // Create new enemy spawn info object and populate with data from the csv
+            EnemySpawnInfo enemySpawnInfo = new EnemySpawnInfo
             {
-                enemyID = columnData[0],
-                enemyName = columnData[1],
-                maxHealth = int.Parse(columnData[2]),
-                moveSpeed = float.Parse(columnData[3]),
-                damage = int.Parse(columnData[4]),
-                enemyPrefabNo = int.Parse(columnData[5])
+                mapID = columnData[0],
+                waveName = columnData[1],
+                waveNo = int.Parse(columnData[2]),
+                enemyID = columnData[3],
+                spawnRate = float.Parse(columnData[4]),
+                spawnCount = int.Parse(columnData[5])
             };
 
             // add the populated EnemyStats object to a list
-            enemyStatsList.Add(enemyStats);
+            enemySpawnInfoList.Add(enemySpawnInfo);
         }
 
         // setting enemy list
-        Game.SetEnemyStatsList(enemyStatsList);
+        Game.SetEnemySpawnInfoList(enemySpawnInfoList);
 
         // debug purposes
-        //foreach (var e in enemyStatsList)
+        //foreach (var esi in enemySpawnInfoList)
         //{
-        //    Debug.Log(e.enemyName);
+        //    Debug.Log(esi.waveNo + esi.enemyID);
         //}
-        */
     }
     #endregion Load Wave Data
 
@@ -87,10 +87,10 @@ public class DataManager : MonoBehaviour
         Game.SetEnemyStatsList(enemyStatsList);
 
         // debug purposes
-        foreach (var e in enemyStatsList)
-        {
-            Debug.Log(e.enemyID + e.enemyName + e.maxHealth);
-        }
+        //foreach (var e in enemyStatsList)
+        //{
+        //    Debug.Log(e.enemyID + e.enemyName + e.maxHealth);
+        //}
     }
     #endregion Load Enemy Stats Data
 

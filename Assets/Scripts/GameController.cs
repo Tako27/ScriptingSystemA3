@@ -10,10 +10,16 @@ public class GameController : MonoBehaviour
     private List<Weapon> weapons;
     private List<item> items;
     private List<Character> characters;
-
+    private List<string> MapIDs;
 
     public DataManager dataManager;
     private bool gameActive;
+
+    // shift this to where you want select the map
+    private string selectedMap = "M01";
+    public EnemySpawner enemySpawner;
+    // ===
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,8 +28,9 @@ public class GameController : MonoBehaviour
         weapons = Game.GetWeaponList();
         items = Game.GetItemList();
         characters = Game.GetCharList();
-        
-        
+
+        // get list of maps
+        MapIDs = Game.GetMapIDs();
     }
 
     // Update is called once per frame
@@ -41,8 +48,15 @@ public class GameController : MonoBehaviour
         }
 
         inputHandler.SetInputReceiver(player.GetComponent<playerMovement>());
+
+        // === to be shifted elsewhere: start
+
+        // when player selected a map from the mapIDs list
+        Game.SetMapID(selectedMap);
+        enemySpawner.GetWavesByMap();
+        // === to be shifted elsewhere: end
     }
 
     //for testingg
-    
+
 }
