@@ -16,6 +16,8 @@ public class EnemySpawner : MonoBehaviour
     public List<EnemySpawnInfo> enemySpawnInfoList;
     // to hold the enemy spawn infos per wave
     public Dictionary<int, List<EnemySpawnInfo>> waveIDToEnemySpawnDict;
+    // dictionary for object pooling, [key] separates the types of enemy prefab
+    private Dictionary<string, Queue<GameObject>> objectPool = new Dictionary<string, Queue<GameObject>>();
 
     private int currentWaveNo = 0;
     private bool waveIsDone = true;
@@ -67,7 +69,8 @@ public class EnemySpawner : MonoBehaviour
             {
                 // spawning enemy prefab at random spawn point
                 Transform spawnPoint = spawnPointList[Random.Range(0, spawnPointList.Count)];
-                //spawning gameobject
+                //spawning gameobject from objectPool
+                GameObject enemyClone = GetEnemyPrefab(enemySpawnInfo.enemyID, spawnPoint);
 
                 //get the enemy script
                 //set enemy stats after spawned
@@ -77,6 +80,47 @@ public class EnemySpawner : MonoBehaviour
             // accumulate the elapsed time
             elapsedTime += enemySpawnInfo.spawnRate;
         }
+    }
+    // for searching which prefab to use from prefab list depending on the enemyID in enemySpawnInfo
+    public GameObject SearchEnemyPrefabList(string enemyID)
+    {
+        foreach(GameObject obj in enemyPrefabList)
+        {
+            if (obj.name == enemyID)
+            {
+                return obj;
+            }
+        }
+        Debug.Log("enemyID not found");
+        return null;
+    }
+
+    public GameObject GetEnemyPrefab(string enemyID, Transform spawnPoint)
+    {
+        GameObject prefab = SearchEnemyPrefabList(enemyID);
+        if (prefab != null)
+        {
+            string key = prefab.name;
+            // if object pool contains the prefab
+            if (objectPool.ContainsKey(key) && objectPool[key].Count > 0)
+            {
+                GameObject obj = objectPool[key].Dequeue();
+                // reactivating obj
+                obj.SetActive(true);
+                // return the obj
+                return obj;
+            }
+            // obj does not exist in pool
+            else
+            {
+                // create new obj from prefab
+                GameObject obj = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+                obj.name = prefab.name;
+                return obj;
+            }
+        }
+        Debug.Log("enemyID not found");
+        return null;
     }
 
     public void GetWavesByMap()
