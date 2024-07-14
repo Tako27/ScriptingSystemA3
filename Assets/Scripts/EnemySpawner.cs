@@ -7,19 +7,24 @@ public class EnemySpawner : MonoBehaviour
     public string selectedMapID;
 
     public float spawnRate;
+    public float timeBetweenWaves = 300f;
 
     public List<GameObject> enemyPrefabList;
     public List<Transform> spawnPointList;
 
+    // to hold all enemy spawn info from game script based on the selected map
     public List<EnemySpawnInfo> enemySpawnInfoList;
+    // to hold the enemy spawn infos per wave
     public Dictionary<int, List<EnemySpawnInfo>> waveIDToEnemySpawnDict;
 
     private int currentWaveNo = 0;
     private bool waveIsDone = true;
-    // Coroutine wrapper
-    private List<CoroutineWrapper> enemySpawnerCoroutineList = new List<CoroutineWrapper>();
     // Control flag for spawning
     private bool isSpawningActive = false;
+    // Coroutine wrapper
+    private List<CoroutineWrapper> enemySpawnerCoroutineList = new List<CoroutineWrapper>();
+    // constant 5 minustes in seconds assuming each wave duration is always 5 minutes
+    private const float waveDuration = 5 * 60f;
 
     void Update()
     {
@@ -41,7 +46,36 @@ public class EnemySpawner : MonoBehaviour
                 return;
             }
 
+            // current wave 
+            List<EnemySpawnInfo> enemySpawnInfos = waveIDToEnemySpawnDict[currentWaveNo];
 
+            foreach (var esi in enemySpawnInfos)
+            {
+                CoroutineWrapper newCoroutine = new CoroutineWrapper(this, EnemySpawnerCoroutine(new EnemySpawnInfo()));
+            }
+        }
+    }
+
+    IEnumerator EnemySpawnerCoroutine(EnemySpawnInfo enemySpawnInfo)
+    {
+        float elapsedTime = 0f;
+
+        // true as long as elapsed time is lesser than 5 minutes
+        while (elapsedTime < waveDuration)
+        {
+            for (int i = 0; i < enemySpawnInfo.spawnCount; i++)
+            {
+                // spawning enemy prefab at random spawn point
+                Transform spawnPoint = spawnPointList[Random.Range(0, spawnPointList.Count)];
+                //spawning gameobject
+
+                //get the enemy script
+                //set enemy stats after spawned
+            }
+            // wait for seconds till the next group spawn
+            yield return new WaitForSeconds(enemySpawnInfo.spawnRate);
+            // accumulate the elapsed time
+            elapsedTime += enemySpawnInfo.spawnRate;
         }
     }
 

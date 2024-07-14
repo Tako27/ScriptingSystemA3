@@ -2,18 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     // Enemy stats
     EnemyStats stats;
-    /*
-    public string enemyID { get;}
-    public string enemyName { get;}
-    public int maxHealth { get;}
-    public float moveSpeed { get;}
-    public int damage { get;}
-    public int enemyPrefabNo { get;}
-    */
 
     // rigidbody of enemy
     protected Rigidbody2D rb;
@@ -25,34 +17,11 @@ public class Enemy : MonoBehaviour
     // current health of enemy
     protected int currentHealth;
 
-    public Enemy(EnemyStats initstats)
+    public void InitializeEnemy(EnemyStats initstats)
     {
         this.stats = initstats;
         this.currentHealth = stats.maxHealth;
     }
-
-    // Initialize enemy stats
-    //public void InitializeEnemy(EnemyStats stats)
-    //{
-    //    enemyID = stats.enemyID;
-    //    enemyName = stats.enemyName;
-    //    maxHealth = stats.maxHealth;
-    //    moveSpeed = stats.moveSpeed;
-    //    damage = stats.damage;
-    //    enemyPrefabNo = stats.enemyPrefabNo;
-    //    currentHealth = maxHealth;
-    //}
-
-    //public void InitializeEnemy(string enemyID, string enemyName, int maxHealth, float moveSpeed, int damage, int enemyPrefabNo)
-    //{
-    //    this.enemyID = enemyID;
-    //    this.enemyName = enemyName;
-    //    this.maxHealth = maxHealth;
-    //    this.moveSpeed = moveSpeed;
-    //    this.damage = damage;
-    //    this.enemyPrefabNo = enemyPrefabNo;
-    //    this.currentHealth = maxHealth;
-    //}
 
     // Start is called before the first frame update
     void Start()
