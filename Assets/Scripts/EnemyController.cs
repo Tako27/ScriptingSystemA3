@@ -7,15 +7,27 @@ public class EnemyController : MonoBehaviour
     // Enemy stats
     EnemyStats stats;
 
+    // remember to change all this to stats.[stats]
+    float attackRange = 1f;
+    int damage = 1;
+    float moveSpeed = 3f;
+    float attackCooldown = 2f;
+
     // rigidbody of enemy
     protected Rigidbody2D rb;
 
-    protected Transform player;
+    protected GameObject player;
+    protected Transform playerPos;
 
     protected Vector2 moveDir;
 
     // current health of enemy
     protected int currentHealth;
+
+    // Attack state
+    // Attack state
+    private bool canAttack = true;
+    private float attackTimer = 0f;
 
     public void InitializeEnemy(EnemyStats initstats)
     {
@@ -27,7 +39,16 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindWithTag("Player").transform;
+        player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            playerPos = player.transform;
+            //Debug.Log("Player found!");
+        }
+        else
+        {
+            Debug.Log("Player not found! Make sure the Player GameObject is tagged as 'Player'.");
+        }
         moveDir = Vector2.zero;
     }
 
@@ -35,14 +56,28 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         // sprite rotation
-        moveDir = (player.position - transform.position).normalized;
+        moveDir = (playerPos.position - transform.position).normalized;
         if(moveDir.magnitude!=0)
         {
             rb.transform.up = moveDir;
         }
 
-        // EnemyAttack();
+        // Handle attack cooldown
+        if (!canAttack)
+        {
+            attackTimer += Time.deltaTime;
+            if (attackTimer >= attackCooldown)
+            {
+                canAttack = true;
+                attackTimer = 0f;
+            }
+        }
 
+        // Attack if in range and cooldown is over
+        if (canAttack && IsPlayerInRange())
+        {
+            EnemyAttack();
+        }
     }
 
     void FixedUpdate()
@@ -52,12 +87,31 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void EnemyMovement()
     {
-        rb.velocity = new Vector2(moveDir.x * stats.moveSpeed, moveDir.y * stats.moveSpeed);
+        rb.velocity = new Vector2(moveDir.x * moveSpeed, moveDir.y * moveSpeed);
     }
 
     protected virtual void EnemyAttack()
     {
-        // to be overidden by enemy behaviour scripts
+        // if player exists
+        if (player != null)
+        {
+            dummyScript playerScript = player.GetComponent<dummyScript>();
+            if (playerScript != null)
+            {
+                playerScript.TakeDamage(damage);
+                // reset attack state
+                canAttack = false; 
+            }
+        }
     }
-
+    protected bool IsPlayerInRange()
+    {
+        float distanceToPlayer = Vector2.Distance(transform.position, playerPos.position);
+        return distanceToPlayer <= attackRange;
+    }
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
 }

@@ -1118,6 +1118,7 @@ GameObject:
   - component: {fileID: 405414986}
   - component: {fileID: 405414985}
   - component: {fileID: 405414984}
+  - component: {fileID: 405414990}
   - component: {fileID: 405414987}
   - component: {fileID: 405414988}
   - component: {fileID: 405414989}
@@ -1295,6 +1296,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expBar: {fileID: 115270040}
   upgradeMenu: {fileID: 116283946}
+--- !u!114 &405414990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405414982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289d177925299564b93a874c40fb909f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!1 &482162246
 GameObject:
   m_ObjectHideFlags: 0
@@ -2089,7 +2103,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -8677,6 +8691,10 @@ PrefabInstance:
     - target: {fileID: 3054736282344843115, guid: e6a77bbf7628cec49a0209d4dc8e9df5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3760386793883299658, guid: e6a77bbf7628cec49a0209d4dc8e9df5, type: 3}
+      propertyPath: m_FlipY
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
