@@ -55,6 +55,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 CoroutineWrapper newCoroutine = new CoroutineWrapper(this, EnemySpawnerCoroutine(new EnemySpawnInfo()));
             }
+            // need continue script
         }
     }
 

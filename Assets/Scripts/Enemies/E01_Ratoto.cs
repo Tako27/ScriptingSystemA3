@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class E01_Ratoto : MonoBehaviour
+public class E01_Ratoto : EnemyController
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void EnemyAttack()
     {
-        
+        base.EnemyAttack();
     }
-
-    // Update is called once per frame
-    void Update()
+    protected override void EnemyMovement()
     {
-        
+        base.EnemyMovement();
     }
 }

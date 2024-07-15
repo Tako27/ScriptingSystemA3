@@ -76,7 +76,9 @@ public class DataManager : MonoBehaviour
                 maxHealth = int.Parse(columnData[2]),
                 moveSpeed = float.Parse(columnData[3]),
                 damage = int.Parse(columnData[4]),
-                enemyPrefabNo = int.Parse(columnData[5])
+                enemyPrefabNo = int.Parse(columnData[5]),
+                attackRange = float.Parse(columnData[6]),
+                attackCooldown = float.Parse(columnData[7])
             };
             
             // add the populated EnemyStats object to a list
