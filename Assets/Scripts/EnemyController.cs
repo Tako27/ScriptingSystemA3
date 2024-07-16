@@ -25,9 +25,7 @@ public class EnemyController : MonoBehaviour
     protected int currentHealth;
 
     // Attack state
-    // Attack state
-    private bool canAttack = true;
-    private float attackTimer = 0f;
+    private bool isAttacking = false;
 
     public void InitializeEnemy(EnemyStats initstats)
     {
@@ -62,21 +60,10 @@ public class EnemyController : MonoBehaviour
             rb.transform.up = moveDir;
         }
 
-        // Handle attack cooldown
-        if (!canAttack)
+        // if player in range and enemy is not already attacking
+        if (IsPlayerInRange() && !isAttacking)
         {
-            attackTimer += Time.deltaTime;
-            if (attackTimer >= attackCooldown)
-            {
-                canAttack = true;
-                attackTimer = 0f;
-            }
-        }
-
-        // Attack if in range and cooldown is over
-        if (canAttack && IsPlayerInRange())
-        {
-            EnemyAttack();
+            StartCoroutine(AttackCoroutine());
         }
     }
 
@@ -99,11 +86,25 @@ public class EnemyController : MonoBehaviour
             if (playerScript != null)
             {
                 playerScript.TakeDamage(damage);
-                // reset attack state
-                canAttack = false; 
             }
         }
     }
+
+    private IEnumerator AttackCoroutine()
+    {
+        isAttacking = true;
+
+        while (IsPlayerInRange())
+        {
+            EnemyAttack();
+
+            // Wait for the attack cooldown before attacking again
+            yield return new WaitForSeconds(attackCooldown);
+        }
+
+        isAttacking = false;
+    }
+
     protected bool IsPlayerInRange()
     {
         float distanceToPlayer = Vector2.Distance(transform.position, playerPos.position);

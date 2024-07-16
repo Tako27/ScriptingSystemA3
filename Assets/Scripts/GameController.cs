@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
 
     // shift this to where you want select the map
     private string selectedMap = "M01";
+    // remember drag and drop assign enemySpawner
     public EnemySpawner enemySpawner;
     // ===
 
