@@ -1,0 +1,10 @@
+itemID,itemName,effectType,basicDescirption
+I01,Health Amulet,Health,Increase maximum health
+I02,Regen Orb,Regen,Regenerates health over time
+I03,Speed Boots,Speed,Increase movement speed
+I04,Attack Charm,Attack,Increases attack
+I05,Swift Gloves,Attack speed,Increases attack speed
+I06,Tough Armour,Defense,Reduce damage taken from enemies
+I07,Defense Shield,Negation,Chance of negating damage
+I08,EXP Booster,Experience,Increase experience gain
+I09,Magnet,Collection,Increase experience pickup radius

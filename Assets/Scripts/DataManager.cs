@@ -10,6 +10,9 @@ public class DataManager : MonoBehaviour
     public List<Weapon> weaponList = new List<Weapon>();
 
     public List<item> itemList = new List<item>();
+
+    public List<WeaponUpgrades> weaponUpgradeList = new List<WeaponUpgrades>();
+    public List<ItemUpgrades> itemUpgradesList = new List<ItemUpgrades>();
     
     
     public void LoadAllData()
@@ -17,12 +20,14 @@ public class DataManager : MonoBehaviour
         LoadCharacterData();
         LoadItemData();
         LoadWeaponData();
+        LoadWeaponUpgrades();
+        LoadItemUpgrades();
     }
 
     #region Load Character Data
     public void LoadCharacterData()
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/A3 - Character - Static.csv");
+        string filePath = Path.Combine(Application.dataPath, "Data/Character.csv");
         string[] fileData = File.ReadAllLines(filePath);
         for(int i =1; i<fileData.Length;i++)
         {
@@ -57,7 +62,7 @@ public class DataManager : MonoBehaviour
 
     public void LoadWeaponData()
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/A3 - Weapons - Static.csv");
+        string filePath = Path.Combine(Application.dataPath, "Data/Weapons.csv");
         string[] fileData = File.ReadAllLines(filePath);
         for(int i =1; i<fileData.Length;i++)
         {
@@ -91,18 +96,19 @@ public class DataManager : MonoBehaviour
 
     public void LoadItemData()
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/A3 - Items - Static.csv");
+        string filePath = Path.Combine(Application.dataPath, "Data/Items.csv");
         string[] fileData = File.ReadAllLines(filePath);
         for(int i =1; i<fileData.Length;i++)
         {
             string[] columnData = fileData[i].Split(new char[] { ',' });
 
-            refItem refItem = new refItem();
-            refItem.id = columnData[0];
-            refItem.name = columnData[1];
-            refItem.effectType = columnData[2];
+            refItem refitem = new refItem();
+            refitem.id = columnData[0];
+            refitem.name = columnData[1];
+            refitem.effectType = columnData[2];
+            refitem.basicDesc = columnData[3];
 
-            item Item = new item(refItem.id, refItem.name, refItem.effectType);
+            item Item = new item(refitem.id, refitem.name, refitem.effectType, refitem.basicDesc);
 
             itemList.Add(Item);
 
@@ -117,5 +123,72 @@ public class DataManager : MonoBehaviour
     }
 
     #endregion Item Data
+
+    #region Weapon Upgrades
+
+    public void LoadWeaponUpgrades()
+    {
+        string filePath = Path.Combine(Application.dataPath, "Data/Weapon Upgrades.csv");
+        string[] fileData = File.ReadAllLines(filePath);
+        for(int i =1; i<fileData.Length;i++)
+        {
+            string[] columnData = fileData[i].Split(new char[] { ',' });
+
+            refWeaponUpgrades refUpgrades = new refWeaponUpgrades();
+            refUpgrades.refID = columnData[0];
+            int.TryParse(columnData[1], out refUpgrades.level);
+            int.TryParse(columnData[2], out refUpgrades.projectileCount);
+            float.TryParse(columnData[3], out refUpgrades.dmgMultiplier);
+            float.TryParse(columnData[4], out refUpgrades.fireRate);
+            refUpgrades.upgradeDesc = columnData[5];
+
+            WeaponUpgrades weaponUpgrades = new WeaponUpgrades(refUpgrades.refID,refUpgrades.level,refUpgrades.projectileCount,refUpgrades.dmgMultiplier, refUpgrades.fireRate, refUpgrades.upgradeDesc);
+
+            weaponUpgradeList.Add(weaponUpgrades);
+
+            //debug purposes
+            // foreach(var item in itemList)
+            // {
+            //     Debug.Log(item.name);
+            // }
+
+            Game.SetWeaponUpgradesList(weaponUpgradeList);
+        }
+    }
+
+    #endregion Weapon Upgrades
+
+    #region Item upgrades
+
+    public void LoadItemUpgrades()
+    {
+        string filePath = Path.Combine(Application.dataPath, "Data/Item Upgrades.csv");
+        string[] fileData = File.ReadAllLines(filePath);
+        for(int i =1; i<fileData.Length;i++)
+        {
+            string[] columnData = fileData[i].Split(new char[] { ',' });
+
+            refItemUpgrades refUpgrades = new refItemUpgrades();
+            refUpgrades.itemID = columnData[0];
+            int.TryParse(columnData[1], out refUpgrades.level);
+            refUpgrades.upgradeDesc = columnData[2];
+
+            ItemUpgrades itemUpgrades = new ItemUpgrades(refUpgrades.itemID, refUpgrades.level, refUpgrades.upgradeDesc);
+
+            itemUpgradesList.Add(itemUpgrades);
+
+            //debug purposes
+            // foreach(var item in itemList)
+            // {
+            //     Debug.Log(item.name);
+            // }
+
+            Game.SetItemUpgradesList(itemUpgradesList);
+        }
+    }
+
+    #endregion Item upgrades
+
+    
     
 }

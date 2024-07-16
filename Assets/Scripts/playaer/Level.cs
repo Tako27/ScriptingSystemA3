@@ -11,13 +11,9 @@ public class Level : MonoBehaviour
     [SerializeField] expBar expBar;
     [SerializeField] UpgradeMenu upgradeMenu;
 
-    private List<Weapon> weaponUpgrades;
-    private List<item> itemUpgrades;
-
     void Start()
     {
-        weaponUpgrades = Game.GetWeaponList();
-        itemUpgrades = Game.GetItemList(); 
+        
         Debug.Log("Player is level" + level);
     }
     int expRequired
@@ -36,9 +32,10 @@ public class Level : MonoBehaviour
 
     public void LevelUp()
     {
+        
         if(exp >= expRequired)
         {
-            upgradeMenu.OpenMenu();
+            upgradeMenu.OpenUpgradeMenu();
             exp -= expRequired;
             level++;
             Debug.Log("Player levelled up! Player is level" + level);
@@ -60,32 +57,5 @@ public class Level : MonoBehaviour
         return exp;
     }
 
-    public List<Weapon> GetWeaponUpgrades(int count)
-    {
-        List<Weapon> list = new List<Weapon>();
-        foreach(Weapon w in weaponUpgrades)
-        {
-            if(!w.isGeneric)
-            {
-                for(int i =0; i<count; i++)
-                {
-                    list.Add(weaponUpgrades[Random.Range(0,weaponUpgrades.Count)]);
-                }
-            }
-            
-            
-        }
-        return list;
-    }
-
-    public List<item> GeItemUpgrades(int count)
-    {
-        List<item> list = new List<item>();
-        for(int i =0; i<count; i++)
-        {
-            list.Add(itemUpgrades[Random.Range(0,itemUpgrades.Count)]);
-        }
-        
-        return list;
-    }
+    
 }

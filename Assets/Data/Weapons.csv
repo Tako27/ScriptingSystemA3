@@ -1,0 +1,10 @@
+weaponID,weaponName,weaponType,damage,basicDescription,isGeneric
+W01,Staff,Ranged,15,Shoots a burst of magic at enemies,FALSE
+W02,Longsword,Melee,20,"Swings in a arc-like motion, dealing damage to enemies caught in it",FALSE
+W03,Pistol,Multishot,12,Shoots projectiles at enemies,FALSE
+W04,Bow,Ranged,14,Shoots projectiles at enemies,FALSE
+W05,Throwing knives,Multishot,10,Throws knives at enemies in a spread pattern,TRUE
+W06,Dark matter,Multishot,8,Spawns an area of dark matter that slows down enemies and damages them over time,TRUE
+W07,Grenade,Ranged,14,Throws a grenade at enemies that bounces around before exploding,TRUE
+W08,Sacrificial Knife,Melee,15,"Stabs at enemies, with a small chance of recovering a small amount of health",TRUE
+W09,Shockwave hammer,Melee,18,Slams down a hammer charged with electricity that damages and knocks back surrounding enemies,TRUE

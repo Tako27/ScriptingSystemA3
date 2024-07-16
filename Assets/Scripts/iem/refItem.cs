@@ -9,4 +9,6 @@ public class refItem
     public string name;
     public string effectType;
 
+    public string basicDesc;
+
 }

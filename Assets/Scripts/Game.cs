@@ -8,9 +8,17 @@ public static class Game
     private static Character chara;
     private static Weapon weapon;
     private static item item;
+
+    private static WeaponUpgrades weaponUpgrades;
+
+    private static ItemUpgrades itemUpgrades;
     private static List<Character> charList;
     private static List<Weapon> weaponList;
     private static List<item> itemList;
+
+    private static List<WeaponUpgrades> weaponUpgradeList;
+
+    private static List<ItemUpgrades> itemUpgradesList;
 
 
     public static Character GetChar()
@@ -84,5 +92,24 @@ public static class Game
         return itemList;
     }
 
+    public static void SetWeaponUpgradesList(List<WeaponUpgrades> list)
+    {
+        weaponUpgradeList = list;
+    }
+
+    public static List<WeaponUpgrades> GetWeaponUpgradesList()
+    {
+        return weaponUpgradeList;
+    }
+
+    public static void SetItemUpgradesList(List<ItemUpgrades> list)
+    {
+        itemUpgradesList = list;
+    }
+
+    public static List<ItemUpgrades> GetItemUpgradesList()
+    {
+        return itemUpgradesList;
+    }
 
 }

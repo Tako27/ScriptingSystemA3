@@ -1,0 +1,5 @@
+weaponID,weaponName,weaponType,damage,basicDescription,isGeneric
+W01,Staff,Ranged,15,Shoots a burst of magic at enemies,TRUE
+W02,Longsword,Melee,20,"Swings in a arc-like motion, dealing damage to enemies caught in it",TRUE
+W03,Pistol,Multishot,12,Shoots projectiles at enemies,TRUE
+W04,Bow,Ranged,14,Shoots projectiles at enemies,TRUE

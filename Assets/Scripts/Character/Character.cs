@@ -5,12 +5,12 @@ using UnityEngine;
 public class Character
 {
     public string id {get;}
-    public string charName {get;}
-    public float health {get;}
-    public float moveSpd {get;}
-    public float atkSpd {get;}
-    public float atkMultiplier {get;}
-    public string weaponID {get;}
+    public string charName {get; private set;}
+    public float health {get; private set;}
+    public float moveSpd {get; private set;}
+    public float atkSpd {get; private set;}
+    public float atkMultiplier {get; private set;}
+    public string weaponID {get; private set;}
 
     public Character(string id, string charName, float health,float moveSpd,float atkSpd,float atkMultiplier,string weaponID)
     {
