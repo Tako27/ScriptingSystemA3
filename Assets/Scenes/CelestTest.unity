@@ -277,6 +277,7 @@ GameObject:
   - component: {fileID: 116283943}
   - component: {fileID: 116283945}
   - component: {fileID: 116283946}
+  - component: {fileID: 116283947}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: Untagged
@@ -299,7 +300,7 @@ MonoBehaviour:
   player: {fileID: 405414982}
   inputHandler: {fileID: 482162247}
   dataManager: {fileID: 116283945}
-  enemySpawner: {fileID: 0}
+  enemySpawner: {fileID: 116283947}
 --- !u!4 &116283944
 Transform:
   m_ObjectHideFlags: 0
@@ -340,6 +341,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgrade: {fileID: 1793698407}
+--- !u!114 &116283947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116283942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e89ef867f689583409f7fb16c190dc2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedMapID: 
+  spawnRate: 0
+  timeBetweenWaves: 300
+  enemyPrefabList: []
+  spawnPointList: []
 --- !u!1 &123286496
 GameObject:
   m_ObjectHideFlags: 0
