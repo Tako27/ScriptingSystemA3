@@ -18,7 +18,7 @@ public class dummyScript : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage; // Decrease current health by the damage amount
-        Debug.Log("Player took damage. Current health: " + currentHealth);
+        //Debug.Log("Player took damage. Current health: " + currentHealth);
 
         if (currentHealth <= 0)
         {

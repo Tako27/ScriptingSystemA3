@@ -55,6 +55,7 @@ public class GameController : MonoBehaviour
         // when player selected a map from the mapIDs list
         Game.SetMapID(selectedMap);
         enemySpawner.GetWavesByMap();
+        enemySpawner.StartSpawning();
         // === to be shifted elsewhere: end
     }
 

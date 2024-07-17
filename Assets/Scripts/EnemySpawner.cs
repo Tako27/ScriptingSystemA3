@@ -7,15 +7,16 @@ public class EnemySpawner : MonoBehaviour
     public string selectedMapID;
 
     public float spawnRate;
-    public float timeBetweenWaves = 300f;
 
     public List<GameObject> enemyPrefabList;
     public List<Transform> spawnPointList;
 
     // to hold all enemy spawn info from game script based on the selected map
     public List<EnemySpawnInfo> enemySpawnInfoList;
+
     // to hold the enemy spawn infos per wave
     public Dictionary<int, List<EnemySpawnInfo>> waveIDToEnemySpawnDict;
+
     // dictionary for object pooling, [key] separates the types of enemy prefab
     private Dictionary<string, Queue<GameObject>> objectPool = new Dictionary<string, Queue<GameObject>>();
 
@@ -34,12 +35,13 @@ public class EnemySpawner : MonoBehaviour
         if (!isSpawningActive) return;
 
         // debugging purposes
-        Debug.Log(currentWaveNo);
+        //Debug.Log(currentWaveNo);
 
         if (waveIsDone)
         {
             currentWaveNo++;
 
+            Debug.Log(currentWaveNo);
             // if all waves finish spawning exit spawn loop
             if (currentWaveNo >= GetTotalWaveCount())
             {
@@ -53,28 +55,65 @@ public class EnemySpawner : MonoBehaviour
 
             foreach (var esi in enemySpawnInfos)
             {
-                CoroutineWrapper newCoroutine = new CoroutineWrapper(this, EnemySpawnerCoroutine(new EnemySpawnInfo()));
+                CoroutineWrapper newCoroutine = new CoroutineWrapper(this, EnemySpawnerCoroutine(esi));
+                newCoroutine.Start();
+                enemySpawnerCoroutineList.Add(newCoroutine);
             }
-            // need continue script
+            // set wave is done is false, so it doesnt spawn the next wave before the wave spawning is completed
+            waveIsDone = false;
+        }
+        // if wave is not done
+        else
+        {
+            // run through to the coroutine list to check if the coroutine is still running
+            foreach (var coroutine in enemySpawnerCoroutineList)
+            {
+                // if coroutine still running, break out of loop
+                if (coroutine.IsRunning)
+                {
+                    return;
+                }
+            }
+            // if not running then set wave is done to true, and clear out the coroutine list
+            waveIsDone = true;
+            enemySpawnerCoroutineList.Clear();
         }
     }
 
     IEnumerator EnemySpawnerCoroutine(EnemySpawnInfo enemySpawnInfo)
     {
         float elapsedTime = 0f;
+        // tracks how many of a type of enemy spawned
+        int noOfEnemySpawned = 0;
 
         // true as long as elapsed time is lesser than 5 minutes
         while (elapsedTime < waveDuration)
         {
             for (int i = 0; i < enemySpawnInfo.spawnCount; i++)
             {
+                noOfEnemySpawned++;
                 // spawning enemy prefab at random spawn point
                 Transform spawnPoint = spawnPointList[Random.Range(0, spawnPointList.Count)];
                 //spawning gameobject from objectPool
-                GameObject enemyClone = GetEnemyPrefab(enemySpawnInfo.enemyID, spawnPoint);
+                GameObject enemyClone = GetEnemyPrefab(enemySpawnInfo.enemyID, spawnPoint, noOfEnemySpawned);
+                if (enemyClone == null)
+                {
+                    Debug.LogError("Failed to get enemy prefab for ID: " + enemySpawnInfo.enemyID);
+                    continue;
+                }
 
-                //get the enemy script
+                // get the enemy script
+                EnemyController enemyCloneScript = enemyClone.GetComponent<EnemyController>();
+
                 //set enemy stats after spawned
+                if (enemyCloneScript != null)
+                {
+                    enemyCloneScript.InitializeEnemy(Game.GetEnemyByID(enemySpawnInfo.enemyID));
+                }
+                else
+                {
+                    Debug.LogError("Enemy script not found on instantiated prefab.");
+                }
             }
             // wait for seconds till the next group spawn
             yield return new WaitForSeconds(enemySpawnInfo.spawnRate);
@@ -96,7 +135,8 @@ public class EnemySpawner : MonoBehaviour
         return null;
     }
 
-    public GameObject GetEnemyPrefab(string enemyID, Transform spawnPoint)
+    // handles spawning from object pool
+    public GameObject GetEnemyPrefab(string enemyID, Transform spawnPoint, int noOfEnemySpawned)
     {
         GameObject prefab = SearchEnemyPrefabList(enemyID);
         if (prefab != null)
@@ -106,8 +146,13 @@ public class EnemySpawner : MonoBehaviour
             if (objectPool.ContainsKey(key) && objectPool[key].Count > 0)
             {
                 GameObject obj = objectPool[key].Dequeue();
+
                 // reactivating obj
                 obj.SetActive(true);
+
+                // rename enemy object before spawning
+                obj.name = prefab.name + "_" + noOfEnemySpawned;
+
                 // return the obj
                 return obj;
             }
@@ -116,12 +161,23 @@ public class EnemySpawner : MonoBehaviour
             {
                 // create new obj from prefab
                 GameObject obj = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
-                obj.name = prefab.name;
+                obj.name = prefab.name + "_" + noOfEnemySpawned;
                 return obj;
             }
         }
-        Debug.Log("enemyID not found");
+        Debug.LogError("Enemy prefab not found in pool or prefab list for ID: " + enemyID);
         return null;
+    }
+
+    public void DestroyEnemyPrefab(GameObject obj)
+    {
+        string key = obj.name.Split('_')[0];
+        if (!objectPool.ContainsKey(key)) 
+        {
+            objectPool[key] = new Queue<GameObject>(); 
+        }
+        obj.SetActive(false);
+        objectPool[key].Enqueue(obj);
     }
 
     public void GetWavesByMap()
@@ -158,8 +214,6 @@ public class EnemySpawner : MonoBehaviour
         //{
         //    Debug.Log(esi.mapID + esi.waveNo + esi.enemyID);
         //}
-
-        //Debug.Log(GetEnemyTypeCountPerWave(1));
 
         //foreach (KeyValuePair<int, List<EnemySpawnInfo>> kvp in waveIDToEnemySpawnDict)
         //{

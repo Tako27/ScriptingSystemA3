@@ -1,23 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 
 public class EnemyController : MonoBehaviour
 {
     // Enemy stats
     EnemyStats stats;
 
-    // remember to change all this to stats.[stats]
-    float attackRange = 1f;
-    int damage = 1;
-    float moveSpeed = 3f;
-    float attackCooldown = 2f;
-
     // rigidbody of enemy
     protected Rigidbody2D rb;
 
     protected GameObject player;
     protected Transform playerPos;
+
+    protected GameObject gameController;
 
     protected Vector2 moveDir;
 
@@ -38,6 +38,7 @@ public class EnemyController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindWithTag("Player");
+        gameController = GameObject.FindWithTag("GameController");
         if (player != null)
         {
             playerPos = player.transform;
@@ -74,7 +75,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void EnemyMovement()
     {
-        rb.velocity = new Vector2(moveDir.x * moveSpeed, moveDir.y * moveSpeed);
+        rb.velocity = new Vector2(moveDir.x * stats.moveSpeed, moveDir.y * stats.moveSpeed);
     }
 
     protected virtual void EnemyAttack()
@@ -85,7 +86,7 @@ public class EnemyController : MonoBehaviour
             dummyScript playerScript = player.GetComponent<dummyScript>();
             if (playerScript != null)
             {
-                playerScript.TakeDamage(damage);
+                playerScript.TakeDamage(stats.damage);
             }
         }
     }
@@ -99,7 +100,7 @@ public class EnemyController : MonoBehaviour
             EnemyAttack();
 
             // Wait for the attack cooldown before attacking again
-            yield return new WaitForSeconds(attackCooldown);
+            yield return new WaitForSeconds(stats.attackCooldown);
         }
 
         isAttacking = false;
@@ -108,11 +109,22 @@ public class EnemyController : MonoBehaviour
     protected bool IsPlayerInRange()
     {
         float distanceToPlayer = Vector2.Distance(transform.position, playerPos.position);
-        return distanceToPlayer <= attackRange;
+        return distanceToPlayer <= stats.attackRange;
     }
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireSphere(transform.position, stats.attackRange);
     }
+
+    protected virtual void EnemyDie()
+    {
+        EnemySpawner enemySpawnerScript = gameController.GetComponent<EnemySpawner>();
+        enemySpawnerScript.DestroyEnemyPrefab(this.gameObject);
+    }
+    //- deletion of prefab
+    //- ensure that prefab remove from object pooling properly
+    //- ensure wave spawning works on second 3 etc wave
+    //- ensure that spawning renames the objects
+    //-for debugging to add a button to spawn next wave instantly, and add to clear all enemies at once
 }

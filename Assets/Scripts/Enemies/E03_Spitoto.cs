@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class E02_Batoto : EnemyController
+public class E03_Spitoto : EnemyController
 {
     protected override void EnemyAttack()
     {
