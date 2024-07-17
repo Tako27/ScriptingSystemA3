@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
+
 using UnityEngine;
 
-public class E01_Ratoto : EnemyController
+public class E02_Batoto : EnemyController
 {
     protected override void EnemyAttack()
     {
