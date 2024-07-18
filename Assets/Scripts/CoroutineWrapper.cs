@@ -12,6 +12,7 @@ public class CoroutineWrapper
     private MonoBehaviour owner;
     private IEnumerator coroutine;
     public bool IsRunning { get; private set; }
+    private Coroutine runningCoroutine;
 
     public CoroutineWrapper(MonoBehaviour owner, IEnumerator coroutine)
     {
@@ -23,6 +24,15 @@ public class CoroutineWrapper
     {
         IsRunning = true;
         owner.StartCoroutine(Run());
+    }
+
+    public void Stop()
+    {
+        if (IsRunning)
+        {
+            owner.StopCoroutine(runningCoroutine);
+            IsRunning = false;
+        }
     }
 
     private IEnumerator Run()

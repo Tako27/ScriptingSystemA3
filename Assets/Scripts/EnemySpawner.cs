@@ -50,7 +50,7 @@ public class EnemySpawner : MonoBehaviour
             if (currentWaveNo >= GetTotalWaveCount())
             {
                 Debug.Log("All waves completed.");
-                isSpawningActive = false;
+                StopSpawning();
                 return;
             }
 
@@ -93,6 +93,11 @@ public class EnemySpawner : MonoBehaviour
         // true as long as elapsed time is lesser than 5 minutes
         while (elapsedTime < waveDuration)
         {
+            if (!isSpawningActive)
+            {
+                // Exit the coroutine if spawning is no longer active
+                yield break;
+            }
             for (int i = 0; i < enemySpawnInfo.spawnCount; i++)
             {
                 noOfEnemySpawned++;
@@ -239,10 +244,29 @@ public class EnemySpawner : MonoBehaviour
 
     public void StartSpawning()
     {
-        // Initialize the wave number and set the spawning flag
+        // initialize the wave number and set the spawning flag
         currentWaveNo = 0;
         waveIsDone = true;
         isSpawningActive = true;
     }
+    public void StopSpawning()
+    {
+        // set the spawning flag to false to stop new spawning
+        isSpawningActive = false;
 
+        // stop all running coroutines
+        foreach (var coroutine in enemySpawnerCoroutineList)
+        {
+            if (coroutine.IsRunning)
+            {
+                coroutine.Stop();
+            }
+        }
+
+        // clear the coroutine list
+        enemySpawnerCoroutineList.Clear();
+
+        // set waveIsDone to true to reset the wave state
+        waveIsDone = true;
+    }
 }
