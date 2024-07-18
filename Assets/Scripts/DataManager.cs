@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class DataManager : MonoBehaviour
 {
+    //Done by Lee Ying Jie
     public List<Character> charSelect = new List<Character>();
     public List<Weapon> weaponList = new List<Weapon>();
 
@@ -18,7 +19,7 @@ public class DataManager : MonoBehaviour
     public List<PlayerDialogue> playerDialoguesList = new List<PlayerDialogue>();
     
     
-    public void LoadAllData()
+    public void LoadAllData() //method to load all data from csv files
     {
         LoadCharacterData();
         LoadItemData();
@@ -30,34 +31,31 @@ public class DataManager : MonoBehaviour
     }
 
     #region Load Character Data
-    public void LoadCharacterData()
+    public void LoadCharacterData() //load character data
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/Character.csv");
-        string[] fileData = File.ReadAllLines(filePath);
-        for(int i =1; i<fileData.Length;i++)
+        string filePath = Path.Combine(Application.dataPath, "Data/Character.csv"); //find file from unity project menu
+        string[] fileData = File.ReadAllLines(filePath); //pull data from file
+        //currently, fileData consists of data from each row, but is not separated by column
+        for(int i =1; i<fileData.Length;i++) 
         {
-            string[] columnData = fileData[i].Split(new char[] { ',' });
+            string[] columnData = fileData[i].Split(new char[] { ',' }); //this separates the data by column, it takes the data in fileData and splits it at each ","
 
-            refChar refchar = new refChar();
+            //now i need to assign each data based on their respective columns
+            refChar refchar = new refChar(); 
             refchar.id = columnData[0];
             refchar.charName = columnData[1];
-            float.TryParse(columnData[2], out refchar.health);
+            float.TryParse(columnData[2], out refchar.health); //convert from string to float
             float.TryParse(columnData[3], out refchar.moveSpd);
             float.TryParse(columnData[4], out refchar.atkSpd);
             float.TryParse(columnData[5], out refchar.atkMultiplier);
             refchar.weaponID = columnData[6]; 
-
+            //set the variables of character class according to variables from refchar class
             Character chara = new Character(refchar.id, refchar.charName, refchar.health, refchar.moveSpd, refchar.atkSpd, refchar.atkMultiplier, refchar.weaponID);
 
-            charSelect.Add(chara);
-
-            //debug purposes
-            // foreach(var c in charSelect)
-            // {
-            //     Debug.Log(c.charName);
-            // }
-
-            Game.SetCharList(charSelect);
+            charSelect.Add(chara); //add all initialized character ddata into this list
+            //this list is acts as the main list of characters, which contains all available characters in the game
+            //which will be referenced by the game script to set the character list in the game
+            Game.SetCharList(charSelect); //this sets the character list
         }
     }
 
@@ -65,33 +63,28 @@ public class DataManager : MonoBehaviour
     
     #region Weapon Data
 
-    public void LoadWeaponData()
+    public void LoadWeaponData() //load weapon data
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/Weapons.csv");
-        string[] fileData = File.ReadAllLines(filePath);
-        for(int i =1; i<fileData.Length;i++)
+        string filePath = Path.Combine(Application.dataPath, "Data/Weapons.csv"); //find file from unity project menu
+        string[] fileData = File.ReadAllLines(filePath); //pull data from file
+        for(int i =1; i<fileData.Length;i++) 
         {
             string[] columnData = fileData[i].Split(new char[] { ',' });
-
+            //assign data based on their respective columns
             refWeapon refWeapon = new refWeapon();
             refWeapon.id = columnData[0];
             refWeapon.name = columnData[1];
             refWeapon.weaponType = columnData[2];
-            float.TryParse(columnData[3], out refWeapon.damage);
+            float.TryParse(columnData[3], out refWeapon.damage); //convert from string to float
             refWeapon.basicDesc = columnData[4]; 
-            refWeapon.isGeneric = columnData[5].ToLower() == "true";
+            refWeapon.isGeneric = columnData[5].ToLower() == "true"; //convert from string to bool
 
             Weapon weapon = new Weapon(refWeapon.id, refWeapon.name, refWeapon.damage, refWeapon.weaponType, refWeapon.basicDesc, refWeapon.isGeneric);
-
             weaponList.Add(weapon);
-
-            //debug purposes
-            // foreach(var w in weaponList)
-            // {
-            //     Debug.Log(w.name);
-            // }
-
-            Game.SetWeaponList(weaponList);
+            //add all initialized weapon ddata into this list
+            //this list is acts as the main list of weapon, which contains all available weapons in the game
+            //which will be referenced by the game script to set the weapon list in the game
+            Game.SetWeaponList(weaponList); //this sets the weapon list
         }
     }
 
@@ -99,14 +92,14 @@ public class DataManager : MonoBehaviour
 
     #region Item Data
 
-    public void LoadItemData()
+    public void LoadItemData() //load item daata
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/Items.csv");
-        string[] fileData = File.ReadAllLines(filePath);
+        string filePath = Path.Combine(Application.dataPath, "Data/Items.csv"); //find file from unity project menu
+        string[] fileData = File.ReadAllLines(filePath); //pull data from file
         for(int i =1; i<fileData.Length;i++)
         {
             string[] columnData = fileData[i].Split(new char[] { ',' });
-
+            //assign data based on their respective columns
             refItem refitem = new refItem();
             refitem.id = columnData[0];
             refitem.name = columnData[1];
@@ -116,14 +109,11 @@ public class DataManager : MonoBehaviour
             item Item = new item(refitem.id, refitem.name, refitem.effectType, refitem.basicDesc);
 
             itemList.Add(Item);
+            //add all initialized item ddata into this list
+            //this list is acts as the main list of item, which contains all available items in the game
+            //which will be referenced by the game script to set the item list in the game
 
-            //debug purposes
-            // foreach(var item in itemList)
-            // {
-            //     Debug.Log(item.name);
-            // }
-
-            Game.SetItemList(itemList);
+            Game.SetItemList(itemList); //set the item list
         }
     }
 
@@ -131,14 +121,14 @@ public class DataManager : MonoBehaviour
 
     #region Weapon Upgrades
 
-    public void LoadWeaponUpgrades()
+    public void LoadWeaponUpgrades() //load weapon upgrades
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/Weapon Upgrades.csv");
-        string[] fileData = File.ReadAllLines(filePath);
+        string filePath = Path.Combine(Application.dataPath, "Data/Weapon Upgrades.csv"); //find file from unity project menu
+        string[] fileData = File.ReadAllLines(filePath); //pull data from file
         for(int i =1; i<fileData.Length;i++)
         {
             string[] columnData = fileData[i].Split(new char[] { ',' });
-
+            //assign data based on their respective columns
             refWeaponUpgrades refUpgrades = new refWeaponUpgrades();
             refUpgrades.refID = columnData[0];
             int.TryParse(columnData[1], out refUpgrades.level);
@@ -150,14 +140,11 @@ public class DataManager : MonoBehaviour
             WeaponUpgrades weaponUpgrades = new WeaponUpgrades(refUpgrades.refID,refUpgrades.level,refUpgrades.projectileCount,refUpgrades.dmgMultiplier, refUpgrades.fireRate, refUpgrades.upgradeDesc);
 
             weaponUpgradeList.Add(weaponUpgrades);
+            //add all initialized weapon upgrade ddata into this list
+            //this list is acts as the main list of weapon upgrade, which contains all available weapon upgrades in the game
+            //which will be referenced by the game script to set the upgrades list in the game
 
-            //debug purposes
-            // foreach(var item in itemList)
-            // {
-            //     Debug.Log(item.name);
-            // }
-
-            Game.SetWeaponUpgradesList(weaponUpgradeList);
+            Game.SetWeaponUpgradesList(weaponUpgradeList); //set weapon upgrades list
         }
     }
 
@@ -165,14 +152,14 @@ public class DataManager : MonoBehaviour
 
     #region Item upgrades
 
-    public void LoadItemUpgrades()
+    public void LoadItemUpgrades() //load item upgrades 
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/Item Upgrades.csv");
-        string[] fileData = File.ReadAllLines(filePath);
+        string filePath = Path.Combine(Application.dataPath, "Data/Item Upgrades.csv"); //find file from unity project menu
+        string[] fileData = File.ReadAllLines(filePath); //pull data from file
         for(int i =1; i<fileData.Length;i++)
         {
             string[] columnData = fileData[i].Split(new char[] { ',' });
-
+            //assign data based on their respective columns
             refItemUpgrades refUpgrades = new refItemUpgrades();
             refUpgrades.itemID = columnData[0];
             int.TryParse(columnData[1], out refUpgrades.level);
@@ -181,14 +168,11 @@ public class DataManager : MonoBehaviour
             ItemUpgrades itemUpgrades = new ItemUpgrades(refUpgrades.itemID, refUpgrades.level, refUpgrades.upgradeDesc);
 
             itemUpgradesList.Add(itemUpgrades);
+            //add all initialized item upgrade ddata into this list
+            //this list is acts as the main list of item upgrade, which contains all available item upgrades in the game
+            //which will be referenced by the game script to set the upgrades list in the game
 
-            //debug purposes
-            // foreach(var item in itemList)
-            // {
-            //     Debug.Log(item.name);
-            // }
-
-            Game.SetItemUpgradesList(itemUpgradesList);
+            Game.SetItemUpgradesList(itemUpgradesList); //set item upgrades list
         }
     }
 
@@ -196,14 +180,14 @@ public class DataManager : MonoBehaviour
 
     #region  NPC Dialogues
 
-    public void LoadNpcDialogues()
+    public void LoadNpcDialogues() //load npc dialogue
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/NPC Dialogue.csv");
-        string[] fileData = File.ReadAllLines(filePath);
+        string filePath = Path.Combine(Application.dataPath, "Data/NPC Dialogue.csv"); //find file from unity project menu
+        string[] fileData = File.ReadAllLines(filePath); //pull data from file
         for(int i =1; i<fileData.Length;i++)
         {
             string[] columnData = fileData[i].Split(new char[] { ',' });
-
+            //assign data based on their respective columns
             refNpcDialogue refDialogue = new refNpcDialogue();
             refDialogue.id = columnData[0];
             refDialogue.dialogue = columnData[1];
@@ -214,8 +198,11 @@ public class DataManager : MonoBehaviour
             npcDialogue dialogue = new npcDialogue(refDialogue.id, refDialogue.dialogue,  refDialogue.dialogueBy,  refDialogue.isDialogueSelection,  refDialogue.optionResponseID);
 
             npcDialoguesList.Add(dialogue);
+            //add all initialized npc dialogue ddata into this list
+            //this list is acts as the main list of npc dialgoue, which contains all available npc dialogue in the game
+            //which will be referenced by the game script to set the npc dialogue list in the game
 
-            Game.SetNpcDialogueList(npcDialoguesList);
+            Game.SetNpcDialogueList(npcDialoguesList); //set npc dialogues
         }
     }
 
@@ -223,14 +210,14 @@ public class DataManager : MonoBehaviour
 
     #region Player Dialogues
 
-    public void LoadPlayerDialogues()
+    public void LoadPlayerDialogues() //load player dialogue
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/Player Dialogue.csv");
-        string[] fileData = File.ReadAllLines(filePath);
+        string filePath = Path.Combine(Application.dataPath, "Data/Player Dialogue.csv"); //find file 
+        string[] fileData = File.ReadAllLines(filePath); //pull data from file
         for(int i =1; i<fileData.Length;i++)
         {
             string[] columnData = fileData[i].Split(new char[] { ',' });
-
+            //assign data based on their respective columns
             refPlayerDialogue refDialogue = new refPlayerDialogue();
             refDialogue.triggerID = columnData[0];
             refDialogue.id = columnData[1];
@@ -242,8 +229,12 @@ public class DataManager : MonoBehaviour
             PlayerDialogue dialogue = new PlayerDialogue(refDialogue.triggerID, refDialogue.id, refDialogue.dialogue,  refDialogue.dialogueBy,  refDialogue.dialogueType,  refDialogue.typeID);
 
             playerDialoguesList.Add(dialogue);
+            //add all initialized player dialogue data into this list
+            //this list acts as the main list of player dialogues, which contains all available plaer dialogue in game
+            //which will be referenced by the game script to set the player dialogue list in game
 
-            Game.SetPlayerDialogueList(playerDialoguesList);
+
+            Game.SetPlayerDialogueList(playerDialoguesList); //set player dialogues
         }
     }
 

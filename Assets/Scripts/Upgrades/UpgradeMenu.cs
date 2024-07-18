@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -80,10 +80,22 @@ public class UpgradeMenu : MonoBehaviour
 
         //add default weapon into inventory
         genericWeapon.Add(playerInventory.weaponInventory[0]);
-        
-        if(newWeapon.initialLevel<=3 || newWeapon2.initialLevel<=3 || newWeapon==null || newWeapon2==null)
+
+        List<Weapon> WeaponsInInventory = new List<Weapon>();
+
+        foreach(Weapon weapon in playerInventory.weaponInventory)
         {
-            if(notDefaultWeapon<4)
+            WeaponsInInventory.Add(weapon);
+        }
+
+        foreach(Weapon weapon in WeaponsInInventory)
+        {
+            if(weapon.initialLevel==3)
+            {
+                genericWeapon.Remove(weapon);
+            }
+        }
+        if(notDefaultWeapon<4)
             {
                 newWeapon = genericWeapon[Random.Range(0, genericWeapon.Count)]; 
                 genericWeapon.Remove(newWeapon);
@@ -101,74 +113,6 @@ public class UpgradeMenu : MonoBehaviour
             {
                 notDefaultWeapon = 0;
             }
-        }
-        else if(newWeapon.initialLevel == 3)
-        {
-            genericWeapon.Remove(newWeapon);
-            if(notDefaultWeapon<4)
-            {
-                newWeapon = genericWeapon[Random.Range(0, genericWeapon.Count)]; 
-                genericWeapon.Remove(newWeapon);
-                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
-                notDefaultWeapon++;
-            }
-            else
-            {
-                newWeapon = genericWeapon.Find(weapon => !weapon.isGeneric);
-                genericWeapon.Remove(newWeapon);
-                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
-                notDefaultWeapon = 0;
-            }
-            if(!newWeapon.isGeneric || !newWeapon2.isGeneric)
-            {
-                notDefaultWeapon = 0;
-            }
-        }
-        else if(newWeapon2.initialLevel == 3)
-        {
-            genericWeapon.Remove(newWeapon2);
-            if(notDefaultWeapon<4)
-            {
-                newWeapon = genericWeapon[Random.Range(0, genericWeapon.Count)]; 
-                genericWeapon.Remove(newWeapon);
-                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
-                notDefaultWeapon++;
-            }
-            else
-            {
-                newWeapon = genericWeapon.Find(weapon => !weapon.isGeneric);
-                genericWeapon.Remove(newWeapon);
-                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
-                notDefaultWeapon = 0;
-            }
-            if(!newWeapon.isGeneric || !newWeapon2.isGeneric)
-            {
-                notDefaultWeapon = 0;
-            }
-        }
-        else if(newWeapon.initialLevel==3 && newWeapon2.initialLevel==3)
-        {
-            genericWeapon.Remove(newWeapon);
-            genericWeapon.Remove(newWeapon2);
-            if(notDefaultWeapon<4)
-            {
-                newWeapon = genericWeapon[Random.Range(0, genericWeapon.Count)]; 
-                genericWeapon.Remove(newWeapon);
-                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
-                notDefaultWeapon++;
-            }
-            else
-            {
-                newWeapon = genericWeapon.Find(weapon => !weapon.isGeneric);
-                genericWeapon.Remove(newWeapon);
-                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
-                notDefaultWeapon = 0;
-            }
-            if(!newWeapon.isGeneric || !newWeapon2.isGeneric)
-            {
-                notDefaultWeapon = 0;
-            }
-        }
         
     }
 
@@ -177,38 +121,25 @@ public class UpgradeMenu : MonoBehaviour
         
         List<item> items = Game.GetItemList();
 
+        List<item> itemsInInventory = new List<item>();
+
+        foreach(item item in playerInventory.itemInventory)
+        {
+            itemsInInventory.Add(item);
+        }
+
+        foreach(item item in itemsInInventory)
+        {
+            if(item.initiallevel==3)
+            {
+                items.Remove(item);
+            }
+        }
+
         newItem = items[Random.Range(0, items.Count)];
         items.Remove(newItem);
         newItem2 = items[Random.Range(0, items.Count)];
-
-        if(newItem.initiallevel<=3 || newItem2.initiallevel<=3 || newItem==null || newItem2==null)
-        {
-            newItem = items[Random.Range(0, items.Count)];
-            items.Remove(newItem);
-            newItem2 = items[Random.Range(0, items.Count)];
-        }
-        else if(newItem.initiallevel == 3)
-        {
-            items.Remove(newItem);
-            newItem = items[Random.Range(0, items.Count)];
-            items.Remove(newItem);
-            newItem2 = items[Random.Range(0, items.Count)];
-        }
-        else if(newItem2.initiallevel == 3)
-        {
-            items.Remove(newItem2);
-            newItem = items[Random.Range(0, items.Count)];
-            items.Remove(newItem);
-            newItem2 = items[Random.Range(0, items.Count)];
-        }
-        else if(newWeapon.initialLevel==3 && newWeapon2.initialLevel==3)
-        {
-            items.Remove(newItem);
-            items.Remove(newItem2);
-            newItem = items[Random.Range(0, items.Count)];
-            items.Remove(newItem);
-            newItem2 = items[Random.Range(0, items.Count)];
-        }
+        
     }
 
     public void CloseUpgradeMenu()
@@ -231,7 +162,6 @@ public class UpgradeMenu : MonoBehaviour
             replacingFromRandomButton = false;
             OpenWeaponReplacementPrompt();
         }
-        //Add to inventory
     }
 
     public void SetWeaponButtonText()
