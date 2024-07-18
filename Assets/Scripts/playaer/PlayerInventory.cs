@@ -47,8 +47,9 @@ public class PlayerInventory : MonoBehaviour
         if(weaponInInventory != null) //if the weapon is already in inventory, upgrade the weapon to the next level
         {
             UpgradeWeapon(weaponInInventory);
+            Debug.Log("Now" + weaponInInventory.name + "is level:" + weaponInInventory.initialLevel);
         }
-        else if(weaponInventory.Count<3 && weapon.isGeneric) //this is when the weapon is not in inventory and is not a default weapon, add to inventory
+        else
         {
             //get initial weapon stats --> weapon stats at level 1
 
@@ -67,7 +68,7 @@ public class PlayerInventory : MonoBehaviour
         {
             UpgradeItem(itemInInventory);
         }
-        else if(itemInventory.Count<3)
+        else
         {
             InitializaItemStats(item);
             itemInventory.Add(item);
@@ -116,7 +117,14 @@ public class PlayerInventory : MonoBehaviour
     public void ReplaceWeaponInInventory(int index, Weapon weapon)
     {
         InitializaWeaponStats(weapon);
+        Debug.Log("replacing:" + weaponInventory[index].name);
         weaponInventory[index] = weapon;
+        Debug.Log("now inventory has:" + weaponInventory[index].name);
+        Debug.Log("slot1:" + weaponInventory[0].name);
+        Debug.Log("slot2:" + weaponInventory[1].name);
+        Debug.Log("slot3:" + weaponInventory[2].name);
+        
+        
     }
 
     public void ReplaceItemInInvetory(int index, item item)

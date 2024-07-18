@@ -9,12 +9,20 @@ public static class Game
     private static Weapon weapon;
     private static item item;
 
+    private static npcDialogue npcDialogue;
+
+    private static PlayerDialogue playerDialogue;
+
     private static WeaponUpgrades weaponUpgrades;
 
     private static ItemUpgrades itemUpgrades;
     private static List<Character> charList;
     private static List<Weapon> weaponList;
     private static List<item> itemList;
+
+    private static List<npcDialogue> npcDialogueList;
+
+    private static List<PlayerDialogue> playerDialogueList;
 
     private static List<WeaponUpgrades> weaponUpgradeList;
 
@@ -28,11 +36,6 @@ public static class Game
     public static void SetChar(Character achar)
     {
         chara = achar;
-    }
-
-    public static Character GetCharByID(string id)
-    {
-        return charList.Find(x => x.id == id);;
     }
     
     public static void SetCharList(List<Character> aList)
@@ -52,12 +55,6 @@ public static class Game
     {
         weapon = aweapon;
     }
-
-    public static Weapon GetWeaponByID(string id)
-    {
-        return weaponList.Find(x=>x.id == id);
-    }
-
     public static void SetWeaponList(List<Weapon> aList)
     {
         weaponList = aList;
@@ -75,11 +72,6 @@ public static class Game
     private static void SetItem(item aitem)
     {
         item = aitem;
-    }
-
-    public static item GetItemByID(string id)
-    {
-        return itemList.Find(x=>x.id == id);
     }
 
     public static void SetItemList(List<item> aList)
@@ -111,5 +103,44 @@ public static class Game
     {
         return itemUpgradesList;
     }
+
+    public static npcDialogue GetNpcDialogue()
+    {
+        return npcDialogue;
+    }
+    private static void SetNpcDialogue(npcDialogue aDialogue)
+    {
+        npcDialogue = aDialogue;
+    }
+
+    public static void SetNpcDialogueList(List<npcDialogue> aList)
+    {
+        npcDialogueList = aList;
+    }
+
+    public static List<npcDialogue> GetNpcDialogueList()
+    {
+        return npcDialogueList;
+    }
+
+    public static PlayerDialogue GetPlayerDialogue()
+    {
+        return playerDialogue;
+    }
+    private static void SetPlayerDialogue(PlayerDialogue aDialogue)
+    {
+        playerDialogue = aDialogue;
+    }
+
+    public static void SetPlayerDialogueList(List<PlayerDialogue> aList)
+    {
+        playerDialogueList = aList;
+    }
+
+    public static List<PlayerDialogue> GetPlayerDialogueList()
+    {
+        return playerDialogueList;
+    }
+
 
 }

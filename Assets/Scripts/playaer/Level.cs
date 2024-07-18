@@ -13,8 +13,7 @@ public class Level : MonoBehaviour
 
     void Start()
     {
-        
-        Debug.Log("Player is level" + level);
+
     }
     int expRequired
     {
@@ -38,7 +37,7 @@ public class Level : MonoBehaviour
             upgradeMenu.OpenUpgradeMenu();
             exp -= expRequired;
             level++;
-            Debug.Log("Player levelled up! Player is level" + level);
+
         }
     }
 

@@ -13,6 +13,9 @@ public class DataManager : MonoBehaviour
 
     public List<WeaponUpgrades> weaponUpgradeList = new List<WeaponUpgrades>();
     public List<ItemUpgrades> itemUpgradesList = new List<ItemUpgrades>();
+
+    public List<npcDialogue> npcDialoguesList = new List<npcDialogue>();
+    public List<PlayerDialogue> playerDialoguesList = new List<PlayerDialogue>();
     
     
     public void LoadAllData()
@@ -22,6 +25,8 @@ public class DataManager : MonoBehaviour
         LoadWeaponData();
         LoadWeaponUpgrades();
         LoadItemUpgrades();
+        LoadNpcDialogues();
+        LoadPlayerDialogues();
     }
 
     #region Load Character Data
@@ -189,6 +194,59 @@ public class DataManager : MonoBehaviour
 
     #endregion Item upgrades
 
-    
+    #region  NPC Dialogues
+
+    public void LoadNpcDialogues()
+    {
+        string filePath = Path.Combine(Application.dataPath, "Data/NPC Dialogue.csv");
+        string[] fileData = File.ReadAllLines(filePath);
+        for(int i =1; i<fileData.Length;i++)
+        {
+            string[] columnData = fileData[i].Split(new char[] { ',' });
+
+            refNpcDialogue refDialogue = new refNpcDialogue();
+            refDialogue.id = columnData[0];
+            refDialogue.dialogue = columnData[1];
+            refDialogue.dialogueBy = columnData[2];
+            refDialogue.isDialogueSelection = columnData[3].ToLower() == "true";
+            refDialogue.optionResponseID = columnData[4];
+
+            npcDialogue dialogue = new npcDialogue(refDialogue.id, refDialogue.dialogue,  refDialogue.dialogueBy,  refDialogue.isDialogueSelection,  refDialogue.optionResponseID);
+
+            npcDialoguesList.Add(dialogue);
+
+            Game.SetNpcDialogueList(npcDialoguesList);
+        }
+    }
+
+    #endregion NPC Dialogues
+
+    #region Player Dialogues
+
+    public void LoadPlayerDialogues()
+    {
+        string filePath = Path.Combine(Application.dataPath, "Data/Player Dialogue.csv");
+        string[] fileData = File.ReadAllLines(filePath);
+        for(int i =1; i<fileData.Length;i++)
+        {
+            string[] columnData = fileData[i].Split(new char[] { ',' });
+
+            refPlayerDialogue refDialogue = new refPlayerDialogue();
+            refDialogue.triggerID = columnData[0];
+            refDialogue.id = columnData[1];
+            refDialogue.dialogue = columnData[2];
+            refDialogue.dialogueBy = columnData[3];
+            refDialogue.dialogueType = columnData[4];
+            refDialogue.typeID = columnData[5];
+
+            PlayerDialogue dialogue = new PlayerDialogue(refDialogue.triggerID, refDialogue.id, refDialogue.dialogue,  refDialogue.dialogueBy,  refDialogue.dialogueType,  refDialogue.typeID);
+
+            playerDialoguesList.Add(dialogue);
+
+            Game.SetPlayerDialogueList(playerDialoguesList);
+        }
+    }
+
+    #endregion Player Dialogues
     
 }

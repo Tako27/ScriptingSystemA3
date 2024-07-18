@@ -41,19 +41,19 @@ public class UpgradeMenu : MonoBehaviour
 
     private item newItem2;
     
-    public float random;
+    private float random;
 
-    public float weaponProbability;
-    private void Start()
-    {
-     
-    }
+    private int notDefaultWeapon;
+
+    private float weaponProbability;
     public void OpenUpgradeMenu()
     {
         random = Random.value;
         weaponProbability = 0.5f; //50% chance of it being a weapon
+        notDefaultWeapon = 0;
 
-        InitializeUpgradeOptions();
+        InitializeWeaponUpgradeOptions();
+        InitializaItemUpgradeOptions();
         
         
         Time.timeScale = 0f; //pause the game when upgrade menu comes out
@@ -65,7 +65,7 @@ public class UpgradeMenu : MonoBehaviour
         
     }
 
-    public void InitializeUpgradeOptions()
+    public void InitializeWeaponUpgradeOptions()
     {
         List<Weapon> weapons = Game.GetWeaponList();
         List<Weapon> genericWeapon = new List<Weapon>(); //this is to get all generic weapons in the full list of weapons
@@ -77,15 +77,138 @@ public class UpgradeMenu : MonoBehaviour
                 genericWeapon.Add(weapon);
             }
         }
-        newWeapon = genericWeapon[Random.Range(0, genericWeapon.Count)]; //set upgrade option to generic weapons and the default weapon for the character only
-        genericWeapon.Remove(newWeapon);
-        newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
 
+        //add default weapon into inventory
+        genericWeapon.Add(playerInventory.weaponInventory[0]);
+        
+        if(newWeapon.initialLevel<=3 || newWeapon2.initialLevel<=3 || newWeapon==null || newWeapon2==null)
+        {
+            if(notDefaultWeapon<4)
+            {
+                newWeapon = genericWeapon[Random.Range(0, genericWeapon.Count)]; 
+                genericWeapon.Remove(newWeapon);
+                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
+                notDefaultWeapon++;
+            }
+            else
+            {
+                newWeapon = genericWeapon.Find(weapon => !weapon.isGeneric);
+                genericWeapon.Remove(newWeapon);
+                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
+                notDefaultWeapon = 0;
+            }
+            if(!newWeapon.isGeneric || !newWeapon2.isGeneric)
+            {
+                notDefaultWeapon = 0;
+            }
+        }
+        else if(newWeapon.initialLevel == 3)
+        {
+            genericWeapon.Remove(newWeapon);
+            if(notDefaultWeapon<4)
+            {
+                newWeapon = genericWeapon[Random.Range(0, genericWeapon.Count)]; 
+                genericWeapon.Remove(newWeapon);
+                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
+                notDefaultWeapon++;
+            }
+            else
+            {
+                newWeapon = genericWeapon.Find(weapon => !weapon.isGeneric);
+                genericWeapon.Remove(newWeapon);
+                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
+                notDefaultWeapon = 0;
+            }
+            if(!newWeapon.isGeneric || !newWeapon2.isGeneric)
+            {
+                notDefaultWeapon = 0;
+            }
+        }
+        else if(newWeapon2.initialLevel == 3)
+        {
+            genericWeapon.Remove(newWeapon2);
+            if(notDefaultWeapon<4)
+            {
+                newWeapon = genericWeapon[Random.Range(0, genericWeapon.Count)]; 
+                genericWeapon.Remove(newWeapon);
+                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
+                notDefaultWeapon++;
+            }
+            else
+            {
+                newWeapon = genericWeapon.Find(weapon => !weapon.isGeneric);
+                genericWeapon.Remove(newWeapon);
+                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
+                notDefaultWeapon = 0;
+            }
+            if(!newWeapon.isGeneric || !newWeapon2.isGeneric)
+            {
+                notDefaultWeapon = 0;
+            }
+        }
+        else if(newWeapon.initialLevel==3 && newWeapon2.initialLevel==3)
+        {
+            genericWeapon.Remove(newWeapon);
+            genericWeapon.Remove(newWeapon2);
+            if(notDefaultWeapon<4)
+            {
+                newWeapon = genericWeapon[Random.Range(0, genericWeapon.Count)]; 
+                genericWeapon.Remove(newWeapon);
+                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
+                notDefaultWeapon++;
+            }
+            else
+            {
+                newWeapon = genericWeapon.Find(weapon => !weapon.isGeneric);
+                genericWeapon.Remove(newWeapon);
+                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
+                notDefaultWeapon = 0;
+            }
+            if(!newWeapon.isGeneric || !newWeapon2.isGeneric)
+            {
+                notDefaultWeapon = 0;
+            }
+        }
+        
+    }
+
+    public void InitializaItemUpgradeOptions()
+    {
+        
         List<item> items = Game.GetItemList();
 
         newItem = items[Random.Range(0, items.Count)];
         items.Remove(newItem);
         newItem2 = items[Random.Range(0, items.Count)];
+
+        if(newItem.initiallevel<=3 || newItem2.initiallevel<=3 || newItem==null || newItem2==null)
+        {
+            newItem = items[Random.Range(0, items.Count)];
+            items.Remove(newItem);
+            newItem2 = items[Random.Range(0, items.Count)];
+        }
+        else if(newItem.initiallevel == 3)
+        {
+            items.Remove(newItem);
+            newItem = items[Random.Range(0, items.Count)];
+            items.Remove(newItem);
+            newItem2 = items[Random.Range(0, items.Count)];
+        }
+        else if(newItem2.initiallevel == 3)
+        {
+            items.Remove(newItem2);
+            newItem = items[Random.Range(0, items.Count)];
+            items.Remove(newItem);
+            newItem2 = items[Random.Range(0, items.Count)];
+        }
+        else if(newWeapon.initialLevel==3 && newWeapon2.initialLevel==3)
+        {
+            items.Remove(newItem);
+            items.Remove(newItem2);
+            newItem = items[Random.Range(0, items.Count)];
+            items.Remove(newItem);
+            newItem2 = items[Random.Range(0, items.Count)];
+        }
     }
 
     public void CloseUpgradeMenu()
@@ -96,7 +219,7 @@ public class UpgradeMenu : MonoBehaviour
 
     public void ChooseWeapon()
     {
-        if(playerInventory.weaponInventory.Count<3)
+        if(playerInventory.weaponInventory.Count<3 || playerInventory.weaponInventory.Contains(newWeapon))
         {
             
             playerInventory.AddWeaponToInventory(newWeapon);
@@ -130,7 +253,7 @@ public class UpgradeMenu : MonoBehaviour
 
     public void ChooseItem()
     {
-        if(playerInventory.itemInventory.Count<3)
+        if(playerInventory.itemInventory.Count<3 || playerInventory.itemInventory.Contains(newItem))
         {
             playerInventory.AddItemToInventory(newItem);
 
@@ -204,10 +327,9 @@ public class UpgradeMenu : MonoBehaviour
     public void ChooseRandom()
     {
         
-
         if(random <weaponProbability)
         {
-            if(playerInventory.weaponInventory.Count<3)
+            if(playerInventory.weaponInventory.Count<3  || playerInventory.weaponInventory.Contains(newWeapon2))
             {
                 
                 playerInventory.AddWeaponToInventory(newWeapon2);
@@ -221,7 +343,7 @@ public class UpgradeMenu : MonoBehaviour
         }
         else
         {   
-            if(playerInventory.itemInventory.Count<3)
+            if(playerInventory.itemInventory.Count<3  || playerInventory.itemInventory.Contains(newItem2))
             {
                 playerInventory.AddItemToInventory(newItem2);
 
@@ -246,7 +368,9 @@ public class UpgradeMenu : MonoBehaviour
         for(int i=0; i<playerInventory.weaponInventory.Count;i++)
         {
             SetWeaponReplacementText(i);
+            Debug.Log(playerInventory.weaponInventory[i].name);
         }
+
    }
 
    public void OpenItemReplacementPrompt()

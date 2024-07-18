@@ -7,8 +7,8 @@ public class playerMovement : PlayerScript, InputReceiver
 {
     private GameController gameController;
     Rigidbody2D rb;
-    
-    public float moveSpd = 10f;
+
+    public float movementSpeed;
     private Vector2 oriPos;
 
     private float speedMultiplier;
@@ -21,12 +21,9 @@ public class playerMovement : PlayerScript, InputReceiver
 
     public void PlayerMovement(Vector2 newPos)
     {
-        List<Character> character = Game.GetCharList();
+        speedMultiplier = Game.GetChar().moveSpd;
 
-        foreach (Character chara in character)
-        {
-            speedMultiplier = chara.moveSpd; //set movement speed multiplier for the player according to character
-        }
+        movementSpeed = 4f * speedMultiplier;
 
         oriPos = newPos;
 
@@ -34,7 +31,7 @@ public class playerMovement : PlayerScript, InputReceiver
 
         oriPos.Normalize();
 
-        Vector2 movePos = rb.position + oriPos*moveSpd*Time.fixedDeltaTime;
+        Vector2 movePos = rb.position + oriPos*movementSpeed*Time.fixedDeltaTime;
         rb.MovePosition(movePos);
 
         if(oriPos.magnitude!=0)
