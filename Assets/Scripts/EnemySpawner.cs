@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Code Done By: Celest Goh Zi Xuan
+// ================================
+// This script controls the enemy spawning
+
 public class EnemySpawner : MonoBehaviour
 {
     public string selectedMapID;

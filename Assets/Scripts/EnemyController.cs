@@ -6,6 +6,10 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering.VirtualTexturing;
 
+// Code Done By: Celest Goh Zi Xuan
+// ================================
+// This script is the base class for enemies
+
 public class EnemyController : MonoBehaviour
 {
     // Enemy stats

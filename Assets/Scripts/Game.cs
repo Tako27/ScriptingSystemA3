@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// Code Done By: Lee Ying Jie, Celest Goh Zi Xuan
+// ================================
+// This script stores the game data pulled from the csv
+// and any static variables
+
 public static class Game
 {
     private static Character chara;

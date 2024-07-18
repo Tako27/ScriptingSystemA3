@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+// Code Done By: Lee Ying Jie, Celest Goh Zi Xuan
+// ================================
+// This script is for pulling data from all the CSVs
+
 public class DataManager : MonoBehaviour
 {
     public List<Character> charSelect = new List<Character>();
