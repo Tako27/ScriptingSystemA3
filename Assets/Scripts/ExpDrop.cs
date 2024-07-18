@@ -7,7 +7,6 @@ public class ExpDrop : MonoBehaviour
 {
     GameObject player;
     public int exp = 400;
-
     Level level;
 
     void Start()
@@ -21,7 +20,6 @@ public class ExpDrop : MonoBehaviour
         {
             
             level.AddExperience(exp);
-            Debug.Log("Picked up exp! Amount of exp player has:" + level.GetCurrentExp());
             Destroy(gameObject);
         }
     }

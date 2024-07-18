@@ -10,9 +10,17 @@ public class Weapon
     public float damage {get;}
 
     public string weaponType {get;}
-    public string basicDesc {get;}
+    public string basicDesc {get; set;}
 
     public bool isGeneric {get;}
+
+    public int initialLevel = 1;
+
+    public int projectileCount;
+
+    public float dmgMultiplier;
+
+    public float fireRate;
 
     public Weapon(string id, string name, float damage,string weaponType, string basicDesc, bool isGeneric)
     {
@@ -27,5 +35,10 @@ public class Weapon
     public string GetID()
     {
         return id;
+    }
+
+    public string GetDescription()
+    {
+        return basicDesc;
     }
 }

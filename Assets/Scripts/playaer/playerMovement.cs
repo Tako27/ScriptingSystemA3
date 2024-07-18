@@ -7,9 +7,11 @@ public class playerMovement : PlayerScript, InputReceiver
 {
     private GameController gameController;
     Rigidbody2D rb;
-    
-    public float moveSpd = 10f;
+
+    public float movementSpeed;
     private Vector2 oriPos;
+
+    private float speedMultiplier;
 
     public override void Initialize(GameController gameController)
     {
@@ -19,12 +21,17 @@ public class playerMovement : PlayerScript, InputReceiver
 
     public void PlayerMovement(Vector2 newPos)
     {
+        speedMultiplier = Game.GetChar().moveSpd;
+
+        movementSpeed = 4f * speedMultiplier;
+
         oriPos = newPos;
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
 
         oriPos.Normalize();
-        Vector2 movePos = rb.position + oriPos*moveSpd*Time.fixedDeltaTime;
+
+        Vector2 movePos = rb.position + oriPos*movementSpeed*Time.fixedDeltaTime;
         rb.MovePosition(movePos);
 
         if(oriPos.magnitude!=0)

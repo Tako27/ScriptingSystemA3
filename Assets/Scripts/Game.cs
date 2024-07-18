@@ -3,25 +3,31 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-// Code Done By: Lee Ying Jie, Celest Goh Zi Xuan
-// ================================
-// This script stores the game data pulled from the csv
-// and any static variables
-
 public static class Game
 {
     private static Character chara;
     private static Weapon weapon;
     private static item item;
+
+    private static npcDialogue npcDialogue;
+
+    private static PlayerDialogue playerDialogue;
+
+    private static WeaponUpgrades weaponUpgrades;
+
+    private static ItemUpgrades itemUpgrades;
     private static List<Character> charList;
     private static List<Weapon> weaponList;
     private static List<item> itemList;
-    
-    private static List<EnemyStats> enemyStatsList;
-    private static List<EnemySpawnInfo> enemySpawnInfoList;
-    
-    private static List<string> mapIDs = new List<string>();
-    private static string mapIDSelected;
+
+    private static List<npcDialogue> npcDialogueList;
+
+    private static List<PlayerDialogue> playerDialogueList;
+
+    private static List<WeaponUpgrades> weaponUpgradeList;
+
+    private static List<ItemUpgrades> itemUpgradesList;
+
 
     public static Character GetChar()
     {
@@ -30,11 +36,6 @@ public static class Game
     public static void SetChar(Character achar)
     {
         chara = achar;
-    }
-
-    public static Character GetCharByID(string id)
-    {
-        return charList.Find(x => x.id == id);;
     }
     
     public static void SetCharList(List<Character> aList)
@@ -54,12 +55,6 @@ public static class Game
     {
         weapon = aweapon;
     }
-
-    public static Weapon GetWeaponByID(string id)
-    {
-        return weaponList.Find(x=>x.id == id);
-    }
-
     public static void SetWeaponList(List<Weapon> aList)
     {
         weaponList = aList;
@@ -79,11 +74,6 @@ public static class Game
         item = aitem;
     }
 
-    public static item GetItemByID(string id)
-    {
-        return itemList.Find(x=>x.id == id);
-    }
-
     public static void SetItemList(List<item> aList)
     {
         itemList = aList;
@@ -94,93 +84,63 @@ public static class Game
         return itemList;
     }
 
-    // this is to show player all the map available to choose from
-    public static List<string> GetMapIDs()
+    public static void SetWeaponUpgradesList(List<WeaponUpgrades> list)
     {
-        foreach (var esi in enemySpawnInfoList)
-        {
-            // if list is empty add first
-            if (mapIDs.Count == 0)
-            {
-                mapIDs.Add(esi.mapID);
-            }
-            // if list does not contain the same map id then add
-            else if (!mapIDs.Contains(esi.mapID))
-            {
-                mapIDs.Add(esi.mapID);
-            }
-            // if list contain the same map id continue
-            else
-            {
-                continue;
-            }
-        }
-
-        // debug purposes
-        //foreach (var m in mapIDs)
-        //{
-        //    Debug.Log(m);
-        //}
-
-        return mapIDs;
+        weaponUpgradeList = list;
     }
 
-    // this is to get the enemy stats based on the enemyID
-    public static EnemyStats GetEnemyByID(string id)
+    public static List<WeaponUpgrades> GetWeaponUpgradesList()
     {
-        return enemyStatsList.Find(x => x.enemyID == id);
+        return weaponUpgradeList;
     }
 
-    // this is save the full enemy stats info
-    public static void SetEnemyStatsList(List<EnemyStats> aList)
+    public static void SetItemUpgradesList(List<ItemUpgrades> list)
     {
-        enemyStatsList = aList;
+        itemUpgradesList = list;
     }
 
-    // this is get the full enemy stats info
-    public static List<EnemyStats> GetEnemyStatsList()
+    public static List<ItemUpgrades> GetItemUpgradesList()
     {
-        return enemyStatsList;
+        return itemUpgradesList;
     }
 
-    // this is get enemy spawn info based on which map the player select
-    public static List<EnemySpawnInfo> GetEnemySpawnInfoByMap(string id)
+    public static npcDialogue GetNpcDialogue()
     {
-        List<EnemySpawnInfo> spawnInfoByMap = new List<EnemySpawnInfo>();
-        foreach (var esi in enemySpawnInfoList)
-        {
-            if (esi.mapID == id)
-            {
-                spawnInfoByMap.Add(esi);
-            }
-        }
-        return spawnInfoByMap;
+        return npcDialogue;
+    }
+    private static void SetNpcDialogue(npcDialogue aDialogue)
+    {
+        npcDialogue = aDialogue;
     }
 
-    // this is to save the full csv of enemy spawn info
-    public static void SetEnemySpawnInfoList(List<EnemySpawnInfo> aList)
+    public static void SetNpcDialogueList(List<npcDialogue> aList)
     {
-        enemySpawnInfoList = aList;
+        npcDialogueList = aList;
     }
 
-    // this is to get the full csv of the enemy spawn info
-    public static List<EnemySpawnInfo> GetEnemySpawnInfoList()
+    public static List<npcDialogue> GetNpcDialogueList()
     {
-        return enemySpawnInfoList;
+        return npcDialogueList;
     }
 
-    // this is to get which map the player selected
-    public static string GetmapID()
+    public static PlayerDialogue GetPlayerDialogue()
     {
-        // debug purposes
-        //Debug.Log(mapIDSelected);
-
-        return mapIDSelected;
+        return playerDialogue;
+    }
+    private static void SetPlayerDialogue(PlayerDialogue aDialogue)
+    {
+        playerDialogue = aDialogue;
     }
 
-    // this is to set which map the player selected
-    public static void SetMapID(string id)
+    public static void SetPlayerDialogueList(List<PlayerDialogue> aList)
     {
-        mapIDSelected = id;
+        playerDialogueList = aList;
     }
+
+    public static List<PlayerDialogue> GetPlayerDialogueList()
+    {
+        return playerDialogueList;
+    }
+
+
 }

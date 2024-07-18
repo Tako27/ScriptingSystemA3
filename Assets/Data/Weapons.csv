@@ -1,0 +1,9 @@
+weaponID,weaponName,weaponType,damage,basicDescription,isGeneric
+W01,Staff,Ranged,15,Shoots 1 projectile at enemies,FALSE
+W02,Longsword,Melee,20,Attack enemies in front,FALSE
+W03,Pistol,Multishot,12,Shoots 3 projectiles forward,FALSE
+W04,Throwing knives,Multishot,10,Throws 3 knives at enemies in a fan-shaped pattern,TRUE
+W05,Dark matter,Multishot,8,Spawns an area of dark matter that slows down and deal damage to enemies,TRUE
+W06,Grenade,Ranged,14,Throws 1 projectile that bounces around before exploding,TRUE
+W07,Sacrificial Knife,Melee,15,"Stabs at enemies to deal damage, with a 10% chance of recovering 5% of health",TRUE
+W08,Shockwave hammer,Melee,18,Slams down a hammer charged with electricity to deal damage and stun enemies in front for 2 seconds,TRUE
