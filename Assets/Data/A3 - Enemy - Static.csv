@@ -1,0 +1,6 @@
+enemyID,enemyName,health,moveSpeed,damage,prefabID,attackRange,attackCooldown
+E01,Ratoto,40,3,1,0,2,2
+E02,Batoto,50,1,2,1,3,3
+E03,Spitoto,55,2,3,2,1,2
+E04,Scortoto,45,2,5,3,3,4
+E05,Slimtoto,60,1,2,4,5,3

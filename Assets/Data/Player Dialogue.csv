@@ -1,0 +1,8 @@
+triggerID,playerDialogueID,dialogue,dialogueBy,dialogueType,typeID
+D1004,PD1001,I've accepted a bounty quest.,player,normalSelection,null
+D1004,PD1002,(Stay silent),player,normalSelection,null
+D1009,PD1003,This staff looks good. (Pick the staff),player,weaponSelection,W01
+D1009,PD1004,This sword looks sharp. (Pick the longsword),player,weaponSelection,W02
+D1009,PD1005,This pistol looks brand new. (Pick the pistol),player,weaponSelection,W03
+D1015,PD1006,The path down the road sounds good to me. (Go by the path further down the road),player,mapSelection,M01
+D1015,PD1007,I'll take the one on the left. (Slide down the slope on the left),player,mapSelection,M02
