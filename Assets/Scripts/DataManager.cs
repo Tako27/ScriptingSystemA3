@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+// Code Done By: Lee Ying Jie, Celest Goh Zi Xuan
+// ================================
+// This script is for pulling data from all the CSVs
+
 public class DataManager : MonoBehaviour
 {
-    //Done by Lee Ying Jie
     public List<Character> charSelect = new List<Character>();
     public List<Weapon> weaponList = new List<Weapon>();
 
@@ -17,8 +20,11 @@ public class DataManager : MonoBehaviour
 
     public List<npcDialogue> npcDialoguesList = new List<npcDialogue>();
     public List<PlayerDialogue> playerDialoguesList = new List<PlayerDialogue>();
-    
-    
+
+    // creating list of enemystats & spawninfo
+    public List<EnemyStats> enemyStatsList = new List<EnemyStats>();
+    public List<EnemySpawnInfo> enemySpawnInfoList = new List<EnemySpawnInfo>();
+
     public void LoadAllData() //method to load all data from csv files
     {
         LoadCharacterData();
@@ -28,7 +34,81 @@ public class DataManager : MonoBehaviour
         LoadItemUpgrades();
         LoadNpcDialogues();
         LoadPlayerDialogues();
+        LoadEnemyStatsData();
+        LoadWaveData();
     }
+
+    #region Load Wave Data
+    public void LoadWaveData()
+    {
+        string filePath = Path.Combine(Application.dataPath, "Data/A3 - Waves - Static.csv");
+        string[] fileData = File.ReadAllLines(filePath);
+        for (int i = 1; i < fileData.Length; i++)
+        {
+            string[] columnData = fileData[i].Split(new char[] { ',' });
+
+            // Create new enemy spawn info object and populate with data from the csv
+            EnemySpawnInfo enemySpawnInfo = new EnemySpawnInfo
+            {
+                mapID = columnData[0],
+                waveName = columnData[1],
+                waveNo = int.Parse(columnData[2]),
+                enemyID = columnData[3],
+                spawnRate = float.Parse(columnData[4]),
+                spawnCount = int.Parse(columnData[5])
+            };
+
+            // add the populated EnemyStats object to a list
+            enemySpawnInfoList.Add(enemySpawnInfo);
+        }
+
+        // setting enemy list
+        Game.SetEnemySpawnInfoList(enemySpawnInfoList);
+
+        // debug purposes
+        //foreach (var esi in enemySpawnInfoList)
+        //{
+        //    Debug.Log(esi.waveNo + esi.enemyID);
+        //}
+    }
+    #endregion Load Wave Data
+
+    #region Load Enemy Stats Data
+    public void LoadEnemyStatsData()
+    {
+        string filePath = Path.Combine(Application.dataPath, "Data/A3 - Enemy - Static.csv");
+        string[] fileData = File.ReadAllLines(filePath);
+        for (int i = 1; i < fileData.Length; i++)
+        {
+            string[] columnData = fileData[i].Split(new char[] { ',' });
+
+            // Create new EnemyStats object and populate with data from the csv
+            EnemyStats enemyStats = new EnemyStats
+            {
+                enemyID = columnData[0],
+                enemyName = columnData[1],
+                maxHealth = int.Parse(columnData[2]),
+                moveSpeed = float.Parse(columnData[3]),
+                damage = int.Parse(columnData[4]),
+                enemyPrefabNo = int.Parse(columnData[5]),
+                attackRange = float.Parse(columnData[6]),
+                attackCooldown = float.Parse(columnData[7])
+            };
+
+            // add the populated EnemyStats object to a list
+            enemyStatsList.Add(enemyStats);
+        }
+
+        // setting enemy list
+        Game.SetEnemyStatsList(enemyStatsList);
+
+        // debug purposes
+        //foreach (var e in enemyStatsList)
+        //{
+        //    Debug.Log(e.enemyID + e.enemyName + e.maxHealth);
+        //}
+    }
+    #endregion Load Enemy Stats Data
 
     #region Load Character Data
     public void LoadCharacterData() //load character data

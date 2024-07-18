@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Code Done By: Lee Ying Jie, Celest Goh Zi Xuan
+// ================================
+// This script controls the main flow of the game
+
+
 public class GameController : MonoBehaviour
 {
     public GameObject player;
@@ -40,5 +45,5 @@ public class GameController : MonoBehaviour
         inputHandler.SetInputReceiver(player.GetComponent<playerMovement>());
     }
 
-    
+
 }

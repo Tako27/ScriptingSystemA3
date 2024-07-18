@@ -25,6 +25,8 @@ public class DialogueScene : MonoBehaviour
 
     private List<PlayerDialogue> responseOptions;
 
+    public EnemySpawner enemySpawner;
+
     private int nextNPCdialogue;
 
     public bool dialogueOpen;
@@ -73,6 +75,7 @@ public class DialogueScene : MonoBehaviour
         else
         {
             gameController.StartGame();
+            enemySpawner.StartSpawning();
         }
         
     }
@@ -107,7 +110,7 @@ public class DialogueScene : MonoBehaviour
         else if(response.dialogueType == "mapSelection")
         {
             //add set map based on dialogue
-
+            SetMapFromDialogue(response.typeID);
         }
 
         for(int i = 0; i<responseOptions.Count; i++)
@@ -144,6 +147,20 @@ public class DialogueScene : MonoBehaviour
             Debug.Log(weapon.name);
         }
 
+    }
+
+    public void SetMapFromDialogue(string mapID)
+    {
+        List<string> MapIDs = Game.GetMapIDs();
+        foreach(string map in MapIDs)
+        {
+            if (map == mapID)
+            {
+                Debug.Log(mapID);
+                Game.SetMapID(map);
+                enemySpawner.GetWavesByMap();
+            }
+        }
     }
     
 }

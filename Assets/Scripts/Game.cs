@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// Code Done By: Lee Ying Jie, Celest Goh Zi Xuan
+// ================================
+// This script stores the game data pulled from the csv
+// and any static variables
+
 public static class Game
 {
     private static Character chara;
@@ -28,6 +33,11 @@ public static class Game
 
     private static List<ItemUpgrades> itemUpgradesList;
 
+    private static List<EnemyStats> enemyStatsList;
+    private static List<EnemySpawnInfo> enemySpawnInfoList;
+
+    private static List<string> mapIDs = new List<string>();
+    private static string mapIDSelected;
 
     public static Character GetChar()
     {
@@ -142,5 +152,93 @@ public static class Game
         return playerDialogueList;
     }
 
+    // this is to show player all the map available to choose from
+    public static List<string> GetMapIDs()
+    {
+        foreach (var esi in enemySpawnInfoList)
+        {
+            // if list is empty add first
+            if (mapIDs.Count == 0)
+            {
+                mapIDs.Add(esi.mapID);
+            }
+            // if list does not contain the same map id then add
+            else if (!mapIDs.Contains(esi.mapID))
+            {
+                mapIDs.Add(esi.mapID);
+            }
+            // if list contain the same map id continue
+            else
+            {
+                continue;
+            }
+        }
 
+        // debug purposes
+        //foreach (var m in mapIDs)
+        //{
+        //    Debug.Log(m);
+        //}
+
+        return mapIDs;
+    }
+
+    // this is to get the enemy stats based on the enemyID
+    public static EnemyStats GetEnemyByID(string id)
+    {
+        return enemyStatsList.Find(x => x.enemyID == id);
+    }
+
+    // this is save the full enemy stats info
+    public static void SetEnemyStatsList(List<EnemyStats> aList)
+    {
+        enemyStatsList = aList;
+    }
+
+    // this is get the full enemy stats info
+    public static List<EnemyStats> GetEnemyStatsList()
+    {
+        return enemyStatsList;
+    }
+
+    // this is get enemy spawn info based on which map the player select
+    public static List<EnemySpawnInfo> GetEnemySpawnInfoByMap(string id)
+    {
+        List<EnemySpawnInfo> spawnInfoByMap = new List<EnemySpawnInfo>();
+        foreach (var esi in enemySpawnInfoList)
+        {
+            if (esi.mapID == id)
+            {
+                spawnInfoByMap.Add(esi);
+            }
+        }
+        return spawnInfoByMap;
+    }
+
+    // this is to save the full csv of enemy spawn info
+    public static void SetEnemySpawnInfoList(List<EnemySpawnInfo> aList)
+    {
+        enemySpawnInfoList = aList;
+    }
+
+    // this is to get the full csv of the enemy spawn info
+    public static List<EnemySpawnInfo> GetEnemySpawnInfoList()
+    {
+        return enemySpawnInfoList;
+    }
+
+    // this is to get which map the player selected
+    public static string GetmapID()
+    {
+        // debug purposes
+        //Debug.Log(mapIDSelected);
+
+        return mapIDSelected;
+    }
+
+    // this is to set which map the player selected
+    public static void SetMapID(string id)
+    {
+        mapIDSelected = id;
+    }
 }
