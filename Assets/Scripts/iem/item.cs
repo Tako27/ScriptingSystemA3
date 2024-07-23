@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Code Done By: Lee Ying Jie
+// ================================
+// This script is the constructor class for items
 public class item
 {
     public string id {get;}
@@ -11,7 +14,7 @@ public class item
 
     public string basicDesc {get; set;}
 
-    public int initiallevel = 1;
+    public int initiallevel = 1; //set all item levels to level 1 by default
 
     public item(string id, string name, string effectType, string basicDesc)
     {
@@ -19,15 +22,5 @@ public class item
         this.name = name;
         this.effectType = effectType;
         this.basicDesc = basicDesc;
-    }
-
-    public string GetID()
-    {
-        return id;
-    }
-
-    public string GetDescription()
-    {
-        return basicDesc;
     }
 }

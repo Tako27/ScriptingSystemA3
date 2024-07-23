@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Code Done By: Lee Ying Jie
+// ================================
+// This script is the constructor class for item upgrades
 public class ItemUpgrades 
 {
     public string itemID {get;}
@@ -13,15 +16,5 @@ public class ItemUpgrades
         this.itemID = itemID;
         this.level = level;
         this.upgradeDesc = upgradeDesc;
-    }
-
-    public string GetID()
-    {
-        return itemID;
-    }
-
-    public string GetDescription()
-    {
-        return upgradeDesc;
     }
 }

@@ -5,6 +5,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Code Done By: Lee Ying Jie
+// ================================
+// This script handles upgrades system in the game
 public class UpgradeMenu : MonoBehaviour
 {
     [SerializeField] GameObject upgrade;
@@ -46,9 +49,12 @@ public class UpgradeMenu : MonoBehaviour
     private int notDefaultWeapon;
 
     private float weaponProbability;
-    public void OpenUpgradeMenu()
+    public void OpenUpgradeMenu() //opens the upgrade interface
     {
-        random = Random.value;
+        //everytime the upgrade interface is displayed, 3 options will be offered to the player
+        //1 weapon, 1 item, 1 random (item or weapon)
+        
+        random = Random.value; //this is to get a random value from 0 to 1, which will be used to handle the random option later
         weaponProbability = 0.5f; //50% chance of it being a weapon
         notDefaultWeapon = 0;
 
@@ -65,7 +71,7 @@ public class UpgradeMenu : MonoBehaviour
         
     }
 
-    public void InitializeWeaponUpgradeOptions()
+    public void InitializeWeaponUpgradeOptions() //initialize weapon upgrades options
     {
         List<Weapon> weapons = Game.GetWeaponList();
         List<Weapon> genericWeapon = new List<Weapon>(); //this is to get all generic weapons in the full list of weapons
@@ -74,10 +80,11 @@ public class UpgradeMenu : MonoBehaviour
         {
             if(weapon.isGeneric)
             {
-                genericWeapon.Add(weapon);
+                genericWeapon.Add(weapon); //all generic weapons is in the list now
             }
         }
-
+        //when playing the game, the weapon upgrades that the player can get is either the default weapon or generic weapons
+        //currently the list only has the generic weapons, so now the default weapon has to be added into the list as well
         //add default weapon into inventory
         genericWeapon.Add(playerInventory.weaponInventory[0]);
 
@@ -88,35 +95,42 @@ public class UpgradeMenu : MonoBehaviour
             WeaponsInInventory.Add(weapon);
         }
 
-        foreach(Weapon weapon in WeaponsInInventory)
+        foreach(Weapon weapon in WeaponsInInventory) //if any weapon in the inventory is at max level (level 3), remove from list so that there is no chance of getting the same weapon as upgrade option
         {
             if(weapon.initialLevel==3)
             {
                 genericWeapon.Remove(weapon);
             }
         }
-        if(notDefaultWeapon<4)
+
+        //now, there is equal getting any weapon in the genericWeapon list as an upgrade
+        //in the case that the player is unlucky and does not get default weapon upgrade for a long time
+        //notDefaultWeapon field comes into use
+        //it acts like a pity system for the default weapon appearance
+        //if the default weapoon did not appear as an upgrade for 3 times in a row, the next time the player level up, it is guaranteed that one of the option is the default weapon
+        if(notDefaultWeapon<4) //this is when the player has not yet hit not getting the default weapon as a upgrade option 3 times in a row
             {
-                newWeapon = genericWeapon[Random.Range(0, genericWeapon.Count)]; 
-                genericWeapon.Remove(newWeapon);
-                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
-                notDefaultWeapon++;
+                newWeapon = genericWeapon[Random.Range(0, genericWeapon.Count)]; //get a random weapon from the list
+                genericWeapon.Remove(newWeapon); //remove weapon from list so that the random upgrade option is not the same weapon
+                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)]; //this is for the random upgrade option
+                notDefaultWeapon++; //notDefaultWeapon is incremented by 1
             }
-            else
-            {
-                newWeapon = genericWeapon.Find(weapon => !weapon.isGeneric);
-                genericWeapon.Remove(newWeapon);
-                newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)];
-                notDefaultWeapon = 0;
-            }
-            if(!newWeapon.isGeneric || !newWeapon2.isGeneric)
-            {
-                notDefaultWeapon = 0;
-            }
+        else //this is if the player did not get the default weapon as upgrade option 3 times in a row
+        {
+            //it is now guaranteed that the default weapon will appear
+            newWeapon = genericWeapon.Find(weapon => !weapon.isGeneric); //default weapon
+            genericWeapon.Remove(newWeapon); //remove default weapon from list so tha trandom upgrades is not the same thing
+            newWeapon2 = genericWeapon[Random.Range(0,genericWeapon.Count)]; //his is a random weapon that is for the random upgrade
+            notDefaultWeapon = 0; //reset the pity count back to zero because this time around the default weapon has in fact appeared
+        }
+        if(!newWeapon.isGeneric || !newWeapon2.isGeneric) //check if any of the upgrade option is the default weapon
+        {
+                notDefaultWeapon = 0; //if any of the upgrades is the default weapon, reset the pity count to 0
+        }
         
     }
 
-    public void InitializaItemUpgradeOptions()
+    public void InitializaItemUpgradeOptions() //initialize item upgrade options
     {
         
         List<item> items = Game.GetItemList();
@@ -132,39 +146,38 @@ public class UpgradeMenu : MonoBehaviour
         {
             if(item.initiallevel==3)
             {
-                items.Remove(item);
+                items.Remove(item); //if any item in the inventory is at max level (level 3), remove from list so that there is no chance of getting the same item as upgrade option
             }
         }
 
-        newItem = items[Random.Range(0, items.Count)];
-        items.Remove(newItem);
-        newItem2 = items[Random.Range(0, items.Count)];
+        newItem = items[Random.Range(0, items.Count)]; //get a random item from list
+        items.Remove(newItem); //remove the item from the list so that there is no chance of the rrandom upgrade option being the same thing
+        newItem2 = items[Random.Range(0, items.Count)]; //this is for the random upgrade option
         
     }
 
-    public void CloseUpgradeMenu()
+    public void CloseUpgradeMenu() //close upgrade menu
     {
         upgrade.SetActive(false);
-        Time.timeScale = 1f; //unpause after upgrading
+        Time.timeScale = 1f; //unpause game
     }
 
-    public void ChooseWeapon()
+    public void ChooseWeapon() //this is to handle weapon upgrade button
     {
-        if(playerInventory.weaponInventory.Count<3 || playerInventory.weaponInventory.Contains(newWeapon))
+        if(playerInventory.weaponInventory.Count<3 || playerInventory.weaponInventory.Contains(newWeapon)) //check if inventory is not full --> add weapon to inventory, or inventory already contains the weapon --> upgrade weapon
         {
-            
             playerInventory.AddWeaponToInventory(newWeapon);
 
-            CloseUpgradeMenu();
+            CloseUpgradeMenu(); //close menu after choosing
         }
-        else
+        else //this is when player inventory does not contain the selected weapon, and is full
         {
             replacingFromRandomButton = false;
-            OpenWeaponReplacementPrompt();
+            OpenWeaponReplacementPrompt(); //open prompt for player to choose weapon in inventory to replace
         }
     }
 
-    public void SetWeaponButtonText()
+    public void SetWeaponButtonText() //set weapon upgrade button text
     {
         if(playerInventory.GetWeaponInventory().Contains(newWeapon))
         {
@@ -181,24 +194,24 @@ public class UpgradeMenu : MonoBehaviour
         }
     }
 
-    public void ChooseItem()
+    public void ChooseItem() //handle item upgrade button
     {
-        if(playerInventory.itemInventory.Count<3 || playerInventory.itemInventory.Contains(newItem))
+        if(playerInventory.itemInventory.Count<3 || playerInventory.itemInventory.Contains(newItem)) //if inventory is not full --> add to inventory, or inventory has the item --> upgrade item
         {
-            playerInventory.AddItemToInventory(newItem);
+            playerInventory.AddItemToInventory(newItem); 
 
-            CloseUpgradeMenu();
+            CloseUpgradeMenu(); //close menu after selection
 
         }
-        else
+        else //this is when player inventory does not contain the selected item, and is full
         {
             replacingFromRandomButton = false;
-            OpenItemReplacementPrompt();
+            OpenItemReplacementPrompt(); //open prompt for player to choose item in inventory to replace
         }
-        //Add to inventory
+
     }
 
-    public void SetItemButtonText()
+    public void SetItemButtonText() //set item upgrade option button text
     {
         if(playerInventory.GetItemInventory().Contains(newItem))
         {
@@ -216,13 +229,12 @@ public class UpgradeMenu : MonoBehaviour
         }
     }
 
-    public void SetRandomButtonText()
+    public void SetRandomButtonText() //set random upgrade option button text
     {
-        
 
-        if(random <weaponProbability)
+        if(random <weaponProbability) //if upgrade option is a weapon
         {
-            if(playerInventory.GetWeaponInventory().Contains(newWeapon2))
+            if(playerInventory.GetWeaponInventory().Contains(newWeapon2)) //set weapon upgrade text
             {
                 List<WeaponUpgrades> upgradeList = Game.GetWeaponUpgradesList().FindAll(upgrade => upgrade.refID == newWeapon2.id); //this is to find all levels for this specific weapon
                 WeaponUpgrades nextLevelWeapon = upgradeList.Find(upgrade => upgrade.level == newWeapon2.initialLevel + 1); //get the stats of next level for this weapon
@@ -236,9 +248,9 @@ public class UpgradeMenu : MonoBehaviour
                 
             }
         }
-        else
+        else //if upgrade option is a item
         {
-            if(playerInventory.GetItemInventory().Contains(newItem2))
+            if(playerInventory.GetItemInventory().Contains(newItem2)) //set item upgrade text
             {
                 List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == newItem2.id); //this is to find all levels for this specific item
                 ItemUpgrades nextLevelItem = upgradeList.Find(upgrade => upgrade.level == newItem2.initiallevel + 1); //get the stats of next level for this weapon
@@ -254,12 +266,13 @@ public class UpgradeMenu : MonoBehaviour
         }
         
     }
-    public void ChooseRandom()
+    public void ChooseRandom() //handle random upgrade option button text
     {
+        //random upgrade button can either be a weapon or item upgrade
         
-        if(random <weaponProbability)
+        if(random <weaponProbability) //this is to find out if upgrade is a weapon or item --> in this case, the upgrade is a weapon
         {
-            if(playerInventory.weaponInventory.Count<3  || playerInventory.weaponInventory.Contains(newWeapon2))
+            if(playerInventory.weaponInventory.Count<3  || playerInventory.weaponInventory.Contains(newWeapon2)) //if inventory is not full --> add to inventory, or inventory has the weapon --> upgrade weapon
             {
                 
                 playerInventory.AddWeaponToInventory(newWeapon2);
@@ -268,12 +281,12 @@ public class UpgradeMenu : MonoBehaviour
             else
             {
                 replacingFromRandomButton =true;
-                OpenWeaponReplacementPrompt();
+                OpenWeaponReplacementPrompt(); //open replacement prompt if inventory is full and does not contain the weapon
             }
         }
-        else
+        else //the upgrade is an item
         {   
-            if(playerInventory.itemInventory.Count<3  || playerInventory.itemInventory.Contains(newItem2))
+            if(playerInventory.itemInventory.Count<3  || playerInventory.itemInventory.Contains(newItem2)) //if inventory not full --> add to inventory, if inventory has item --> upgrade item
             {
                 playerInventory.AddItemToInventory(newItem2);
 
@@ -283,46 +296,44 @@ public class UpgradeMenu : MonoBehaviour
             else
             {
                 replacingFromRandomButton = true;
-                OpenItemReplacementPrompt();
+                OpenItemReplacementPrompt(); //open item replacement prompt if inventory is full and does not contain the selected item
             }
         }
 
     }
 
-   public void OpenWeaponReplacementPrompt()
+   public void OpenWeaponReplacementPrompt() //open weapon replacement prompt
    {
 
         upgrade.SetActive(false);
         weaponReplacementMenu.SetActive(true);
         replacingWeapon = true;
-        for(int i=0; i<playerInventory.weaponInventory.Count;i++)
+        for(int i=0; i<playerInventory.weaponInventory.Count;i++) //set weapon details text
         {
             SetWeaponReplacementText(i);
-            Debug.Log(playerInventory.weaponInventory[i].name);
         }
 
    }
 
-   public void OpenItemReplacementPrompt()
+   public void OpenItemReplacementPrompt() //open item replacement prompt
    {
         upgrade.SetActive(false);
-        Time.timeScale = 0f; //pause the game again
         itemReplacementMenu.SetActive(true);
         replacingWeapon = false;
-        for(int i =0; i<playerInventory.itemInventory.Count; i++)
+        for(int i =0; i<playerInventory.itemInventory.Count; i++) //set item details text
         {
             SetItemReplacementText(i);
         }
    }
 
-   public void ReplaceWeapon(int index)
+   public void ReplaceWeapon(int index) //handle weapon replacement
    {
-       if(!replacingFromRandomButton)
+       if(!replacingFromRandomButton) //weapon is from the weapon upgrade option button
        {
             playerInventory.ReplaceWeaponInInventory(index, newWeapon);
             
        }
-       else
+       else //weapon is from the radom upgrade option button
        {
             playerInventory.ReplaceWeaponInInventory(index, newWeapon2);
             
@@ -331,16 +342,16 @@ public class UpgradeMenu : MonoBehaviour
         
    }
 
-   public void SetWeaponReplacementText(int index)
+   public void SetWeaponReplacementText(int index) //set text for stats of weapons in inventory
    {
         Weapon weapon = playerInventory.weaponInventory[index];
         TextMeshProUGUI weaponText =  weaponInventoryDetails[index];
         
-        if(weapon.initialLevel == 1)
+        if(weapon.initialLevel == 1) //weapon is currently level 1
         {
             weaponText.text = weapon.name + "\n" +"\nLevel: " + weapon.initialLevel.ToString() + "\n" + "\n" + weapon.basicDesc;
         }
-        else
+        else //weapon is level 2 and above
         {
             List<WeaponUpgrades> upgradeList = Game.GetWeaponUpgradesList().FindAll(upgrade => upgrade.refID == newWeapon2.id); //this is to find all levels for this specific weapon
             WeaponUpgrades weaponStats = upgradeList.Find(upgrade => upgrade.level == weapon.initialLevel); //get the stats of current level for this weapon
@@ -349,16 +360,16 @@ public class UpgradeMenu : MonoBehaviour
 
    }
 
-   public void SetItemReplacementText(int index)
+   public void SetItemReplacementText(int index) //set text for stats of items in inventory
    {
         item item = playerInventory.itemInventory[index];
         foreach(var e in itemInventoryDetails)
         {
-            if(item.initiallevel == 1)
+            if(item.initiallevel == 1) //item is currently level 1
             {
                 e.text = item.name + "\n" +"\nLevel: " + item.initiallevel.ToString() + "\n" + "\n" + item.basicDesc;
             }
-            else
+            else //item is level 2 and above
             {
                 List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == item.id); //this is to find all levels for this specific item
                 ItemUpgrades itemStats = upgradeList.Find(upgrade => upgrade.level == item.initiallevel); //get the stats of current level for this item
@@ -368,14 +379,14 @@ public class UpgradeMenu : MonoBehaviour
         }
    }
 
-   public void ReplaceItem(int index)
+   public void ReplaceItem(int index) //handle item replacement
    {    
-        if(!replacingFromRandomButton)
+        if(!replacingFromRandomButton) //if item is from the item upgrade option button
         {
             playerInventory.ReplaceItemInInvetory(index, newItem);
             
         }
-        else
+        else //item is from the random upgrade option button 
         {
             playerInventory.ReplaceItemInInvetory(index, newItem2);
             
@@ -384,23 +395,23 @@ public class UpgradeMenu : MonoBehaviour
         
    }
 
-    public void OnReplacement(int index)
+    public void OnReplacement(int index) //close replacement menu upon selection
     {
-        if(replacingWeapon)
+        if(replacingWeapon) //weapon has been replaced, so replacement menu has to be closed and game unpaused
         {
             ReplaceWeapon(index);
             weaponReplacementMenu.SetActive(false);
-            Time.timeScale = 1f;
+            Time.timeScale = 1f; //unpause game
         }
-        else
+        else //item has been replaced, so replacement menu has to be closed and game unpaused
         {
             ReplaceItem(index);
             itemReplacementMenu.SetActive(false);
-            Time.timeScale = 1f;
+            Time.timeScale = 1f; //unpause game
         }
     }
 
-    public void ReOpenUppgradeMenu()
+    public void ReOpenUppgradeMenu() //this is to go back to upgrade menu from the replacement interface
     {
         itemReplacementMenu.SetActive(false);
         weaponReplacementMenu.SetActive(false);

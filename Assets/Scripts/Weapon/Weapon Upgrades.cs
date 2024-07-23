@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Code Done By: Lee Ying Jie
+// ================================
+// This script is the constructor class for weapon upgrades
 public class WeaponUpgrades
 {
     public string refID {get;}
@@ -22,19 +25,5 @@ public class WeaponUpgrades
         this.upgradeDesc = upgradeDesc;
     }
 
-    public string GetID()
-    {
-        return refID;
-    }
-
-    public int GetLevel()
-    {
-        return level;
-    }
-    
-    public string GetDescription()
-    {
-        return upgradeDesc;
-    }
 
 }

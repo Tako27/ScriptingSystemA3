@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Code Done By: Lee Ying Jie
+// ================================
+// This script is the constructor class for weapons
 public class Weapon 
 {
     public string id {get;}
@@ -32,13 +35,4 @@ public class Weapon
         this.isGeneric = isGeneric;
     }
 
-    public string GetID()
-    {
-        return id;
-    }
-
-    public string GetDescription()
-    {
-        return basicDesc;
-    }
 }
