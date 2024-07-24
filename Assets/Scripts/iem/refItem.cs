@@ -16,4 +16,11 @@ public class refItem
 
     public string basicDesc;
 
+    public float itemValue;
+
+    public string effectTime;
+
+    public string effectCooldown;
+
+    public string imageFilePath;
 }

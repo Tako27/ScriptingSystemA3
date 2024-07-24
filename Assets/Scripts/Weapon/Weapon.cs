@@ -25,7 +25,9 @@ public class Weapon
 
     public float fireRate;
 
-    public Weapon(string id, string name, float damage,string weaponType, string basicDesc, bool isGeneric)
+    public string imageFilePath {get; set;}
+
+    public Weapon(string id, string name, float damage,string weaponType, string basicDesc, bool isGeneric, string imageFilePath)
     {
         this.id = id;
         this.name = name;
@@ -33,6 +35,7 @@ public class Weapon
         this.weaponType = weaponType;
         this.basicDesc = basicDesc;
         this.isGeneric = isGeneric;
+        this.imageFilePath = imageFilePath;
     }
 
 }

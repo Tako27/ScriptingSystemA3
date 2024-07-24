@@ -27,7 +27,7 @@ public class playerMovement : PlayerScript, InputReceiver
     {
         speedMultiplier = Game.GetChar().moveSpd; //this is the speed multiplier taken from the selected character stats
 
-        movementSpeed = 4f * speedMultiplier; //the actual movement speed of the player is the speed multiplier of selected character class multiplied by base movement speed
+        movementSpeed = 2f * speedMultiplier; //the actual movement speed of the player is the speed multiplier of selected character class multiplied by base movement speed
 
         oriPos = newPos;
 
@@ -38,10 +38,6 @@ public class playerMovement : PlayerScript, InputReceiver
         Vector2 movePos = rb.position + oriPos*movementSpeed*Time.fixedDeltaTime; //player moven=ment calculation
         rb.MovePosition(movePos); //move player
 
-        if(oriPos.magnitude!=0) //handle player rotation
-        {
-            rb.transform.up = oriPos; 
-        }
     }
 
     

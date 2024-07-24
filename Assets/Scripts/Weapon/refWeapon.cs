@@ -19,6 +19,8 @@ public class refWeapon
     public string basicDesc;
 
     public bool isGeneric;
+
+    public string imageFilePath;
     
 }
 

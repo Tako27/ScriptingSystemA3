@@ -13,4 +13,8 @@ public class refItemUpgrades
     public string itemID;
     public int level;
     public string upgradeDesc;
+
+    public float itemValue;
+    public string effectTime;
+    public string effectCooldown;
 }

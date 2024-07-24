@@ -16,4 +16,6 @@ public class refChar
     public float atkSpd;
     public float atkMultiplier;
     public string weaponID;
+
+    public string spriteImage;
 }

@@ -1,4 +1,17 @@
-charID,character,health,moveSpeed,attackSpeed,attackMultiplier,weaponID
-C01,Magician,70,4,1.2,1.5,W01
-C02,Gunner,80,3.5,1.5,1,W03
-C03,Swordsmen,100,3,1,1.2,W02
+charID,character,health,moveSpeed,attackSpeed,attackMultiplier,weaponID,spriteImage
+C01,Magician,70,4,1.2,1.5,W01,Assets/kenney_tiny-dungeon/Tiles/tile_0084.png
+C02,Gunner,80,3.5,1.5,1,W03,Assets/kenney_tiny-dungeon/Tiles/tile_0098.png
+C03,Swordsmen,100,3,1,1.2,W02,Assets/kenney_tiny-dungeon/Tiles/tile_0087.png
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+Column Name,,,,,,,
+charID,,,,,,,
+character,,,,,,,
+health,,,,,,,
+moveSpeed,,,,,,,
+attackSpeed,,,,,,,
+attackMultiplier,,,,,,,
+weaponID,,,,,,,
+spriteImage,,,,,,,

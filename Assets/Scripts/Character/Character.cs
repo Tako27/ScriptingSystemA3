@@ -16,7 +16,9 @@ public class Character
     public float atkMultiplier {get; private set;}
     public string weaponID {get; private set;}
 
-    public Character(string id, string charName, float health,float moveSpd,float atkSpd,float atkMultiplier,string weaponID) //constructor for character class
+    public string spriteImage {get; private set;}
+
+    public Character(string id, string charName, float health,float moveSpd,float atkSpd,float atkMultiplier,string weaponID, string spriteImage) //constructor for character class
     {
         this.id = id;
         this.charName = charName;
@@ -25,6 +27,6 @@ public class Character
         this.atkSpd = atkSpd;
         this.atkMultiplier = atkMultiplier;
         this.weaponID = weaponID;
-        
+        this.spriteImage = spriteImage;
     }
 }

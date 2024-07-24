@@ -15,5 +15,9 @@ public class refWeaponUpgrades
     public float dmgMultiplier;
     public float fireRate;
 
+    public float weaponRangeMultiplier;
+    public float RegenProbability;
+    public float RecoveryMultiplier;
+
     public string upgradeDesc;
 }

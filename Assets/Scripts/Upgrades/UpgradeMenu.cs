@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,17 +24,26 @@ public class UpgradeMenu : MonoBehaviour
     [SerializeField] Button randomButton;
 
     [SerializeField]TextMeshProUGUI weaponDetails;
+    [SerializeField] Image weaponButtonImage;
     [SerializeField] TextMeshProUGUI itemDetails;
+
+    [SerializeField] Image itemButtonImage;
     [SerializeField] TextMeshProUGUI  randomDetails;
+    [SerializeField] Image randomButtonImage;
 
     [SerializeField] List<TextMeshProUGUI> weaponInventoryDetails;
+
+    [SerializeField] List<Image> weaponInventoryImages;
     [SerializeField] List<TextMeshProUGUI> itemInventoryDetails;
+
+    [SerializeField] List<Image> itemInventoryImages;
 
     [SerializeField] List<Button> weaponInventorySlots;
 
     [SerializeField] List<Button> itemInventorySlots;
 
     [SerializeField] PlayerInventory playerInventory;
+
 
     private bool replacingWeapon;
 
@@ -65,9 +76,9 @@ public class UpgradeMenu : MonoBehaviour
         Time.timeScale = 0f; //pause the game when upgrade menu comes out
         upgrade.SetActive(true);
         
-        SetWeaponButtonText();
-        SetItemButtonText();
-        SetRandomButtonText();
+        SetWeaponButton();
+        SetItemButton();
+        SetRandomButton();
         
     }
 
@@ -177,9 +188,14 @@ public class UpgradeMenu : MonoBehaviour
         }
     }
 
-    public void SetWeaponButtonText() //set weapon upgrade button text
+    public void SetWeaponButton() //set weapon upgrade button text and image
     {
-        if(playerInventory.GetWeaponInventory().Contains(newWeapon))
+        //set weapon button image
+        string spriteFilePath = newWeapon.imageFilePath;
+        Sprite weaponImage = AssetDatabase.LoadAssetAtPath<Sprite>(spriteFilePath);
+        weaponButtonImage.sprite = weaponImage;
+
+        if(playerInventory.GetWeaponInventory().Contains(newWeapon)) //if weapon is in inventory --> set info to next level
         {
             List<WeaponUpgrades> upgradeList = Game.GetWeaponUpgradesList().FindAll(upgrade => upgrade.refID == newWeapon.id); //this is to find all levels for this specific weapon
             WeaponUpgrades nextLevelWeapon = upgradeList.Find(upgrade => upgrade.level == newWeapon.initialLevel + 1); //get the stats of next level for this weapon
@@ -187,7 +203,7 @@ public class UpgradeMenu : MonoBehaviour
             weaponDetails.text = newWeapon.name + "\n" +"\nLevel: " + nextLevelWeapon.level.ToString() + "\n" + "\n" + nextLevelWeapon.upgradeDesc;
 
         }
-        else
+        else //not in inventory --> set info to level 1
         {
             weaponDetails.text = newWeapon.name + "\n" +"\nLevel: " + newWeapon.initialLevel.ToString() + "\n" + "\n" + newWeapon.basicDesc;
             
@@ -211,9 +227,15 @@ public class UpgradeMenu : MonoBehaviour
 
     }
 
-    public void SetItemButtonText() //set item upgrade option button text
+    public void SetItemButton() //set item upgrade option button text and image
     {
-        if(playerInventory.GetItemInventory().Contains(newItem))
+        //set item image for item button
+        string spriteFilePath = newItem.imageFilePath;
+        Sprite itemImage = AssetDatabase.LoadAssetAtPath<Sprite>(spriteFilePath);
+        itemButtonImage.sprite = itemImage;
+        
+        //set item text for item button
+        if(playerInventory.GetItemInventory().Contains(newItem)) //if item is in inventory, set the text of item button to the next level stats of the item
         {
             List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == newItem.id); //this is to find all levels for this specific item
             ItemUpgrades nextLevelItem = upgradeList.Find(upgrade => upgrade.level == newItem.initiallevel + 1); //get the stats of next level for this weapon
@@ -221,7 +243,7 @@ public class UpgradeMenu : MonoBehaviour
             itemDetails.text = newItem.name + "\n" +"\nLevel: " + nextLevelItem.level.ToString() + "\n" + "\n" + nextLevelItem.upgradeDesc;
             
         }
-        else
+        else //this is if the item is not already in inventory
         {
             itemDetails.text = newItem.name + "\n" +"\nLevel: " + newItem.initiallevel.ToString() + "\n" + "\n" + newItem.basicDesc;
             
@@ -229,12 +251,18 @@ public class UpgradeMenu : MonoBehaviour
         }
     }
 
-    public void SetRandomButtonText() //set random upgrade option button text
+    public void SetRandomButton() //set random upgrade option button text and image
     {
+        
 
         if(random <weaponProbability) //if upgrade option is a weapon
         {
-            if(playerInventory.GetWeaponInventory().Contains(newWeapon2)) //set weapon upgrade text
+            //set weapon image
+            string weaponSprite = newWeapon2.imageFilePath;
+            Sprite weaponImage = AssetDatabase.LoadAssetAtPath<Sprite>(weaponSprite);
+            randomButtonImage.sprite = weaponImage;
+
+            if(playerInventory.GetWeaponInventory().Contains(newWeapon2)) //set weapon upgrade text --> if weapon is in invenotry, set text to next level info
             {
                 List<WeaponUpgrades> upgradeList = Game.GetWeaponUpgradesList().FindAll(upgrade => upgrade.refID == newWeapon2.id); //this is to find all levels for this specific weapon
                 WeaponUpgrades nextLevelWeapon = upgradeList.Find(upgrade => upgrade.level == newWeapon2.initialLevel + 1); //get the stats of next level for this weapon
@@ -242,7 +270,7 @@ public class UpgradeMenu : MonoBehaviour
                 randomDetails.text = newWeapon2.name + "\n" +"\nLevel: " + nextLevelWeapon.level.ToString() + "\n" + "\n" + nextLevelWeapon.upgradeDesc;
 
             }
-            else
+            else //not in innventory --> level 1 info
             {
                 randomDetails.text = newWeapon2.name + "\n" +"\nLevel: " + newWeapon2.initialLevel.ToString() + "\n" + "\n" + newWeapon2.basicDesc;
                 
@@ -250,7 +278,12 @@ public class UpgradeMenu : MonoBehaviour
         }
         else //if upgrade option is a item
         {
-            if(playerInventory.GetItemInventory().Contains(newItem2)) //set item upgrade text
+            //set item image
+            string itemSprite = newItem2.imageFilePath;
+            Sprite itemImage = AssetDatabase.LoadAssetAtPath<Sprite>(itemSprite);
+            randomButtonImage.sprite = itemImage;
+
+            if(playerInventory.GetItemInventory().Contains(newItem2)) //set item upgrade text --> next level info if item is in inventory
             {
                 List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == newItem2.id); //this is to find all levels for this specific item
                 ItemUpgrades nextLevelItem = upgradeList.Find(upgrade => upgrade.level == newItem2.initiallevel + 1); //get the stats of next level for this weapon
@@ -258,7 +291,7 @@ public class UpgradeMenu : MonoBehaviour
                 randomDetails.text = newItem2.name + "\n" +"\nLevel: " + nextLevelItem.level.ToString() + "\n" + "\n" + nextLevelItem.upgradeDesc;
                 
             }
-            else
+            else //not in inventory --> level 1 info
             {
                 randomDetails.text = newItem2.name + "\n" +"\nLevel: " + newItem2.initiallevel.ToString() + "\n" + "\n" + newItem2.basicDesc;
              
@@ -310,7 +343,7 @@ public class UpgradeMenu : MonoBehaviour
         replacingWeapon = true;
         for(int i=0; i<playerInventory.weaponInventory.Count;i++) //set weapon details text
         {
-            SetWeaponReplacementText(i);
+            SetWeaponReplacementButton(i);
         }
 
    }
@@ -322,7 +355,7 @@ public class UpgradeMenu : MonoBehaviour
         replacingWeapon = false;
         for(int i =0; i<playerInventory.itemInventory.Count; i++) //set item details text
         {
-            SetItemReplacementText(i);
+            SetItemReplacementButton(i);
         }
    }
 
@@ -342,10 +375,15 @@ public class UpgradeMenu : MonoBehaviour
         
    }
 
-   public void SetWeaponReplacementText(int index) //set text for stats of weapons in inventory
+   public void SetWeaponReplacementButton(int index) //set text for stats of weapons in inventory, and image of weapons
    {
         Weapon weapon = playerInventory.weaponInventory[index];
         TextMeshProUGUI weaponText =  weaponInventoryDetails[index];
+
+        //set weapon image
+        string weaponSprite = weapon.imageFilePath;
+        Sprite weaponImage = AssetDatabase.LoadAssetAtPath<Sprite>(weaponSprite);
+        weaponInventoryImages[index].sprite = weaponImage;
         
         if(weapon.initialLevel == 1) //weapon is currently level 1
         {
@@ -360,22 +398,26 @@ public class UpgradeMenu : MonoBehaviour
 
    }
 
-   public void SetItemReplacementText(int index) //set text for stats of items in inventory
+   public void SetItemReplacementButton(int index) //set text for stats of items in inventory, and image of the items in inventory
    {
         item item = playerInventory.itemInventory[index];
-        foreach(var e in itemInventoryDetails)
+        TextMeshProUGUI itemText = itemInventoryDetails[index];
+
+        //set item image
+        string itemSprite = item.imageFilePath;
+        Sprite itemImage = AssetDatabase.LoadAssetAtPath<Sprite>(itemSprite);
+        itemInventoryImages[index].sprite = itemImage;
+
+
+        if(item.initiallevel == 1) //item is currently level 1
         {
-            if(item.initiallevel == 1) //item is currently level 1
-            {
-                e.text = item.name + "\n" +"\nLevel: " + item.initiallevel.ToString() + "\n" + "\n" + item.basicDesc;
-            }
-            else //item is level 2 and above
-            {
-                List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == item.id); //this is to find all levels for this specific item
-                ItemUpgrades itemStats = upgradeList.Find(upgrade => upgrade.level == item.initiallevel); //get the stats of current level for this item
-                e.text = item.name + "\n" +"\nLevel: " + item.initiallevel.ToString() + "\n" + "\n" + itemStats.upgradeDesc;
-            }
-            
+            itemText.text = item.name + "\n" +"\nLevel: " + item.initiallevel.ToString() + "\n" + "\n" + item.basicDesc;
+        }
+        else //item is level 2 and above
+        {
+            List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == item.id); //this is to find all levels for this specific item
+            ItemUpgrades itemStats = upgradeList.Find(upgrade => upgrade.level == item.initiallevel); //get the stats of current level for this item
+            itemText.text = item.name + "\n" +"\nLevel: " + item.initiallevel.ToString() + "\n" + "\n" + itemStats.upgradeDesc;
         }
    }
 
