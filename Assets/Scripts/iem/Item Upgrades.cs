@@ -13,11 +13,11 @@ public class ItemUpgrades
 
     public float itemValue {get; set;}
 
-    public string effectTime {get; set;}
+    public float effectTime {get; set;}
 
-    public string effectCooldown {get; set;}
+    public float effectCooldown {get; set;}
 
-    public ItemUpgrades(string itemID, int level, string upgradeDesc, float itemValue, string effectTime, string effectCooldown)
+    public ItemUpgrades(string itemID, int level, string upgradeDesc, float itemValue, float effectTime, float effectCooldown)
     {
         this.itemID = itemID;
         this.level = level;
