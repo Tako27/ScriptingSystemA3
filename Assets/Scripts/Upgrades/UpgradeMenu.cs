@@ -44,6 +44,8 @@ public class UpgradeMenu : MonoBehaviour
 
     [SerializeField] PlayerInventory playerInventory;
 
+    [SerializeField] ittemManager ittemManager;
+
 
     private bool replacingWeapon;
 
@@ -60,6 +62,9 @@ public class UpgradeMenu : MonoBehaviour
     private int notDefaultWeapon;
 
     private float weaponProbability;
+
+    public bool replacingItem = false;
+
     public void OpenUpgradeMenu() //opens the upgrade interface
     {
         //everytime the upgrade interface is displayed, 3 options will be offered to the player
@@ -71,7 +76,7 @@ public class UpgradeMenu : MonoBehaviour
 
         InitializeWeaponUpgradeOptions();
         InitializaItemUpgradeOptions();
-        
+
         
         Time.timeScale = 0f; //pause the game when upgrade menu comes out
         upgrade.SetActive(true);
@@ -225,6 +230,8 @@ public class UpgradeMenu : MonoBehaviour
             OpenItemReplacementPrompt(); //open prompt for player to choose item in inventory to replace
         }
 
+        ittemManager.ApplyItemEffects(newItem);
+
     }
 
     public void SetItemButton() //set item upgrade option button text and image
@@ -331,6 +338,8 @@ public class UpgradeMenu : MonoBehaviour
                 replacingFromRandomButton = true;
                 OpenItemReplacementPrompt(); //open item replacement prompt if inventory is full and does not contain the selected item
             }
+
+            ittemManager.ApplyItemEffects(newItem2);
         }
 
     }
@@ -423,15 +432,18 @@ public class UpgradeMenu : MonoBehaviour
 
    public void ReplaceItem(int index) //handle item replacement
    {    
+        replacingItem = true;
         if(!replacingFromRandomButton) //if item is from the item upgrade option button
         {
             playerInventory.ReplaceItemInInvetory(index, newItem);
+            
+            ittemManager.ApplyItemEffects(newItem);
             
         }
         else //item is from the random upgrade option button 
         {
             playerInventory.ReplaceItemInInvetory(index, newItem2);
-            
+            ittemManager.ApplyItemEffects(newItem2);
         }
         
         
@@ -447,7 +459,9 @@ public class UpgradeMenu : MonoBehaviour
         }
         else //item has been replaced, so replacement menu has to be closed and game unpaused
         {
+            
             ReplaceItem(index);
+            replacingItem = false;
             itemReplacementMenu.SetActive(false);
             Time.timeScale = 1f; //unpause game
         }

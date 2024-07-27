@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
     public PlayerInventory playerInventory;
 
     public bool gameActive;
+    
 
     // Start is called before the first frame update
     void Start()

@@ -16,6 +16,13 @@ public class playerMovement : PlayerScript, InputReceiver
     private Vector2 oriPos;
 
     private float speedMultiplier;
+    
+    private Player player;
+
+    void Start()
+    {
+        player = FindAnyObjectByType<Player>();
+    }
 
     public override void Initialize(GameController gameController)
     {
@@ -25,7 +32,8 @@ public class playerMovement : PlayerScript, InputReceiver
 
     public void PlayerMovement(Vector2 newPos)
     {
-        speedMultiplier = Game.GetChar().moveSpd; //this is the speed multiplier taken from the selected character stats
+        speedMultiplier = player.speed; //this is the speed multiplier taken from the selected character stats, changes according to specific upgrades
+
 
         movementSpeed = 2f * speedMultiplier; //the actual movement speed of the player is the speed multiplier of selected character class multiplied by base movement speed
 

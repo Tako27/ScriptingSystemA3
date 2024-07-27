@@ -14,86 +14,82 @@ public class ittemManager : MonoBehaviour
 
     private PlayerInventory playerInventory;
 
+    [SerializeField] UpgradeMenu upgradeMenu;
+
     private void Start()
     {
         player = FindObjectOfType<Player>();
+        playerInventory = FindObjectOfType<PlayerInventory>(); 
     }
 
-    public void ApplyItemEffects()
+    public void ApplyItemEffects(item item)
     {
-        foreach (item item in playerInventory.itemInventory)
+        if(!upgradeMenu.replacingItem)
         {
             switch (item.effectType)
             {
                 case "Health":
-                    HealthEffect(item.itemValue);
-                    break;
-                case "Regen":
-                    //StartCoroutine(Regeneration(item.itemValue, item.effectCooldown));
+                    player.IncreaseMaxHealth(item);
                     break;
                 case "Speed":
-                    MovementSpeed(item.itemValue);
+                    player.IncreaseMoveSpeed(item);
                     break;
                 case "Attack":
-                    Attack(item.itemValue);
+                    player.IncreaseDamage(item);
                     break;
                 case "Attack Speed":
-                    AttackSpeed(item.itemValue);
-                    break;
-                case "Defense":
-                    Defense(item.itemValue);
+                    player.IncreaseAttackSpeed(item);
                     break;
                 case "Experience":
-                    ExperienceGain(item.itemValue);
-                    break;
-                case "Collection":
-                    Collection(item.itemValue);
+                    player.IncreaseExpGain(item);
                     break;
             }
         }
-    }
-
-    private void HealthEffect(float value)
-    {
-        player.IncreaseMaxHealth(value);
-    }
-
-    private IEnumerator Regeneration(float percentage, float cooldown)
-    {
-        while (true)
+        else
         {
-            player.RegenerateHealth(percentage);
-            yield return new WaitForSeconds(cooldown); // Assuming regeneration happens every 10 seconds
+            // Debug.LogWarning("Replacing items, resetting stats!");
+
+            player.health = Game.GetChar().health;
+
+            player.speed = Game.GetChar().moveSpd;
+
+            player.attackSpeed = Game.GetChar().atkSpd;
+
+            player.attack = Game.GetChar().atkMultiplier;
+            
+            player.expMultiplier = 1f;
+            player.pickupRange = 1f;
+            player.incomingDamageMultiplier = 1f;
+
+            // Debug.LogWarning("Stats reset!" +"Health:"+ player.health +" Speed:"+ player.speed + " Attack:" + player.attack + " Attack speed:" + player.attackSpeed  + " expMultiplier:" +   player.expMultiplier+ " pickup range:" + player.pickupRange + " incoming damage multiplier:" + player.incomingDamageMultiplier);
+
+            foreach(item i in playerInventory.itemInventory)
+            {
+                switch (item.effectType)
+                {
+                    case "Health":
+                        player.IncreaseMaxHealth(item);
+                        break;
+                    case "Speed":
+                        player.IncreaseMoveSpeed(item);
+                        break;
+                    case "Attack":
+                        player.IncreaseDamage(item);
+                        break;
+                    case "Attack Speed":
+                        player.IncreaseAttackSpeed(item);
+                        break;
+                    case "Experience":
+                        player.IncreaseExpGain(item);
+                        break;
+                    
+                }
+            }
+            // Debug.LogWarning("Slot 1:" + playerInventory.itemInventory[0].name + playerInventory.itemInventory[0].initiallevel + playerInventory.itemInventory[0].itemValue);
+            // Debug.LogWarning("Slot2:" + playerInventory.itemInventory[1].name + playerInventory.itemInventory[1].initiallevel + playerInventory.itemInventory[1].itemValue);
+            // Debug.LogWarning("Slot3:" + playerInventory.itemInventory[2].name + playerInventory.itemInventory[2].initiallevel + playerInventory.itemInventory[2].itemValue);
+            // Debug.LogWarning("Stats relenished!" +"Health:"+ player.health +" Speed:"+ player.speed + " Attack:" + player.attack + " Attack speed:" + player.attackSpeed  + " expMultiplier:" +   player.expMultiplier+ " pickup range:" + player.pickupRange + " incoming damage multiplier:" + player.incomingDamageMultiplier);
         }
-    }
-
-    private void MovementSpeed(float multiplier)
-    {
-        player.IncreaseMoveSpeed(multiplier);
-    }
-
-    private void Attack(float multiplier)
-    {
-        player.IncreaseDamage(multiplier);
-    }
-
-    private void AttackSpeed(float multiplier)
-    {
-        player.IncreaseAttackSpeed(multiplier);
-    }
-
-    private void Defense(float multiplier)
-    {
-        player.ReduceDamageTaken(multiplier);
-    }
-
-    private void ExperienceGain(float multiplier)
-    {
-        player.IncreaseExpGain(multiplier);
-    }
-
-    private void Collection(float multiplier)
-    {
-        player.IncreasePickUpRange(multiplier);
+        
     }
 }

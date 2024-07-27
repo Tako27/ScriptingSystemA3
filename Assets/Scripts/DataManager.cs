@@ -189,8 +189,8 @@ public class DataManager : MonoBehaviour
             refitem.effectType = columnData[2];
             refitem.basicDesc = columnData[3];
             float.TryParse(columnData[4], out refitem.itemValue);
-            float.TryParse(columnData[5], out refitem.itemValue);
-            float.TryParse(columnData[6], out refitem.itemValue);
+            float.TryParse(columnData[5], out refitem.effectTime);
+            float.TryParse(columnData[6], out refitem.effectCooldown);
             refitem.imageFilePath = columnData[7];
 
             item Item = new item(refitem.id, refitem.name, refitem.effectType, refitem.basicDesc, refitem.itemValue, refitem.effectTime, refitem.effectCooldown, refitem.imageFilePath);
@@ -256,8 +256,8 @@ public class DataManager : MonoBehaviour
             int.TryParse(columnData[1], out refUpgrades.level);
             refUpgrades.upgradeDesc = columnData[2];
             float.TryParse(columnData[3], out refUpgrades.itemValue);
-            float.TryParse(columnData[4], out refUpgrades.itemValue);
-            float.TryParse(columnData[5], out refUpgrades.itemValue);
+            float.TryParse(columnData[4], out refUpgrades.effectTime);
+            float.TryParse(columnData[5], out refUpgrades.effectCooldown);
 
             ItemUpgrades itemUpgrades = new ItemUpgrades(refUpgrades.itemID, refUpgrades.level, refUpgrades.upgradeDesc, refUpgrades.itemValue, refUpgrades.effectTime, refUpgrades.effectCooldown);
 
