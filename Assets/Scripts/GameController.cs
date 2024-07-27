@@ -22,6 +22,8 @@ public class GameController : MonoBehaviour
     public ManageScenes manageScenes;
     public PlayerInventory playerInventory;
 
+    public List<GameObject> mapPrefabs;
+
     public bool gameActive;
     
 

@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;   
 
-// Code Done By: Lee Ying Jie
+// Code Done By: Lee Ying Jie, Celest Goh Zi Xuan
 // ================================
 // This script handles the dialogues in the game
 public class DialogueScene : MonoBehaviour
@@ -159,6 +159,14 @@ public class DialogueScene : MonoBehaviour
             {
                 Game.SetMapID(map); //set the map
                 enemySpawner.GetWavesByMap(); //initialize enemySpawner based on selected map
+                foreach(GameObject mapPrefab in gameController.mapPrefabs)
+                {
+                    if (mapPrefab.name == mapID)
+                    {
+                        Instantiate(mapPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                        enemySpawner.GetSpawnPointsByMap(mapID);
+                    }
+                }
             }
         }
     }

@@ -52,9 +52,7 @@ public class PlayerInventory : MonoBehaviour
             InitializaWeaponStats(weapon);
             weaponInventory.Add(weapon);
 
-        }
-        
-        
+        }      
     }
 
     public void AddItemToInventory(item item) //handles addition of items
