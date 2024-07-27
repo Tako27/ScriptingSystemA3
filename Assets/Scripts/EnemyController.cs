@@ -23,6 +23,7 @@ public class EnemyController : MonoBehaviour
 
     protected GameObject gameController;
 
+
     protected Vector2 moveDir;
 
     // current health of enemy
@@ -149,6 +150,7 @@ public class EnemyController : MonoBehaviour
     {
         EnemySpawner enemySpawnerScript = gameController.GetComponent<EnemySpawner>();
         enemySpawnerScript.DestroyEnemyPrefab(this.gameObject);
+        SpawnExp();
         Game.AddTotalEnemiesKilled();
         // Debug.Log(Game.GetTotalEnemiesKilled());
     }
@@ -158,4 +160,11 @@ public class EnemyController : MonoBehaviour
         currentHealth -= damage;
     }
 
+
+    protected virtual void SpawnExp()
+    {
+        GameObject expDrop = gameController.GetComponent<GameController>().expDrop;
+        Instantiate(expDrop, transform.position, transform.rotation);
+
+    }
 }

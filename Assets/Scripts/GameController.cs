@@ -19,10 +19,11 @@ public class GameController : MonoBehaviour
     public DialogueScene dialogueScene;
     public DataManager dataManager;
 
-    public ManageScenes manageScenes;
     public PlayerInventory playerInventory;
 
     public List<GameObject> mapPrefabs;
+
+    public GameObject expDrop;
 
     public bool gameActive;
     
@@ -66,18 +67,6 @@ public class GameController : MonoBehaviour
             inputHandler.SetAttackReceiver(attackScript);
         }
     }
-
-    // public void OpenPauseMenu()
-    // {
-    //     manageScenes.OpenScene("Pause", () => 
-    //     {
-    //             //initialize menu after scene finishes loading
-    //             PauseMenu pauseMenu = FindObjectOfType<PauseMenu>();
-    //             pauseMenu.InitializeMenu(this);
-
-    //         }
-    //     );
-    // }
 
 
 }
