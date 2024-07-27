@@ -724,11 +724,11 @@ MonoBehaviour:
   inputHandler: {fileID: 482162247}
   dialogueScene: {fileID: 116283949}
   dataManager: {fileID: 116283945}
-  manageScenes: {fileID: 0}
   playerInventory: {fileID: 405414990}
   mapPrefabs:
   - {fileID: 6040414349826761410, guid: 0cae10856b5b79046ad990684bf384bb, type: 3}
   - {fileID: 9119067728623934035, guid: 4d06b4850b70c4949852465711443a94, type: 3}
+  expDrop: {fileID: 1642018538323562546, guid: ea888b8a2d4b42d4a913bd5cfde42b7b, type: 3}
   gameActive: 0
 --- !u!4 &116283944
 Transform:
@@ -2575,7 +2575,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 0
+  speedMultiplier: 0
   currentHealth: 0
+  playerAtkSpd: 0
+  playerAttack: 0
+  expGain: 0
+  reduceDamage: 0
   upgradeMenu: {fileID: 116283948}
   healthBar: {fileID: 227353700}
 --- !u!114 &405414993
@@ -2590,7 +2595,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1d1d986629f8f48ab6c0c2672cab1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  maxHealth: 0
+  healthAdded: 0
   initialHealth: 0
   speed: 0
   initialSpeed: 0
@@ -2617,9 +2623,11 @@ MonoBehaviour:
   attackCooldown: 1
   attackPoint: {fileID: 405414986}
   attackRange: 1
+  attackRadius: 0.05
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
+  staffProjectilePrefab: {fileID: 1627826485608381573, guid: 57d45f16aec3b6349b575fc2dddcbdeb, type: 3}
 --- !u!1 &425342734
 GameObject:
   m_ObjectHideFlags: 0
@@ -7043,7 +7051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1357229786
 Transform:
   m_ObjectHideFlags: 0

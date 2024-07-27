@@ -148,9 +148,9 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void EnemyDie()
     {
+        SpawnExp();
         EnemySpawner enemySpawnerScript = gameController.GetComponent<EnemySpawner>();
         enemySpawnerScript.DestroyEnemyPrefab(this.gameObject);
-        SpawnExp();
         Game.AddTotalEnemiesKilled();
         // Debug.Log(Game.GetTotalEnemiesKilled());
     }
@@ -161,7 +161,7 @@ public class EnemyController : MonoBehaviour
     }
 
 
-    protected virtual void SpawnExp()
+    public void SpawnExp()
     {
         GameObject expDrop = gameController.GetComponent<GameController>().expDrop;
         Instantiate(expDrop, transform.position, transform.rotation);
