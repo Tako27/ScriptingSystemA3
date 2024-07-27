@@ -20,9 +20,12 @@ public class GameController : MonoBehaviour
     public DataManager dataManager;
     public PlayerInventory playerInventory;
 
+    public bool gameActive;
+
     // Start is called before the first frame update
     void Start()
     {
+        gameActive = false;
         dataManager.LoadAllData();
         dialogueScene.OpenDialogue();
         
@@ -36,6 +39,7 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
+        gameActive = true;
         dialogueScene.CloseDialogue();
         
         //set corresponding sprite image for chosen character class
