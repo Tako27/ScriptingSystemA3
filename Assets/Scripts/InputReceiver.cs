@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-// Code Done By: Lee Ying Jie
+// Code Done By: Lee Ying Jie, Celest Goh Zi Xuan
 // ================================
 // This script is for handling player behaviour
 

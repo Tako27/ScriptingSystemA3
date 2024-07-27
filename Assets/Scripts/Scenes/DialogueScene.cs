@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;   
 
-// Code Done By: Lee Ying Jie
+// Code Done By: Lee Ying Jie, Celest Goh Zi Xuan
 // ================================
 // This script handles the dialogues in the game
 public class DialogueScene : MonoBehaviour
