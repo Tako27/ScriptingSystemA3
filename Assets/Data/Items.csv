@@ -1,10 +1,9 @@
-itemID,itemName,effectType,basicDescirption
-I01,Health Amulet,Health,Increase health by 20
-I02,Regen Orb,Regen,Regenerate 1% health per second for 3 seconds. Occurs every 10 seconds
-I03,Speed Boots,Speed,Increase movement speed by 20%
-I04,Attack Charm,Attack,Increase attack by 15%
-I05,Swift Gloves,Attack speed,Increase attack speed by 15%
-I06,Tough Armour,Defense,Reduce damage taken by 10%
-I07,Defense Shield,Negation,15% chance to negate 1 hit and knockback all surrounding enemies
-I08,EXP Booster,Experience,Increase EXP gain by 15%
-I09,Magnet,Collection,Increase EXP pickup range by 50%
+itemID,itemName,effectType,basicDescirption,itemValue,effectTime,effectCooldown,imageFilePath
+I01,Strange Mushroom,Health,Increase health by 20,20,-1,-1,Assets/tiny town assets/Tiles/tile_0029.png
+I02,Honey Bees,Regen,Harvest honey to regenerate 1% health per second for 3 seconds. Occurs every 10 seconds,0.01,3,10,Assets/tiny town assets/Tiles/tile_0094.png
+I03,Speed Potion,Speed,Increase movement speed by 20%,1.2,-1,-1,Assets/kenney_tiny-dungeon/Tiles/tile_0116.png
+I04,Strength Potion,Attack,Increase attack by 15%,1.15,-1,-1,Assets/kenney_tiny-dungeon/Tiles/tile_0113.png
+I05,Revitalizing Tonic,Attack speed,Increase attack speed by 15%,1.15,-1,-1,Assets/kenney_tiny-dungeon/Tiles/tile_0114.png
+I06,Defense Shield,Defense,Reduce damage taken by 10%,0.9,-1,-1,Assets/kenney_tiny-dungeon/Tiles/tile_0102.png
+I07,Training Target,Experience,Increase EXP gain by 15%,1.15,-1,-1,Assets/tiny town assets/Tiles/tile_0095.png
+I08,Lootbag,Collection,Increase EXP pickup range by 50%,1.5,-1,-1,Assets/tiny town assets/Tiles/tile_0107.png

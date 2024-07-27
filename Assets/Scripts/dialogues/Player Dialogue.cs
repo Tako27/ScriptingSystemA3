@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Code Done By: Lee Ying Jie
+// ================================
+// This script is the constructor class for player dialogues
 public class PlayerDialogue
 {
     public string triggerID {get;}

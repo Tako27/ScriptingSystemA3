@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+// Code Done By: Lee Ying Jie
+// ================================
+// This script handles the player movement
+
 public class playerMovement : PlayerScript, InputReceiver
 {
     private GameController gameController;
@@ -21,9 +25,9 @@ public class playerMovement : PlayerScript, InputReceiver
 
     public void PlayerMovement(Vector2 newPos)
     {
-        speedMultiplier = Game.GetChar().moveSpd;
+        speedMultiplier = Game.GetChar().moveSpd; //this is the speed multiplier taken from the selected character stats
 
-        movementSpeed = 4f * speedMultiplier;
+        movementSpeed = 2f * speedMultiplier; //the actual movement speed of the player is the speed multiplier of selected character class multiplied by base movement speed
 
         oriPos = newPos;
 
@@ -31,13 +35,9 @@ public class playerMovement : PlayerScript, InputReceiver
 
         oriPos.Normalize();
 
-        Vector2 movePos = rb.position + oriPos*movementSpeed*Time.fixedDeltaTime;
-        rb.MovePosition(movePos);
+        Vector2 movePos = rb.position + oriPos*movementSpeed*Time.fixedDeltaTime; //player moven=ment calculation
+        rb.MovePosition(movePos); //move player
 
-        if(oriPos.magnitude!=0)
-        {
-            rb.transform.up = oriPos;
-        }
     }
 
     

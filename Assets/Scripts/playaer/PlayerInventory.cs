@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Code Done By: Lee Ying Jie
+// ================================
+// This script handles the player inventory, as well as addition or replacement of weapons or items 
 public class PlayerInventory : MonoBehaviour
 {
     public List<Weapon> weaponInventory = new List<Weapon>();
@@ -11,14 +14,7 @@ public class PlayerInventory : MonoBehaviour
 
     private WeaponUpgrades nextLevelWeapon;
 
-
-    void Start()
-    {
-        //when the game starts, get the type of character that the player has selected
-        //based on the selected character, add the assigned default weapon to inventory
-    }
-
-    public void InitializaWeaponStats(Weapon weapon)
+    public void InitializaWeaponStats(Weapon weapon) //this is to handle initialization of weapons 
     {
         List<WeaponUpgrades> upgradeList = Game.GetWeaponUpgradesList().FindAll(upgrade => upgrade.refID == weapon.id); //this is to find all levels for this specific weapon
         WeaponUpgrades levelOneWeapon = upgradeList.Find(upgrade => upgrade.level == weapon.initialLevel); //find level 1 data for this weapon
@@ -31,7 +27,7 @@ public class PlayerInventory : MonoBehaviour
         weapon.basicDesc = levelOneWeapon.upgradeDesc;
     }
 
-    public void InitializaItemStats(item item)
+    public void InitializaItemStats(item item) //handle initialization of items
     {
         List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == item.id); //this is to find all levels for this specific item
         ItemUpgrades levelOneItem = upgradeList.Find(upgrade => upgrade.level == item.initiallevel); //find level 1 data for item
@@ -40,7 +36,7 @@ public class PlayerInventory : MonoBehaviour
         item.initiallevel = levelOneItem.level;
         item.basicDesc = levelOneItem.upgradeDesc;
     }
-    public void AddWeaponToInventory(Weapon weapon)
+    public void AddWeaponToInventory(Weapon weapon) //handles additon of weapons
     {   
 
         Weapon weaponInInventory = weaponInventory.Find(w => w.id == weapon.id);  //check inventory for weapon
@@ -49,7 +45,7 @@ public class PlayerInventory : MonoBehaviour
             UpgradeWeapon(weaponInInventory);
             Debug.Log("Now" + weaponInInventory.name + "is level:" + weaponInInventory.initialLevel);
         }
-        else
+        else //weapon is not in inventory
         {
             //get initial weapon stats --> weapon stats at level 1
 
@@ -61,16 +57,18 @@ public class PlayerInventory : MonoBehaviour
         
     }
 
-    public void AddItemToInventory(item item)
+    public void AddItemToInventory(item item) //handles addition of items
     {
         item itemInInventory = itemInventory.Find(w => w.id == item.id);  //check inventory for item
         if(itemInInventory != null) //if the weapon is already in inventory, upgrade the weapon to the next level
         {
             UpgradeItem(itemInInventory);
         }
-        else
+        else //item is not in inventory
         {
+            //get initial item stats --> items stats at level 1
             InitializaItemStats(item);
+            //add it to inventory
             itemInventory.Add(item);
         }
         
@@ -86,12 +84,13 @@ public class PlayerInventory : MonoBehaviour
         return itemInventory;
     }
 
-    public void UpgradeWeapon(Weapon weapon)
+    public void UpgradeWeapon(Weapon weapon) //handles weapon upgrading 
     {
         List<WeaponUpgrades> upgradeList = Game.GetWeaponUpgradesList().FindAll(upgrade => upgrade.refID == weapon.id); //this is to find all levels for this specific weapon
-        nextLevelWeapon = upgradeList.Find(upgrade => upgrade.level == weapon.initialLevel + 1);
-
-        if(nextLevelWeapon != null)
+        nextLevelWeapon = upgradeList.Find(upgrade => upgrade.level == weapon.initialLevel + 1); //find the next level from the previous list of weapon upgrades
+        
+        //if the weapon is not already max level, set selected weapon stats to that of the next level
+        if(nextLevelWeapon != null) 
         {
             weapon.initialLevel = nextLevelWeapon.level;
 
@@ -102,11 +101,12 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    public void UpgradeItem(item item)
+    public void UpgradeItem(item item) //handle item upgrading
     {
         List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == item.id); //this is to find all levels for this specific item
-        ItemUpgrades nextLevel = upgradeList.Find(upgrade => upgrade.level == item.initiallevel + 1);
+        ItemUpgrades nextLevel = upgradeList.Find(upgrade => upgrade.level == item.initiallevel + 1); //find the next levell from the previous list of item upgrades
 
+        //if item is not already max level, set selected item stats to that of the next level
         if(nextLevel != null)
         {
             item.initiallevel = nextLevel.level;
@@ -114,22 +114,18 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    public void ReplaceWeaponInInventory(int index, Weapon weapon)
+    //in the game, player has 2 types of inventory: weapon and item
+    //both inventory acts independently of the other
+    //maximum number of slots for each inventory is 3, and if player selects a weapon or item that is not in inventory when it is full, player will be prompted to select aa weapon or item in inventory to replace
+    public void ReplaceWeaponInInventory(int index, Weapon weapon)  //handle weapon replacement
     {
-        InitializaWeaponStats(weapon);
-        Debug.Log("replacing:" + weaponInventory[index].name);
-        weaponInventory[index] = weapon;
-        Debug.Log("now inventory has:" + weaponInventory[index].name);
-        Debug.Log("slot1:" + weaponInventory[0].name);
-        Debug.Log("slot2:" + weaponInventory[1].name);
-        Debug.Log("slot3:" + weaponInventory[2].name);
-        
-        
+        InitializaWeaponStats(weapon); //get the default state of the new weapon from upgrades menu --> level 1
+        weaponInventory[index] = weapon; //based on index of selected inventory slot, replace the weapon in the selected slot with the new weapon
     }
 
-    public void ReplaceItemInInvetory(int index, item item)
+    public void ReplaceItemInInvetory(int index, item item) //handle item replacement
     {
-        InitializaItemStats(item);
-        itemInventory[index] = item;
+        InitializaItemStats(item); //get default state of the new item from uupgrades menu --> level 1
+        itemInventory[index] = item; //based on index of selected inventory slot, repplace item in selected slot with new item
     }
 }

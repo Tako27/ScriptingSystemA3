@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 // Code Done By: Lee Ying Jie, Celest Goh Zi Xuan
@@ -36,6 +37,12 @@ public class GameController : MonoBehaviour
     public void StartGame()
     {
         dialogueScene.CloseDialogue();
+        
+        //set corresponding sprite image for chosen character class
+        string spriteFilePath = Game.GetChar().spriteImage;
+        Sprite playerSprite = AssetDatabase.LoadAssetAtPath<Sprite>(spriteFilePath);
+        player.GetComponent<SpriteRenderer>().sprite = playerSprite;
+
         player.transform.position = Vector2.zero;
         foreach(PlayerScript playerScript in player.GetComponents<PlayerScript>())
         {

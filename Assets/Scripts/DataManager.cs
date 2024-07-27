@@ -129,8 +129,10 @@ public class DataManager : MonoBehaviour
             float.TryParse(columnData[4], out refchar.atkSpd);
             float.TryParse(columnData[5], out refchar.atkMultiplier);
             refchar.weaponID = columnData[6]; 
+            refchar.spriteImage = columnData[7];
+            
             //set the variables of character class according to variables from refchar class
-            Character chara = new Character(refchar.id, refchar.charName, refchar.health, refchar.moveSpd, refchar.atkSpd, refchar.atkMultiplier, refchar.weaponID);
+            Character chara = new Character(refchar.id, refchar.charName, refchar.health, refchar.moveSpd, refchar.atkSpd, refchar.atkMultiplier, refchar.weaponID, refchar.spriteImage);
 
             charSelect.Add(chara); //add all initialized character ddata into this list
             //this list is acts as the main list of characters, which contains all available characters in the game
@@ -151,15 +153,16 @@ public class DataManager : MonoBehaviour
         {
             string[] columnData = fileData[i].Split(new char[] { ',' });
             //assign data based on their respective columns
-            refWeapon refWeapon = new refWeapon();
-            refWeapon.id = columnData[0];
-            refWeapon.name = columnData[1];
-            refWeapon.weaponType = columnData[2];
-            float.TryParse(columnData[3], out refWeapon.damage); //convert from string to float
-            refWeapon.basicDesc = columnData[4]; 
-            refWeapon.isGeneric = columnData[5].ToLower() == "true"; //convert from string to bool
+            refWeapon refweapon = new refWeapon();
+            refweapon.id = columnData[0];
+            refweapon.name = columnData[1];
+            refweapon.weaponType = columnData[2];
+            float.TryParse(columnData[3], out refweapon.damage); //convert from string to float
+            refweapon.basicDesc = columnData[4]; 
+            refweapon.isGeneric = columnData[5].ToLower() == "true"; //convert from string to bool
+            refweapon.imageFilePath = columnData[6];
 
-            Weapon weapon = new Weapon(refWeapon.id, refWeapon.name, refWeapon.damage, refWeapon.weaponType, refWeapon.basicDesc, refWeapon.isGeneric);
+            Weapon weapon = new Weapon(refweapon.id, refweapon.name, refweapon.damage, refweapon.weaponType, refweapon.basicDesc, refweapon.isGeneric, refweapon.imageFilePath);
             weaponList.Add(weapon);
             //add all initialized weapon ddata into this list
             //this list is acts as the main list of weapon, which contains all available weapons in the game
@@ -185,8 +188,12 @@ public class DataManager : MonoBehaviour
             refitem.name = columnData[1];
             refitem.effectType = columnData[2];
             refitem.basicDesc = columnData[3];
+            float.TryParse(columnData[4], out refitem.itemValue);
+            float.TryParse(columnData[5], out refitem.itemValue);
+            float.TryParse(columnData[6], out refitem.itemValue);
+            refitem.imageFilePath = columnData[7];
 
-            item Item = new item(refitem.id, refitem.name, refitem.effectType, refitem.basicDesc);
+            item Item = new item(refitem.id, refitem.name, refitem.effectType, refitem.basicDesc, refitem.itemValue, refitem.effectTime, refitem.effectCooldown, refitem.imageFilePath);
 
             itemList.Add(Item);
             //add all initialized item ddata into this list
@@ -215,9 +222,13 @@ public class DataManager : MonoBehaviour
             int.TryParse(columnData[2], out refUpgrades.projectileCount);
             float.TryParse(columnData[3], out refUpgrades.dmgMultiplier);
             float.TryParse(columnData[4], out refUpgrades.fireRate);
-            refUpgrades.upgradeDesc = columnData[5];
+            float.TryParse(columnData[5], out refUpgrades.weaponRangeMultiplier);
+            float.TryParse(columnData[6], out refUpgrades.RegenProbability);
+            float.TryParse(columnData[7], out refUpgrades.RecoveryMultiplier);
+            refUpgrades.upgradeDesc = columnData[8];
 
-            WeaponUpgrades weaponUpgrades = new WeaponUpgrades(refUpgrades.refID,refUpgrades.level,refUpgrades.projectileCount,refUpgrades.dmgMultiplier, refUpgrades.fireRate, refUpgrades.upgradeDesc);
+
+            WeaponUpgrades weaponUpgrades = new WeaponUpgrades(refUpgrades.refID,refUpgrades.level,refUpgrades.projectileCount,refUpgrades.dmgMultiplier, refUpgrades.fireRate, refUpgrades.upgradeDesc, refUpgrades.weaponRangeMultiplier, refUpgrades.RegenProbability, refUpgrades.RecoveryMultiplier);
 
             weaponUpgradeList.Add(weaponUpgrades);
             //add all initialized weapon upgrade ddata into this list
@@ -244,8 +255,11 @@ public class DataManager : MonoBehaviour
             refUpgrades.itemID = columnData[0];
             int.TryParse(columnData[1], out refUpgrades.level);
             refUpgrades.upgradeDesc = columnData[2];
+            float.TryParse(columnData[3], out refUpgrades.itemValue);
+            float.TryParse(columnData[4], out refUpgrades.itemValue);
+            float.TryParse(columnData[5], out refUpgrades.itemValue);
 
-            ItemUpgrades itemUpgrades = new ItemUpgrades(refUpgrades.itemID, refUpgrades.level, refUpgrades.upgradeDesc);
+            ItemUpgrades itemUpgrades = new ItemUpgrades(refUpgrades.itemID, refUpgrades.level, refUpgrades.upgradeDesc, refUpgrades.itemValue, refUpgrades.effectTime, refUpgrades.effectCooldown);
 
             itemUpgradesList.Add(itemUpgrades);
             //add all initialized item upgrade ddata into this list
