@@ -13,6 +13,7 @@ public class EnemySpawner : MonoBehaviour
     public float spawnRate;
 
     public List<GameObject> enemyPrefabList;
+
     public List<Transform> spawnPointList;
 
     // to hold all enemy spawn info from game script based on the selected map
@@ -30,8 +31,13 @@ public class EnemySpawner : MonoBehaviour
     private bool isSpawningActive = false;
     // Coroutine wrapper
     private List<CoroutineWrapper> enemySpawnerCoroutineList = new List<CoroutineWrapper>();
-    // constant 5 minustes in seconds assuming each wave duration is always 5 minutes
+    // constant 5 minustes in seconds assuming each wave duration is always 5 minutes [5 * 60f]
     private const float waveDuration = 5 * 60f;
+
+    void Start()
+    {
+        
+    }
 
     void Update()
     {
@@ -47,10 +53,10 @@ public class EnemySpawner : MonoBehaviour
 
             Debug.Log(currentWaveNo);
             // if all waves finish spawning exit spawn loop
-            if (currentWaveNo >= GetTotalWaveCount())
+            if (currentWaveNo > GetTotalWaveCount())
             {
                 Debug.Log("All waves completed.");
-                isSpawningActive = false;
+                StopSpawning();
                 return;
             }
 
@@ -93,6 +99,29 @@ public class EnemySpawner : MonoBehaviour
         // true as long as elapsed time is lesser than 5 minutes
         while (elapsedTime < waveDuration)
         {
+            if (!isSpawningActive)
+            {
+                // Exit the coroutine if spawning is no longer active
+                yield break;
+            }
+
+            // Check if spawnRate is 0, indicating a boss spawn
+            if (enemySpawnInfo.spawnRate == 0f)
+            {
+                // Spawn the boss once and then break out of the loop
+                Transform spawnPoint = spawnPointList[Random.Range(0, spawnPointList.Count)];
+                GameObject enemyClone = GetEnemyPrefab(enemySpawnInfo.enemyID, spawnPoint, ++noOfEnemySpawned);
+                if (enemyClone == null)
+                {
+                    Debug.LogError("Failed to get enemy prefab for ID: " + enemySpawnInfo.enemyID);
+                }
+                else
+                {
+                    Debug.Log("Spawned boss: " + enemyClone.name);
+                }
+                yield break;
+            }
+
             for (int i = 0; i < enemySpawnInfo.spawnCount; i++)
             {
                 noOfEnemySpawned++;
@@ -104,19 +133,6 @@ public class EnemySpawner : MonoBehaviour
                 {
                     Debug.LogError("Failed to get enemy prefab for ID: " + enemySpawnInfo.enemyID);
                     continue;
-                }
-
-                // get the enemy script
-                EnemyController enemyCloneScript = enemyClone.GetComponent<EnemyController>();
-
-                //set enemy stats after spawned
-                if (enemyCloneScript != null)
-                {
-                    enemyCloneScript.InitializeEnemy(Game.GetEnemyByID(enemySpawnInfo.enemyID));
-                }
-                else
-                {
-                    Debug.LogError("Enemy script not found on instantiated prefab.");
                 }
             }
             // wait for seconds till the next group spawn
@@ -139,6 +155,71 @@ public class EnemySpawner : MonoBehaviour
         return null;
     }
 
+    // to initialize all the enemy object pool at the start by the enemyID
+    public void InitializeObjectPool(string enemyID, int initialSize)
+    {
+        GameObject prefab = SearchEnemyPrefabList(enemyID);
+        if (prefab != null)
+        {
+            string key = prefab.name;
+            // if there is no existing queue for the enemy type, create new queue
+            if (!objectPool.ContainsKey(key))
+            {
+                objectPool[key] = new Queue<GameObject>();
+            }
+
+            // for the size of the object pool i want
+            for (int i = 0; i < initialSize; i++)
+            {
+                // instantiate all the prefab
+                GameObject obj = Instantiate(prefab);
+                // set it to active false
+                obj.SetActive(false);
+                // add it to the queue
+                objectPool[key].Enqueue(obj);
+            }
+        }
+    }
+
+    public void CreateObjectPool()
+    {
+        // to ensure that each enemy type only has 1 object pool even if it appears in different waves
+        List<string> enemyIds = new List<string>();
+        // check what enemies this map has and create object pool based on that
+        foreach (EnemySpawnInfo info in enemySpawnInfoList)
+        {
+            // if enemy is not a boss
+            if (info.spawnRate != 0)
+            {
+                // run through enemy prefab list
+                foreach (GameObject enemyPrefab in enemyPrefabList)
+                {
+                    // if the prefab name matches the enemyID in the enemySpawnInfoList
+                    // and if there is no existing object pool for that enemyID
+                    if (enemyPrefab.name == info.enemyID && !enemyIds.Contains(enemyPrefab.name))
+                    {
+                        // Initial size of 15, adjust as needed
+                        InitializeObjectPool(enemyPrefab.name, 15);
+                        enemyIds.Add(info.enemyID);
+                    }
+                }
+
+            }
+            // if enemy is a boss
+            else
+            {
+                foreach (GameObject enemyPrefab in enemyPrefabList)
+                {
+                    if (enemyPrefab.name == info.enemyID)
+                    {
+                        // Initial size of 15, adjust as needed
+                        InitializeObjectPool(enemyPrefab.name, 1);
+                    }
+                }
+            }
+        }
+    }
+
     // handles spawning from object pool
     public GameObject GetEnemyPrefab(string enemyID, Transform spawnPoint, int noOfEnemySpawned)
     {
@@ -146,28 +227,38 @@ public class EnemySpawner : MonoBehaviour
         if (prefab != null)
         {
             string key = prefab.name;
+            GameObject obj;
+
             // if object pool contains the prefab
             if (objectPool.ContainsKey(key) && objectPool[key].Count > 0)
             {
-                GameObject obj = objectPool[key].Dequeue();
-
-                // reactivating obj
-                obj.SetActive(true);
-
-                // rename enemy object before spawning
-                obj.name = prefab.name + "_" + noOfEnemySpawned;
-
-                // return the obj
-                return obj;
+                obj = objectPool[key].Dequeue();
+                //reset obj position and rotation
+                obj.transform.position = spawnPoint.position;
+                obj.transform.rotation = spawnPoint.rotation;
             }
             // obj does not exist in pool
             else
             {
                 // create new obj from prefab
-                GameObject obj = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
-                obj.name = prefab.name + "_" + noOfEnemySpawned;
-                return obj;
+                obj = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
             }
+
+            // reactivating obj
+            obj.SetActive(true);
+
+            // rename enemy object before spawning
+            obj.name = prefab.name + "_" + noOfEnemySpawned;
+
+            // Reset the enemy's state
+            EnemyController enemyCloneScript = obj.GetComponent<EnemyController>();
+            if (enemyCloneScript != null)
+            {
+                enemyCloneScript.InitializeEnemy(Game.GetEnemyByID(enemyID));
+            }
+
+            // return the obj
+            return obj;
         }
         Debug.LogError("Enemy prefab not found in pool or prefab list for ID: " + enemyID);
         return null;
@@ -181,6 +272,16 @@ public class EnemySpawner : MonoBehaviour
             objectPool[key] = new Queue<GameObject>(); 
         }
         obj.SetActive(false);
+        obj.transform.position = Vector3.zero;
+        obj.transform.rotation = Quaternion.identity;
+
+        // Reset any other necessary properties here
+        EnemyController enemyCloneScript = obj.GetComponent<EnemyController>();
+        if (enemyCloneScript != null)
+        {
+            enemyCloneScript.ResetEnemy();
+        }
+
         objectPool[key].Enqueue(obj);
     }
 
@@ -212,6 +313,8 @@ public class EnemySpawner : MonoBehaviour
             waveNo++;
 
         }
+
+        CreateObjectPool();
         // debug purposes ===
 
         //foreach (var esi in enemySpawnInfoList)
@@ -239,10 +342,29 @@ public class EnemySpawner : MonoBehaviour
 
     public void StartSpawning()
     {
-        // Initialize the wave number and set the spawning flag
+        // initialize the wave number and set the spawning flag
         currentWaveNo = 0;
         waveIsDone = true;
         isSpawningActive = true;
     }
+    public void StopSpawning()
+    {
+        // set the spawning flag to false to stop new spawning
+        isSpawningActive = false;
 
+        // stop all running coroutines
+        foreach (var coroutine in enemySpawnerCoroutineList)
+        {
+            if (coroutine.IsRunning)
+            {
+                coroutine.Stop();
+            }
+        }
+
+        // clear the coroutine list
+        enemySpawnerCoroutineList.Clear();
+
+        // set waveIsDone to true to reset the wave state
+        waveIsDone = true;
+    }
 }

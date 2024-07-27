@@ -26,7 +26,7 @@ public class EnemyController : MonoBehaviour
     protected Vector2 moveDir;
 
     // current health of enemy
-    protected int currentHealth;
+    protected float currentHealth;
 
     // Attack state
     private bool isAttacking = false;
@@ -34,7 +34,16 @@ public class EnemyController : MonoBehaviour
     public void InitializeEnemy(EnemyStats initstats)
     {
         this.stats = initstats;
-        this.currentHealth = stats.maxHealth;
+        this.currentHealth = (float)stats.maxHealth;
+    }
+
+    public void ResetEnemy()
+    {
+        // Reset the state of the enemy
+        isAttacking = false;
+        currentHealth = stats.maxHealth;
+        rb.velocity = Vector2.zero;
+        // Add any other necessary resets
     }
 
     // Start is called before the first frame update
@@ -58,6 +67,17 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (currentHealth <= 0) 
+        {
+            EnemyDie();
+        }
+
+        // Check if GameObject is active before proceeding
+        if (!gameObject.activeInHierarchy)
+        {
+            return;
+        }
+
         // sprite rotation
         moveDir = (playerPos.position - transform.position).normalized;
         if(moveDir.magnitude!=0)
@@ -115,20 +135,31 @@ public class EnemyController : MonoBehaviour
         float distanceToPlayer = Vector2.Distance(transform.position, playerPos.position);
         return distanceToPlayer <= stats.attackRange;
     }
+
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, stats.attackRange);
+        if (stats != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, stats.attackRange);
+        }
     }
 
     protected virtual void EnemyDie()
     {
         EnemySpawner enemySpawnerScript = gameController.GetComponent<EnemySpawner>();
         enemySpawnerScript.DestroyEnemyPrefab(this.gameObject);
+        Game.AddTotalEnemiesKilled();
+        // Debug.Log(Game.GetTotalEnemiesKilled());
     }
-    //- deletion of prefab
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+    }
+    //- deletion of prefab /
+    //- track enemy killed count when enemy die /
     //- ensure that prefab remove from object pooling properly
     //- ensure wave spawning works on second 3 etc wave
-    //- ensure that spawning renames the objects
     //-for debugging to add a button to spawn next wave instantly, and add to clear all enemies at once
 }

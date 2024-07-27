@@ -39,6 +39,8 @@ public static class Game
     private static List<string> mapIDs = new List<string>();
     private static string mapIDSelected;
 
+    private static int totalEnemiesKilled;
+
     public static Character GetChar()
     {
         return chara;
@@ -240,5 +242,15 @@ public static class Game
     public static void SetMapID(string id)
     {
         mapIDSelected = id;
+    }
+
+    public static void AddTotalEnemiesKilled()
+    {
+        totalEnemiesKilled++;
+    }
+
+    public static int GetTotalEnemiesKilled() 
+    {  
+        return totalEnemiesKilled; 
     }
 }
