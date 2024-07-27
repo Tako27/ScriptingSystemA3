@@ -18,6 +18,8 @@ public class GameController : MonoBehaviour
     private Character chosenCharacter;
     public DialogueScene dialogueScene;
     public DataManager dataManager;
+
+    public ManageScenes manageScenes;
     public PlayerInventory playerInventory;
 
     public bool gameActive;
@@ -55,6 +57,18 @@ public class GameController : MonoBehaviour
 
         inputHandler.SetInputReceiver(player.GetComponent<playerMovement>());
     }
+
+    // public void OpenPauseMenu()
+    // {
+    //     manageScenes.OpenScene("Pause", () => 
+    //     {
+    //             //initialize menu after scene finishes loading
+    //             PauseMenu pauseMenu = FindObjectOfType<PauseMenu>();
+    //             pauseMenu.InitializeMenu(this);
+
+    //         }
+    //     );
+    // }
 
 
 }
