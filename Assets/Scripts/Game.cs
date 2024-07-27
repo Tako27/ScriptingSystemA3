@@ -96,6 +96,11 @@ public static class Game
         return itemList;
     }
 
+    public static item GetItemByEffectType(string aEffectType)
+    {
+        return itemList.Find(x => x.effectType == aEffectType);
+    }
+
     public static void SetWeaponUpgradesList(List<WeaponUpgrades> list)
     {
         weaponUpgradeList = list;

@@ -2,24 +2,15 @@ itemID,level,upgradeDescription,itemValue,effectTime,effectCooldown
 I01,1,Increase health by 20,20,-1,-1
 I01,2,Increase helath by 25,25,-1,-1
 I01,3,Increase health by 30,30,-1,-1
-I02,1,Harvest honey to regenerate 1% health per second for 3 seconds. Occurs every 10 seconds,0.01,3,10
-I02,2,Harvet honey to regenerate 3% health per second for 3 seconds. Occurs every 10 seconds,0.03,3,10
-I02,3,Harvest honey to regenerate 5% health per second for 3 seconds. Occurs every 10 seconds,0.05,3,10
-I03,1,Increase movement speed by 20%,1.2,-1,-1
-I03,2,Increase movement speed by 40%,1.4,-1,-1
-I03,3,Increase movement speed by 60%,1.6,-1,-1
-I04,1,Increase attack by 15%,1.15,-1,-1
-I04,2,Increase attack by 20%,1.2,-1,-1
-I04,3,Increase attack by 25%,1.25,-1,-1
-I05,1,Increase attack speed by 15%,1.15,-1,-1
-I05,2,Increase attack speed by 20%,1.2,-1,-1
-I05,3,Increase attack speed by 25%,1.25,-1,-1
-I06,1,Reduce damage taken by 10%,0.9,-1,-1
-I06,2,Reduce damage taken by 15%,0.85,-1,-1
-I06,3,Reduce damage taken by 20%,0.8,-1,-1
-I07,1,Increase EXP gain by 15%,1.15,-1,-1
-I07,2,Increase EXP gain by 20%,1.2,-1,-1
-I07,3,Increase EXP gain by 25%,1.25,-1,-1
-I08,1,Increase EXP pickup range by 50%,1.5,-1,-1
-I08,2,Increase EXP pickup range by 75%,1.75,-1,-1
-I08,3,Increase EXP pickup range by 100%,2,-1,-1
+I02,1,Increase movement speed by 1%,1.01,-1,-1
+I02,2,Increase movement speed by 5%,1.05,-1,-1
+I02,3,Increase movement speed by 10%,1.1,-1,-1
+I03,1,Increase attack by 15%,1.15,-1,-1
+I03,2,Increase attack by 20%,1.2,-1,-1
+I03,3,Increase attack by 25%,1.25,-1,-1
+I04,1,Increase attack speed by 15%,1.15,-1,-1
+I04,2,Increase attack speed by 20%,1.2,-1,-1
+I04,3,Increase attack speed by 25%,1.25,-1,-1
+I05,1,Increase EXP gain by 15%,1.15,-1,-1
+I05,2,Increase EXP gain by 20%,1.2,-1,-1
+I05,3,Increase EXP gain by 25%,1.25,-1,-1

@@ -9,14 +9,14 @@ public class Character
 {
     //get necessary values from reference class
     public string id {get;}
-    public string charName {get; private set;}
-    public float health {get; private set;}
-    public float moveSpd {get; private set;}
-    public float atkSpd {get; private set;}
-    public float atkMultiplier {get; private set;}
-    public string weaponID {get; private set;}
+    public string charName {get; set;}
+    public float health {get; set;}
+    public float moveSpd {get; set;}
+    public float atkSpd {get; set;}
+    public float atkMultiplier {get; set;}
+    public string weaponID {get; set;}
 
-    public string spriteImage {get; private set;}
+    public string spriteImage {get; set;}
 
     public Character(string id, string charName, float health,float moveSpd,float atkSpd,float atkMultiplier,string weaponID, string spriteImage) //constructor for character class
     {

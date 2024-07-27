@@ -18,11 +18,14 @@ public class GameController : MonoBehaviour
     private Character chosenCharacter;
     public DialogueScene dialogueScene;
     public DataManager dataManager;
+
+    public ManageScenes manageScenes;
     public PlayerInventory playerInventory;
 
     public List<GameObject> mapPrefabs;
 
     public bool gameActive;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +66,18 @@ public class GameController : MonoBehaviour
             inputHandler.SetAttackReceiver(attackScript);
         }
     }
+
+    // public void OpenPauseMenu()
+    // {
+    //     manageScenes.OpenScene("Pause", () => 
+    //     {
+    //             //initialize menu after scene finishes loading
+    //             PauseMenu pauseMenu = FindObjectOfType<PauseMenu>();
+    //             pauseMenu.InitializeMenu(this);
+
+    //         }
+    //     );
+    // }
 
 
 }
