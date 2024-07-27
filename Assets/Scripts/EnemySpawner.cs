@@ -14,6 +14,8 @@ public class EnemySpawner : MonoBehaviour
 
     public List<GameObject> enemyPrefabList;
 
+    // list of spawn points, dont need to assign in inspector
+    // ensure that in each map prefabs there is an empty gameobject called "SpawnPoints"
     public List<Transform> spawnPointList;
 
     // to hold all enemy spawn info from game script based on the selected map
@@ -33,11 +35,6 @@ public class EnemySpawner : MonoBehaviour
     private List<CoroutineWrapper> enemySpawnerCoroutineList = new List<CoroutineWrapper>();
     // constant 5 minustes in seconds assuming each wave duration is always 5 minutes [5 * 60f]
     private const float waveDuration = 5 * 60f;
-
-    void Start()
-    {
-        
-    }
 
     void Update()
     {
@@ -313,8 +310,9 @@ public class EnemySpawner : MonoBehaviour
             waveNo++;
 
         }
-
+        // start creating object pool based on the enemy type in the map
         CreateObjectPool();
+
         // debug purposes ===
 
         //foreach (var esi in enemySpawnInfoList)
@@ -330,6 +328,24 @@ public class EnemySpawner : MonoBehaviour
         //        Debug.Log(e.waveNo + " " + e.enemyID);
         //    }
         //}
+    }
+
+    public void GetSpawnPointsByMap(string selectedMapID)
+    {
+        // find the gameobject of the map in the scene
+        GameObject mapPrefab = GameObject.Find(selectedMapID + "(Clone)");
+
+        // find the "SpawnPoints" child
+        Transform spawnPointsTransform = mapPrefab.transform.Find("SpawnPoints");
+
+        Debug.Log("Found SpawnPoints: " + spawnPointsTransform.name);
+
+        // Run through all the children in the mapSpawnPoints and add to the list
+        for (int i = 0; i < spawnPointsTransform.childCount; i++)
+        {
+            Transform spawnPoint = spawnPointsTransform.GetChild(i);
+            spawnPointList.Add(spawnPoint);
+        }
     }
 
     // get total number of waves in chosen map

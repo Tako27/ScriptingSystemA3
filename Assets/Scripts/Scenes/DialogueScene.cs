@@ -158,6 +158,14 @@ public class DialogueScene : MonoBehaviour
             {
                 Game.SetMapID(map); //set the map
                 enemySpawner.GetWavesByMap(); //initialize enemySpawner based on selected map
+                foreach(GameObject mapPrefab in gameController.mapPrefabs)
+                {
+                    if (mapPrefab.name == mapID)
+                    {
+                        Instantiate(mapPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                        enemySpawner.GetSpawnPointsByMap(mapID);
+                    }
+                }
             }
         }
     }

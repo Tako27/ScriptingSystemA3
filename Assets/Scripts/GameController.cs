@@ -20,6 +20,8 @@ public class GameController : MonoBehaviour
     public DataManager dataManager;
     public PlayerInventory playerInventory;
 
+    public List<GameObject> mapPrefabs;
+
     public bool gameActive;
 
     // Start is called before the first frame update
