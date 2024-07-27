@@ -15,11 +15,11 @@ public class playerMovement : PlayerScript, InputReceiver
     public float movementSpeed;
     private Vector2 oriPos;
     
-    private ittemManager ittemManager;
+    private Player player;
 
     void Start()
     {
-        ittemManager = FindAnyObjectByType<ittemManager>();
+        player = FindAnyObjectByType<Player>();
     }
 
     public override void Initialize(GameController gameController)
@@ -30,7 +30,7 @@ public class playerMovement : PlayerScript, InputReceiver
 
     public void PlayerMovement(Vector2 newPos)
     {
-        movementSpeed = 2f*ittemManager.speed; //this is the player speed is the speed multiplier for movement speed, 2f is the base speed of all characters
+        movementSpeed = 2f*player.speedMultiplier; //this is the player speed is the speed multiplier for movement speed, 2f is the base speed of all characters
 
         oriPos = newPos;
 

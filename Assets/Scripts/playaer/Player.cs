@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 // Code Done By: Lee Ying Jie
 // ================================
@@ -8,7 +9,13 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float maxHealth;
+
+    public float speedMultiplier;
     public float currentHealth;
+    public float playerAtkSpd;
+    public float playerAttack;
+    public float expGain;
+    public float reduceDamage;
    private List<item> items = Game.GetItemList();
 
     private ittemManager ittemManager;
@@ -33,12 +40,14 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage) //handle taking damage
     {
+        
         currentHealth -= damage;
         
         if(currentHealth<=0)
         {
             Die();
         }
+        
     }
 
     public void Die() //handle death
@@ -49,19 +58,17 @@ public class Player : MonoBehaviour
     public void ApplyItemEffects() //apply effects of items to player
     {
         //reset all changes before applying new item effects to the player
-        ittemManager.health = Game.GetChar().health;
+        maxHealth = ittemManager.maxHealth;
+        currentHealth-=ittemManager.healthAdded;
 
-        ittemManager.speed = Game.GetChar().moveSpd;
+        speedMultiplier = ittemManager.speed;
 
-        ittemManager.attackSpeed = Game.GetChar().atkSpd;
+        playerAtkSpd = ittemManager.attackSpeed;
+        playerAttack = ittemManager.attack;
+        expGain = ittemManager.expMultiplier;
+        reduceDamage = ittemManager.incomingDamageMultiplier;
 
-        ittemManager.attack = Game.GetChar().atkMultiplier;
-            
-        ittemManager.expMultiplier = 1f;
-        ittemManager.pickupRange = 1f;
-        ittemManager.incomingDamageMultiplier = 1f;
-
-        Debug.LogWarning("Stats reset!" +"Health:"+ ittemManager.health +" Speed:"+ ittemManager.speed + " Attack:" + ittemManager.attack + " Attack speed:" + ittemManager.attackSpeed  + " expMultiplier:" +   ittemManager.expMultiplier+ " pickup range:" + ittemManager.pickupRange + " incoming damage multiplier:" + ittemManager.incomingDamageMultiplier);
+        ittemManager.healthAdded = 0;
 
         //apply new item effects
         foreach(item i in playerInventory.itemInventory)
@@ -88,10 +95,8 @@ public class Player : MonoBehaviour
                     break;
                 }
             }
-            // Debug.LogWarning("Slot 1:" + playerInventory.itemInventory[0].name + playerInventory.itemInventory[0].initiallevel + playerInventory.itemInventory[0].itemValue);
-            // Debug.LogWarning("Slot2:" + playerInventory.itemInventory[1].name + playerInventory.itemInventory[1].initiallevel + playerInventory.itemInventory[1].itemValue);
-            // Debug.LogWarning("Slot3:" + playerInventory.itemInventory[2].name + playerInventory.itemInventory[2].initiallevel + playerInventory.itemInventory[2].itemValue);
-            Debug.LogWarning("Stats relenished!" +"Health:"+ ittemManager.health +" Speed:"+ ittemManager.speed + " Attack:" + ittemManager.attack + " Attack speed:" + ittemManager.attackSpeed  + " expMultiplier:" +   ittemManager.expMultiplier+ " pickup range:" + ittemManager.pickupRange + " incoming damage multiplier:" + ittemManager.incomingDamageMultiplier);
+        
+            Debug.LogWarning("Stats relenished!" +"Health:"+ maxHealth +" Speed:"+ ittemManager.speed + " Attack:" + ittemManager.attack + " Attack speed:" + ittemManager.attackSpeed  + " expMultiplier:" +   ittemManager.expMultiplier+ " pickup range:" + ittemManager.pickupRange + " incoming damage multiplier:" + ittemManager.incomingDamageMultiplier);
         
     }
 }

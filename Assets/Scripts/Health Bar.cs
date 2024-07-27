@@ -16,11 +16,7 @@ public class HealthBar : MonoBehaviour
     {
         slider.maxValue = maxHealth; //set max slider value to maximum health for the character classs\
         slider.value = currentHealth; //set current health --> reflect on exp bar
-        UpdateHealthBarInfo(currentHealth, maxHealth);
+        health.text = currentHealth.ToString() + " / " + maxHealth.ToString(); //set text for health bar
     }
 
-    public void UpdateHealthBarInfo(float currentHealth, float maxHealth) //set health text
-    {
-        health.text = currentHealth.ToString() + " / " + maxHealth.ToString();
-    }
 }

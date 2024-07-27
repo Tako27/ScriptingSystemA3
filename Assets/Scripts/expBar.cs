@@ -12,11 +12,11 @@ public class expBar : MonoBehaviour
     [SerializeField] Slider slider;
     [SerializeField] TextMeshProUGUI levelText;
 
-    private Level level;
+    private Level levelscript;
 
     void Start()
     {
-        level = FindAnyObjectByType<Level>();
+        levelscript = FindAnyObjectByType<Level>();
     }
 
     public void UpdateExpBar(int currentExp, int limit)
@@ -24,6 +24,6 @@ public class expBar : MonoBehaviour
         slider.maxValue = limit; //set max slider value to maximum exp for the current player level
         slider.value = currentExp; //set current level progress --> reflect on exp bar
 
-        levelText.text = "Level: " + level.level.ToString(); //set text for player level
+        levelText.text = "Level: " + levelscript.level.ToString(); //set text for player level
     }
 }

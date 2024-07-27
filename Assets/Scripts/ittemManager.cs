@@ -9,7 +9,8 @@ using UnityEngine;
 public class ittemManager : MonoBehaviour
 {
 
-     public float health;
+     public float maxHealth;
+     public float healthAdded;
 
     public float initialHealth;
 
@@ -35,7 +36,6 @@ public class ittemManager : MonoBehaviour
     [SerializeField] GameController gameController;
 
     private Player player;
-    private ittemManager itemManager;
 
     private List<ItemUpgrades> itemUpgrades;
 
@@ -46,7 +46,6 @@ public class ittemManager : MonoBehaviour
         initializedStats = false;
         playerMovement = GetComponent<playerMovement>();
         playerInventory = GetComponent<PlayerInventory>();
-        itemManager = GetComponent<ittemManager>();
         player = GetComponent<Player>();    
 
         itemUpgrades = Game.GetItemUpgradesList();
@@ -60,13 +59,22 @@ public class ittemManager : MonoBehaviour
             
             while(!initializedStats)
             {
-                health = Game.GetChar().health;
+                //store the initial stats of items --> level 1 items
+                maxHealth = Game.GetChar().health;
                 speed = Game.GetChar().moveSpd;
                 attackSpeed = Game.GetChar().atkSpd;
                 attack = Game.GetChar().atkMultiplier;
 
-                player.maxHealth = health;
+
+                //initialize player stats
+                player.maxHealth = maxHealth;
                 player.currentHealth = player.maxHealth;
+
+                player.speedMultiplier = speed;
+                player.playerAtkSpd = attackSpeed;
+                player.playerAttack = attack;
+                player.expGain = expMultiplier;
+                player.reduceDamage = incomingDamageMultiplier;
                 
 
                 initializedStats = true;
@@ -82,15 +90,17 @@ public class ittemManager : MonoBehaviour
         {
             player.maxHealth+=item.itemValue;
             player.currentHealth+=item.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". Health increased by:" + item.itemValue + ". Current health:" + health );
+            healthAdded+=item.itemValue;
+
         }
         else //stats of items that are not level 1
         {
             List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == item.id);
             ItemUpgrades nextLevelItem = upgradeList.Find(upgrade => upgrade.level == item.initiallevel); //get the stats of current level for this item
             player.maxHealth+=nextLevelItem.itemValue;
-            player.currentHealth += nextLevelItem.itemValue;
-            // Debug.Log("Item level:" + item.initiallevel + ". Health increased by:" + item.itemValue + ". Current health:" + + health );
+            player.currentHealth+=nextLevelItem.itemValue;
+            healthAdded+=nextLevelItem.itemValue;
+
         }
     }
 
@@ -98,15 +108,13 @@ public class ittemManager : MonoBehaviour
     {
         if(item.initiallevel ==1)
         {
-            speed*=item.itemValue;
-            Debug.Log( "Item level:" + item.initiallevel + ". Spped increased by:" + item.itemValue + ". Current Speed:" + speed );
+            player.speedMultiplier*=item.itemValue;
         }
         else //stats of items that are not level 1
         {
             List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == item.id);
             ItemUpgrades nextLevelItem = upgradeList.Find(upgrade => upgrade.level == item.initiallevel); //get the stats of current level for this item
-            speed*=nextLevelItem.itemValue;
-            Debug.Log( "Item level:" + item.initiallevel + ". Speed increased by:" + item.itemValue + ". Current speed:"  + speed );
+            player.speedMultiplier*=nextLevelItem.itemValue;
         }
 
     }
@@ -115,15 +123,13 @@ public class ittemManager : MonoBehaviour
     {
         if(item.initiallevel ==1)
         {
-            attack*=item.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". attack mulptiplier increased by:" + item.itemValue + ". Current multiplier:"  + attack );
+            player.playerAttack*=item.itemValue;
         }
         else //stats of items that are not level 1
         {
             List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == item.id);
             ItemUpgrades nextLevelItem = upgradeList.Find(upgrade => upgrade.level == item.initiallevel); //get the stats of current level for this item
-            attack*=nextLevelItem.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". attack multiplier increased by:" + item.itemValue + ". Current multiplier:"  + attack );
+            player.playerAttack*=nextLevelItem.itemValue;
         }
 
 
@@ -133,15 +139,13 @@ public class ittemManager : MonoBehaviour
     {
         if(item.initiallevel ==1)
         {
-            attackSpeed*=item.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". attack speed mulptiplier increased by:" + item.itemValue + ". Current multiplier:" + attackSpeed );
+            player.playerAtkSpd*=item.itemValue;
         }
         else //stats of items that are not level 1
         {
             List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == item.id);
             ItemUpgrades nextLevelItem = upgradeList.Find(upgrade => upgrade.level == item.initiallevel); //get the stats of current level for this item
-            attackSpeed*=nextLevelItem.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". attack speed multiplier increased by:" + item.itemValue + ". Current multiplier:" + attackSpeed );
+            player.playerAtkSpd*=nextLevelItem.itemValue;
         }
 
     }
@@ -151,15 +155,13 @@ public class ittemManager : MonoBehaviour
         
         if(item.initiallevel ==1)
         {
-            expMultiplier*=item.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". exp multiplier increased by:" + item.itemValue + ". Current multiplier:" + expMultiplier);
+            player.expGain*=item.itemValue;
         }
         else//stats of items that are not level 1
         {
             List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == item.id);
             ItemUpgrades nextLevelItem = upgradeList.Find(upgrade => upgrade.level == item.initiallevel); //get the stats of current level for this item
-            expMultiplier*=nextLevelItem.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". attack multiplier increased by:" + item.itemValue + ". Current multiplier:" + expMultiplier);
+            player.expGain*=nextLevelItem.itemValue;
         }
 
     }
@@ -168,15 +170,13 @@ public class ittemManager : MonoBehaviour
     {
         if(item.initiallevel ==1)
         {
-            incomingDamageMultiplier*=item.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". incoming dmg multiplier increased by:" + item.itemValue + ". Current multiplier:" + incomingDamageMultiplier);
+            player.reduceDamage*=item.itemValue;
         }
         else //stats of items that are not level 1
         {
             List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == item.id);
             ItemUpgrades nextLevelItem = upgradeList.Find(upgrade => upgrade.level == item.initiallevel); //get the stats of current level for this item
-            incomingDamageMultiplier*=nextLevelItem.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". incoming dmg multiplier increased by:" + item.itemValue + ". Current multiplier:" + incomingDamageMultiplier);
+            player.reduceDamage*=nextLevelItem.itemValue;
         }
     }
     
