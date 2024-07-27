@@ -1,9 +1,7 @@
-    using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,7 +42,7 @@ public class UpgradeMenu : MonoBehaviour
 
     [SerializeField] PlayerInventory playerInventory;
 
-    [SerializeField] ittemManager ittemManager;
+    [SerializeField] Player player;
 
 
     private bool replacingWeapon;
@@ -65,6 +63,10 @@ public class UpgradeMenu : MonoBehaviour
 
     public bool replacingItem = false;
 
+    void Start()
+    {
+        
+    }
     public void OpenUpgradeMenu() //opens the upgrade interface
     {
         //everytime the upgrade interface is displayed, 3 options will be offered to the player
@@ -150,6 +152,14 @@ public class UpgradeMenu : MonoBehaviour
     {
         
         List<item> items = Game.GetItemList();
+        List<item> itemOptions = new List<item>();
+
+        foreach(item item in items)
+        {
+            itemOptions.Add(item);
+        }
+        Debug.Log(itemOptions.Count);
+        Debug.Log("Game list:" + items.Count);
 
         List<item> itemsInInventory = new List<item>();
 
@@ -162,13 +172,13 @@ public class UpgradeMenu : MonoBehaviour
         {
             if(item.initiallevel==3)
             {
-                items.Remove(item); //if any item in the inventory is at max level (level 3), remove from list so that there is no chance of getting the same item as upgrade option
+                itemOptions.Remove(item); //if any item in the inventory is at max level (level 3), remove from list so that there is no chance of getting the same item as upgrade option
             }
         }
 
-        newItem = items[Random.Range(0, items.Count)]; //get a random item from list
-        items.Remove(newItem); //remove the item from the list so that there is no chance of the rrandom upgrade option being the same thing
-        newItem2 = items[Random.Range(0, items.Count)]; //this is for the random upgrade option
+        newItem = itemOptions[Random.Range(0, itemOptions.Count)]; //get a random item from list
+        itemOptions.Remove(newItem); //remove the item from the list so that there is no chance of the rrandom upgrade option being the same thing
+        newItem2 = itemOptions[Random.Range(0, itemOptions.Count)]; //this is for the random upgrade option
         
     }
 
@@ -230,7 +240,7 @@ public class UpgradeMenu : MonoBehaviour
             OpenItemReplacementPrompt(); //open prompt for player to choose item in inventory to replace
         }
 
-        ittemManager.ApplyItemEffects(newItem);
+        player.ApplyItemEffects(); //apply effects of items 
 
     }
 
@@ -339,7 +349,7 @@ public class UpgradeMenu : MonoBehaviour
                 OpenItemReplacementPrompt(); //open item replacement prompt if inventory is full and does not contain the selected item
             }
 
-            ittemManager.ApplyItemEffects(newItem2);
+            player.ApplyItemEffects(); //apply effect of items
         }
 
     }
@@ -437,13 +447,13 @@ public class UpgradeMenu : MonoBehaviour
         {
             playerInventory.ReplaceItemInInvetory(index, newItem);
             
-            ittemManager.ApplyItemEffects(newItem);
+            player.ApplyItemEffects(); //apply effect of items
             
         }
         else //item is from the random upgrade option button 
         {
             playerInventory.ReplaceItemInInvetory(index, newItem2);
-            ittemManager.ApplyItemEffects(newItem2);
+            player.ApplyItemEffects(); //apply effect of items
         }
         
         

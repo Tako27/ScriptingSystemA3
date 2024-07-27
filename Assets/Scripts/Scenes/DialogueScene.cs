@@ -19,7 +19,8 @@ public class DialogueScene : MonoBehaviour
     [SerializeField] TextMeshProUGUI dialogueBy;
     [SerializeField] TextMeshProUGUI dialogue;
     [SerializeField] GameObject dialogueInterface;
-    [SerializeField] GameObject expBar;
+    [SerializeField] GameObject gameUI;
+
 
     [SerializeField] GameObject nextButton;
 
@@ -58,7 +59,7 @@ public class DialogueScene : MonoBehaviour
     {
         Time.timeScale = 1f; //unpause the game
         dialogueInterface.SetActive(false);
-        expBar.SetActive(true);
+        gameUI.SetActive(true);
         dialogueOpen = false;
 
     }

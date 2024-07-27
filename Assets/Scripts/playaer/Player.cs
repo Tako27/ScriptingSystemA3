@@ -4,147 +4,94 @@ using UnityEngine;
 
 // Code Done By: Lee Ying Jie
 // ================================
-// This script handles the player stats, as well as application of weapons and items
+// This script handles the player stats, as well as application of items
 public class Player : MonoBehaviour
 {
-    public float health;
+    public float maxHealth;
+    public float currentHealth;
+   private List<item> items = Game.GetItemList();
 
-    public float initialHealth;
+    private ittemManager ittemManager;
 
-    public float speed;
-
-    public float initialSpeed;
-    public float attack;
-
-    public float initialAttack;
-    public float expMultiplier = 1f;
-
-    public float attackSpeed;
-
-    public float initialAttackSpeed;
-    public float pickupRange = 1f;
-
-
-    public float incomingDamageMultiplier = 1f;
-
-    private playerMovement playerMovement;
     private PlayerInventory playerInventory;
 
-    [SerializeField] GameController gameController;
-    private ittemManager itemManager;
+    [SerializeField] UpgradeMenu upgradeMenu;
+    [SerializeField] HealthBar healthBar;
 
-    private List<ItemUpgrades> itemUpgrades;
-
-    private bool initializedStats;
-
-    void Start()
+    private void Start()
     {
-        initializedStats = false;
-        playerMovement = GetComponent<playerMovement>();
-        playerInventory = GetComponent<PlayerInventory>();
-        itemManager = GetComponent<ittemManager>();
+        ittemManager = FindObjectOfType<ittemManager>();
+        playerInventory = FindObjectOfType<PlayerInventory>(); 
 
-        itemUpgrades = Game.GetItemUpgradesList();
 
     }
+
     void Update()
     {
+        healthBar.UpdateHealthBar(currentHealth, maxHealth);
+    }
+
+    public void TakeDamage(int damage) //handle taking damage
+    {
+        currentHealth -= damage;
         
-        if(gameController.gameActive)
+        if(currentHealth<=0)
         {
+            Die();
+        }
+    }
+
+    public void Die() //handle death
+    {
+
+    }
+
+    public void ApplyItemEffects() //apply effects of items to player
+    {
+        //reset all changes before applying new item effects to the player
+        ittemManager.health = Game.GetChar().health;
+
+        ittemManager.speed = Game.GetChar().moveSpd;
+
+        ittemManager.attackSpeed = Game.GetChar().atkSpd;
+
+        ittemManager.attack = Game.GetChar().atkMultiplier;
             
-            while(!initializedStats)
+        ittemManager.expMultiplier = 1f;
+        ittemManager.pickupRange = 1f;
+        ittemManager.incomingDamageMultiplier = 1f;
+
+        Debug.LogWarning("Stats reset!" +"Health:"+ ittemManager.health +" Speed:"+ ittemManager.speed + " Attack:" + ittemManager.attack + " Attack speed:" + ittemManager.attackSpeed  + " expMultiplier:" +   ittemManager.expMultiplier+ " pickup range:" + ittemManager.pickupRange + " incoming damage multiplier:" + ittemManager.incomingDamageMultiplier);
+
+        //apply new item effects
+        foreach(item i in playerInventory.itemInventory)
+        {
+            switch (i.effectType)
             {
-                health = Game.GetChar().health;
-                speed = Game.GetChar().moveSpd;
-                attackSpeed = Game.GetChar().atkSpd;
-                attack = Game.GetChar().atkMultiplier;
-
-                initializedStats = true;
+                case "Health":
+                    ittemManager.IncreaseMaxHealth(i);
+                    break;
+                case "Speed":
+                    ittemManager.IncreaseMoveSpeed(i);
+                    break;
+                case "Attack":
+                    ittemManager.IncreaseDamage(i);
+                    break;
+                case "Attack Speed":
+                    ittemManager.IncreaseAttackSpeed(i);
+                    break;
+                case "Experience":
+                    ittemManager.IncreaseExpGain(i);
+                    break;
+                case "Defense":
+                    ittemManager.ReduceDamageTaken(i);
+                    break;
+                }
             }
-            
-        }
+            // Debug.LogWarning("Slot 1:" + playerInventory.itemInventory[0].name + playerInventory.itemInventory[0].initiallevel + playerInventory.itemInventory[0].itemValue);
+            // Debug.LogWarning("Slot2:" + playerInventory.itemInventory[1].name + playerInventory.itemInventory[1].initiallevel + playerInventory.itemInventory[1].itemValue);
+            // Debug.LogWarning("Slot3:" + playerInventory.itemInventory[2].name + playerInventory.itemInventory[2].initiallevel + playerInventory.itemInventory[2].itemValue);
+            Debug.LogWarning("Stats relenished!" +"Health:"+ ittemManager.health +" Speed:"+ ittemManager.speed + " Attack:" + ittemManager.attack + " Attack speed:" + ittemManager.attackSpeed  + " expMultiplier:" +   ittemManager.expMultiplier+ " pickup range:" + ittemManager.pickupRange + " incoming damage multiplier:" + ittemManager.incomingDamageMultiplier);
         
-    }
-
-    public void IncreaseMaxHealth(item item)
-    {
-        if(item.initiallevel ==1)
-        {
-            health+=item.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". Health increased by:" + item.itemValue + ". Current health:" + health );
-        }
-        else
-        {
-            ItemUpgrades nextLevelItem = itemUpgrades.Find(upgrade => upgrade.level == item.initiallevel); //get the stats of current level for this item
-            health+=nextLevelItem.itemValue;
-            // Debug.Log("Item level:" + item.initiallevel + ". Health increased by:" + item.itemValue + ". Current health:" + + health );
-        }
-    }
-
-    public void IncreaseMoveSpeed(item item)
-    {
-        if(item.initiallevel ==1)
-        {
-            speed = playerMovement.movementSpeed*=item.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". Spped increased by:" + item.itemValue + ". Current Speed:" + speed );
-        }
-        else
-        {
-            ItemUpgrades nextLevelItem = itemUpgrades.Find(upgrade => upgrade.level == item.initiallevel); //get the stats of current level for this item
-            speed = playerMovement.movementSpeed*=nextLevelItem.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". Speed increased by:" + item.itemValue + ". Current speed:"  + speed );
-        }
-
-    }
-
-    public void IncreaseDamage(item item)
-    {
-        if(item.initiallevel ==1)
-        {
-            attack*=item.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". attack mulptiplier increased by:" + item.itemValue + ". Current multiplier:"  + attack );
-        }
-        else
-        {
-            ItemUpgrades nextLevelItem = itemUpgrades.Find(upgrade => upgrade.level == item.initiallevel); //get the stats of current level for this item
-            attack*=nextLevelItem.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". attack multiplier increased by:" + item.itemValue + ". Current multiplier:"  + attack );
-        }
-
-
-    }
-
-    public void IncreaseAttackSpeed(item item)
-    {
-        if(item.initiallevel ==1)
-        {
-            attackSpeed*=item.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". attack speed mulptiplier increased by:" + item.itemValue + ". Current multiplier:" + attackSpeed );
-        }
-        else
-        {
-            ItemUpgrades nextLevelItem = itemUpgrades.Find(upgrade => upgrade.level == item.initiallevel); //get the stats of current level for this item
-            attackSpeed*=nextLevelItem.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". attack speed multiplier increased by:" + item.itemValue + ". Current multiplier:" + attackSpeed );
-        }
-
-    }
-
-    public void IncreaseExpGain(item item)
-    {
-        
-        if(item.initiallevel ==1)
-        {
-            expMultiplier*=item.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". exp multiplier increased by:" + item.itemValue + ". Current multiplier:" + expMultiplier);
-        }
-        else
-        {
-            ItemUpgrades nextLevelItem = itemUpgrades.Find(upgrade => upgrade.level == item.initiallevel); //get the stats of current level for this item
-            expMultiplier*=nextLevelItem.itemValue;
-            // Debug.Log( "Item level:" + item.initiallevel + ". attack multiplier increased by:" + item.itemValue + ". Current multiplier:" + expMultiplier);
-        }
-
     }
 }

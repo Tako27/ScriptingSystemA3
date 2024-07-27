@@ -4,3 +4,4 @@ I02,Speed Potion,Speed,Increase movement speed by 1%,1.01,-1,-1,Assets/kenney_ti
 I03,Strength Potion,Attack,Increase attack by 15%,1.15,-1,-1,Assets/kenney_tiny-dungeon/Tiles/tile_0113.png
 I04,Revitalizing Tonic,Attack speed,Increase attack speed by 15%,1.15,-1,-1,Assets/kenney_tiny-dungeon/Tiles/tile_0114.png
 I05,Training Target,Experience,Increase EXP gain by 15%,1.15,-1,-1,Assets/tiny town assets/Tiles/tile_0095.png
+I06,Defense Shield,Defense,Reduce damage taken by 10%,0.9,-1,-1,Assets/kenney_tiny-dungeon/Tiles/tile_0102.png

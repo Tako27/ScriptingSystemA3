@@ -8,11 +8,16 @@ using UnityEngine;
 // This script handles the levelling system of the player
 public class Level : MonoBehaviour
 {
-    int exp = 0;
-    int level = 1; //set level to llevel 1 by default when game starts
+    public int exp = 0;
+    public int level = 1; //set level to level 1 by default when game starts
 
     [SerializeField] expBar expBar;
     [SerializeField] UpgradeMenu upgradeMenu;
+
+    void Update()
+    {
+        expBar.UpdateExpBar(exp, expRequired);
+    }
 
     int expRequired //this is to get the amount of exp required to level up for each level
     {
@@ -25,7 +30,7 @@ public class Level : MonoBehaviour
     {
         exp += amount;
         LevelUp();
-        expBar.UpdateExpBar(exp, expRequired);
+        
     }
 
     public void LevelUp() //this handles the incrementation of levels

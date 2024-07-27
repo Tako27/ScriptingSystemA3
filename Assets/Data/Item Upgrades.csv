@@ -14,3 +14,6 @@ I04,3,Increase attack speed by 25%,1.25,-1,-1
 I05,1,Increase EXP gain by 15%,1.15,-1,-1
 I05,2,Increase EXP gain by 20%,1.2,-1,-1
 I05,3,Increase EXP gain by 25%,1.25,-1,-1
+I06,1,Reduce damage taken by 10%,0.9,-1,-1
+I06,2,Reduce damage taken by 15%,0.85,-1,-1
+I06,3,Reduce damage taken by 20%,0.8,-1,-1

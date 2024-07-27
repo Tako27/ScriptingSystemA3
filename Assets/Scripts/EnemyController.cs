@@ -101,16 +101,16 @@ public class EnemyController : MonoBehaviour
     {
         rb.velocity = new Vector2(moveDir.x * stats.moveSpeed, moveDir.y * stats.moveSpeed);
     }
-
+ 
     protected virtual void EnemyAttack()
     {
         // if player exists
         if (player != null)
         {
-            dummyScript playerScript = player.GetComponent<dummyScript>();
-            if (playerScript != null)
+            Player playerscript = player.GetComponent<Player>();
+            if (playerscript != null)
             {
-                playerScript.TakeDamage(stats.damage);
+                playerscript.TakeDamage(stats.damage);
             }
         }
     }
@@ -157,9 +157,5 @@ public class EnemyController : MonoBehaviour
     {
         currentHealth -= damage;
     }
-    //- deletion of prefab /
-    //- track enemy killed count when enemy die /
-    //- ensure that prefab remove from object pooling properly
-    //- ensure wave spawning works on second 3 etc wave
-    //-for debugging to add a button to spawn next wave instantly, and add to clear all enemies at once
+
 }
