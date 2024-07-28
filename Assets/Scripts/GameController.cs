@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject player;
+    public GameObject playerObj;
     public InputHandler inputHandler;
 
     private List<Weapon> weaponInventory;
@@ -22,22 +22,30 @@ public class GameController : MonoBehaviour
 
     public PlayerInventory playerInventory;
 
+    public Player player;
+
     public List<GameObject> mapPrefabs;
 
     public GameObject expDrop;
 
     public TimeTracker timeTracker;
 
+    public ManageScene manageScene;
+
     public bool gameActive;
     
-
     // Start is called before the first frame update
     void Start()
     {
         gameActive = false;
         dataManager.LoadAllData();
+        player = FindObjectOfType<Player>();
+
+        manageScene = FindAnyObjectByType<ManageScene>();
+        OpenStartMenu();
+
         dialogueScene.OpenDialogue();
-        
+
     }
 
     // Update is called once per frame
@@ -70,11 +78,26 @@ public class GameController : MonoBehaviour
         dialogueScene.OpenDialogue();
     }
 
-    public void RestartGame()
+    public void Surrender()
     {
-        Game.ResetEnemiesKilledCounters();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        player.Die();
     }
 
+    public void ReOpenStartMenu()
+    {
+        Game.ResetEnemiesKilledCounters(); //reset eveything
+        OpenStartMenu();
+    }
+
+
+    public void OpenStartMenu()
+    {
+        manageScene.OpenScene("StartScene", () =>
+            {
+                //initialize scene after scene finishes loading
+                StartMenuScript menuScript = FindObjectOfType<StartMenuScript>();
+                menuScript.InitializeScene(this);
+            });
+    }
 
 }

@@ -16,7 +16,7 @@ public class HealthBar : MonoBehaviour
     {
         slider.maxValue = maxHealth; //set max slider value to maximum health for the character classs\
         slider.value = currentHealth; //set current health --> reflect on exp bar
-        health.text = currentHealth.ToString() + " / " + maxHealth.ToString(); //set text for health bar
+        health.text = currentHealth.ToString("F2") + " / " + maxHealth.ToString("F2"); //set text for health bar, current health is rounded off to 2dp
     }
 
 }

@@ -3,8 +3,8 @@ D1004,PD1001,I've accepted a bounty quest.,player,normalSelection,null
 D1004,PD1002,(Stay silent),player,normalSelection,null
 D1009,PD1003,This staff looks good. (Pick the staff),player,weaponSelection,W01
 D1009,PD1004,This sword looks sharp. (Pick the longsword),player,weaponSelection,W02
-D1009,PD1005,This pistol looks brand new. (Pick the pistol),player,weaponSelection,W03
-D1015,PD1006,The path down the road sounds good to me. (Go by the path further down the road),player,mapSelection,M01
+D1009,PD1005,This bow looks brand new. (Pick the bow),player,weaponSelection,W03
+D1015,PD1006,The one down the road. (Go by the path further down the road),player,mapSelection,M01
 D1015,PD1007,I'll take the one on the left. (Slide down the slope on the left),player,mapSelection,M02
-D1026@D1034,PD1008,Alright. (Restart),player,endGameSelection,null
-D1026@D1034,PD1009,No thanks. I'll be on my way. (Return to Start),player,endGameSelection,null
+D1026,PD1008,No thanks. I'll be on my way.,player,endGameSelection,null
+D1026,PD1009,Alright. I'll you up on that offer.,player,endGameSelection,null
