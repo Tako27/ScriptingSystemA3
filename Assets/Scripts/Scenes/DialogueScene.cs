@@ -35,7 +35,7 @@ public class DialogueScene : MonoBehaviour
 
     [SerializeField] Player player ;
 
-    private int nextNPCdialogue;
+    [SerializeField] private int nextNPCdialogue;
 
     public bool dialogueOpen;
 
@@ -43,16 +43,20 @@ public class DialogueScene : MonoBehaviour
 
     public bool toReturnToStartMenu;
 
-    public bool gameInitiated;
+    public bool gameStart;
 
     public string currentSceneID;
 
+
+    private void Awake()
+    {
+        gameStart = true;
+    }
 
     void Start()
     {
         cameraBounds  = FindAnyObjectByType<CameraBounds>();
         nextNPCdialogue = 0;
-
     }
 
 
@@ -72,24 +76,35 @@ public class DialogueScene : MonoBehaviour
 
         dialogueInterface.SetActive(true);
 
-                if (player == null)
+        if (player == null)
         {
             Debug.LogError("Player is not assigned.");
             return;
         }
         currentSceneID = npcDialogues[nextNPCdialogue].sceneID;
+        
+        // DS001 - Game Start Dialog
+        // DS002 - Game End (player is dead)
+        // DS003 - Game End (player is alive)
+
+        if (gameStart)
+        {
+            dialogueBy.text = npcDialogues[nextNPCdialogue].dialogueBy + ":";
+            dialogue.text = npcDialogues[nextNPCdialogue].dialogue; //this is the dialogue made by the npc 
+            gameStart = false;
+            return;
+        }
 
         if(!player.dead)
         {
             string temp = currentSceneID;
 
+            // skip the current scene's dialogues
             while(temp == currentSceneID)
             {
                 currentSceneID = npcDialogues[nextNPCdialogue].sceneID;
                 nextNPCdialogue++;
             }
-            dialogueBy.text = npcDialogues[nextNPCdialogue].dialogueBy + ":";
-            dialogue.text = npcDialogues[nextNPCdialogue].dialogue; //this is the dialogue made by the npc
         }
         dialogueBy.text = npcDialogues[nextNPCdialogue].dialogueBy + ":";
         dialogue.text = npcDialogues[nextNPCdialogue].dialogue; //this is the dialogue made by the npc 

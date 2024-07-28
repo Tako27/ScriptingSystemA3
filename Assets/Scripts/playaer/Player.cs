@@ -51,13 +51,13 @@ public class Player : MonoBehaviour
         if(currentHealth<=0)
         {
             Die();
-            dead =true;
         }
         
     }
 
     public void Die() //handle death
     {
+        dead = true;
         gameController.EndGame();
     }
 
