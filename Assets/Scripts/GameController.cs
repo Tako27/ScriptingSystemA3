@@ -26,6 +26,8 @@ public class GameController : MonoBehaviour
 
     public GameObject expDrop;
 
+    public TimeTracker timeTracker;
+
     public bool gameActive;
     
 
@@ -64,12 +66,13 @@ public class GameController : MonoBehaviour
     public void EndGame()
     {
         gameActive = false;
-        Debug.Log("Game Ended");
+        Game.SetTime(timeTracker.endText);
         dialogueScene.OpenDialogue();
     }
 
     public void RestartGame()
     {
+        Game.ResetEnemiesKilledCounters();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

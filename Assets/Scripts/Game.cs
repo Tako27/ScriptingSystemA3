@@ -39,6 +39,10 @@ public static class Game
     private static List<string> mapIDs = new List<string>();
     private static string mapIDSelected;
 
+    private static string time;
+
+    private static string playerLevel;
+
     private static int totalEnemiesKilled;
     private static Dictionary<string, int> typeOfEnemiesKilled = new Dictionary<string, int>();
 
@@ -255,6 +259,12 @@ public static class Game
         totalEnemiesKilled++;
     }
 
+    public static void ResetEnemiesKilledCounters()
+    {
+        totalEnemiesKilled = 0;
+        typeOfEnemiesKilled.Clear();
+    }
+
     public static int GetTotalEnemiesKilled() 
     {  
         return totalEnemiesKilled; 
@@ -278,5 +288,25 @@ public static class Game
     public static Dictionary<string, int> GetTypeOfEnemiesKilled()
     {
         return typeOfEnemiesKilled;
+    }
+
+    public static void SetTime(string atime)
+    {
+        time = atime;
+    }
+
+    public static string GetTime()
+    {
+        return time;
+    }
+
+    public static void SetLevel(string alevel)
+    {
+        playerLevel = alevel;
+    }
+
+    public static string GetLevel()
+    {
+        return playerLevel;
     }
 }

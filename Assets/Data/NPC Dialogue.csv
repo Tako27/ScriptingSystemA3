@@ -22,7 +22,7 @@ D1020,You had us worried for a moment there!,Villager A,FALSE,null,DS002
 D1021,You were taking quite a while so we decided to send some people to check things out.,Villager A,FALSE,null,DS002
 D1022,Imagine our surprise to see you passed out in there!,Villager A,FALSE,null,DS002
 D1023,You didn't manage to fully complete the commisssion but you've worked hard!,Villager A,FALSE,null,DS002
-D1024,In total you spent {timeElapsed} doing the commission and successfully eliminated a total of {number} enemies!,Villager A,FALSE,null,DS002
+D1024,In total you spent {0} doing the commission and successfully eliminated a total of {1} enemies!,Villager A,FALSE,null,DS002
 D1025,Thanks for your hard work!,Villager A,FALSE,null,DS002
 D1026,Before you leave why don't you rest up first?,Villager A,TRUE,null,DS002
 D1027,Have a good rest!,Villager A,FALSE,PD1008,DS002
@@ -30,7 +30,7 @@ D1028,Oh alright. Hope to see you again!,Villager A,FALSE,PD1009,DS002
 D1029,Welcome back!,Villager A,FALSE,null,DS003
 D1030,Wow! You really completed our commission effortlessly!,Villager A,FALSE,null,DS003
 D1031,I knew that you're the guy to do it the moment I set my eyes on you!,Villager A,FALSE,null,DS003
-D1032,In total you spent {timeElapsed} doing the commission and successfully eliminated a total of {number} enemies!,Villager A,FALSE,null,DS003
+D1032,In total you spent {0} doing the commission and successfully eliminated a total of {1} enemies!,Villager A,FALSE,null,DS003
 D1033,Thanks for your hard work!,Villager A,FALSE,null,DS003
 D1034,Before you leave why don't you rest up first?,Villager A,TRUE,null,DS003
 D1035,Have a good rest!,Villager A,FALSE,PD1008,DS003
