@@ -22,9 +22,10 @@ public class Level : MonoBehaviour
     }
     void Update()
     {
+        
         if(gameController.gameActive)
         {
-            expBar.UpdateExpBar(exp, expRequired);
+            expBar.UpdateExpBar(exp, expRequired); //update exp bar
         }
         Game.SetLevel(level.ToString());
     }

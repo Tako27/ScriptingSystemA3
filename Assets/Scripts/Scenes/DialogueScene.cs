@@ -143,7 +143,7 @@ public class DialogueScene : MonoBehaviour
                 {
                     PlayerResponseButton();
                 }
-                if(npcDialogues[nextNPCdialogue].id == "D1024" || npcDialogues[nextNPCdialogue].id == "D1033")
+                if(npcDialogues[nextNPCdialogue].id == "D1024" || npcDialogues[nextNPCdialogue].id == "D1033") //set dynamic text according to game state
                 {
                     List<Weapon> weaponList = Game.GetWeaponList();
                     Weapon defaultWeapon = weaponList.Find(x => x.id == Game.GetChar().weaponID);

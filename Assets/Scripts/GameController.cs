@@ -42,9 +42,7 @@ public class GameController : MonoBehaviour
         player = FindObjectOfType<Player>();
 
         manageScene = FindAnyObjectByType<ManageScene>();
-        OpenStartMenu();
-
-        dialogueScene.OpenDialogue();
+        OpenStartMenu(); //open start menu when game starts
 
     }
 
@@ -71,26 +69,26 @@ public class GameController : MonoBehaviour
         inputHandler.SetInputReceiver(player.GetComponent<playerMovement>());
     }
 
-    public void EndGame()
+    public void EndGame() //end game 
     {
         gameActive = false;
         Game.SetTime(timeTracker.endText);
         dialogueScene.OpenDialogue();
     }
 
-    public void Surrender()
+    public void Surrender() //this is for when the player presss on give up 
     {
-        player.Die();
+        player.Die(); //kills the player immediately as this is considered a failed attempt
     }
 
-    public void ReOpenStartMenu()
+    public void ReOpenStartMenu() //return to start menu
     {
         Game.ResetEnemiesKilledCounters(); //reset eveything
         OpenStartMenu();
     }
 
 
-    public void OpenStartMenu()
+    public void OpenStartMenu() //open start menu
     {
         manageScene.OpenScene("StartScene", () =>
             {

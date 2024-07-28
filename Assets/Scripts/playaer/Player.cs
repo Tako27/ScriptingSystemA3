@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
     public void Die() //handle death
     {
         dead = true;
-        gameController.EndGame();
+        gameController.EndGame(); //end the game
     }
 
     public void ApplyItemEffects() //apply effects of items to player
@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
                 }
             }
         
-            Debug.LogWarning("Stats relenished!" +"Health:"+ maxHealth +" Speed:"+ ittemManager.speed + " Attack:" + ittemManager.attack + " Attack speed:" + ittemManager.attackSpeed  + " expMultiplier:" +   ittemManager.expMultiplier+ " pickup range:" + ittemManager.pickupRange + " incoming damage multiplier:" + ittemManager.incomingDamageMultiplier);
+            // Debug.LogWarning("Stats relenished!" +"Health:"+ maxHealth +" Speed:"+ ittemManager.speed + " Attack:" + ittemManager.attack + " Attack speed:" + ittemManager.attackSpeed  + " expMultiplier:" +   ittemManager.expMultiplier+ " pickup range:" + ittemManager.pickupRange + " incoming damage multiplier:" + ittemManager.incomingDamageMultiplier);
         
     }
 }
