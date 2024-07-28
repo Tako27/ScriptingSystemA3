@@ -346,8 +346,13 @@ public static class Game
         List<SessionDataInfo> sessionDatas = GetSessionDataInfoList();
 
         // if there is no data - missing files/no existing file
-        if (sessionDatas == null)
+        if (sessionDatas == null || sessionDatas.Count == 0)
         {
+            if (sessionDatas == null)
+            {
+                sessionDatas = new List<SessionDataInfo>();
+            }
+
             // set the data session id to S00001
             SessionDataInfo newSessionDataInfo = new SessionDataInfo
             {
