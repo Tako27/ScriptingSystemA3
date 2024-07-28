@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Code Done By: Celest Goh Zi Xuan
+// ================================
+// This script is the base class of weapon effects
+
+// struct hold the information of the weapon effects
 public struct WeaponEffectData
 {
     public float damage;

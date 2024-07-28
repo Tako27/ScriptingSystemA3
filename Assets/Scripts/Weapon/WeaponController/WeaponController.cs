@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Code Done By: Celest Goh Zi Xuan
+// ================================
+// This script is the base class for weapon
 public abstract class WeaponController : MonoBehaviour
 {
+    // weapon data from player inventory
     public Weapon weaponRef;
 
     [Header("Base Weapon Stats")]
@@ -27,12 +31,19 @@ public abstract class WeaponController : MonoBehaviour
         this.weaponRef = weaponRef;
 
         this.weaponEnabled = true;
+        attackTimer = 0f;
+}
+
+    public void DisableWeapon()
+    {
+        this.weaponEnabled = false;
     }
 
+    // firing weapon
     protected virtual GameObject FireWeapon(Vector3 firePosition)
     {
         GameObject weaponEffectObject = Instantiate(weaponEffectPrefab, firePosition, Quaternion.identity);
-
+        // try get component so dont have to write if null
         if (weaponEffectObject.TryGetComponent<WeaponEffect>(out var weaponEffect))
         {
             weaponEffect.InitializeWeaponEffect(CalculateWeaponEffectData());
@@ -49,6 +60,7 @@ public abstract class WeaponController : MonoBehaviour
         }
     }
 
+    // auto firing
     private void HandleWeaponTick()
     {
         if (attackTimer <= 0f)
@@ -61,6 +73,7 @@ public abstract class WeaponController : MonoBehaviour
         attackTimer -= Time.deltaTime;
     }
 
+    // calculate damage before passing to weapon effect
     protected virtual WeaponEffectData CalculateWeaponEffectData()
     {
         WeaponEffectData newEffectData = new WeaponEffectData();

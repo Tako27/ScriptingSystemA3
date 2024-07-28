@@ -125,7 +125,9 @@ public class PlayerInventory : MonoBehaviour
     public void ReplaceWeaponInInventory(int index, Weapon weapon)  //handle weapon replacement
     {
         InitializaWeaponStats(weapon); //get the default state of the new weapon from upgrades menu --> level 1
+        DisableWeapon(weaponInventory[index]);
         weaponInventory[index] = weapon; //based on index of selected inventory slot, replace the weapon in the selected slot with the new weapon
+        EnableWeapon(weaponInventory[index]);
     }
 
     public void ReplaceItemInInvetory(int index, item item) //handle item replacement
@@ -150,7 +152,22 @@ public class PlayerInventory : MonoBehaviour
             Debug.Log("Weapon controller not found");
 
 
-            weaponControllerList[7].InitializeWeapon(weaponRef);
+            //weaponControllerList[2].InitializeWeapon(weaponRef);
+        }
+    }
+
+    public void DisableWeapon(Weapon weaponRef)
+    {
+        int weaponID = int.Parse(weaponRef.id.Substring(1)) - 1;
+
+        try
+        {
+            weaponControllerList[weaponID].DisableWeapon();
+        }
+        catch (NullReferenceException)
+        {
+            Debug.Log("Weapon controller not found");
+
         }
     }
 

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Code Done By: Celest Goh Zi Xuan
+// ================================
+// This script is the sub class of weapon effects and overrides the behaviour of the base
 public class Slam : WeaponEffect
 {
     public override void InitializeWeaponEffect(WeaponEffectData weaponEffectData)
