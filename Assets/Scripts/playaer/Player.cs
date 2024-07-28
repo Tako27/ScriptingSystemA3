@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     public float reduceDamage;
 
     public bool dead;
-   private List<item> items = Game.GetItemList();
+    private List<item> items = Game.GetItemList();
 
     private ittemManager ittemManager;
 
@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     [SerializeField] UpgradeMenu upgradeMenu;
     [SerializeField] HealthBar healthBar;
 
-    private void Start()
+    void Start()
     {
         ittemManager = FindObjectOfType<ittemManager>();
         playerInventory = FindObjectOfType<PlayerInventory>(); 

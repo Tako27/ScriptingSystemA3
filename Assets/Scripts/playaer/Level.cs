@@ -14,9 +14,19 @@ public class Level : MonoBehaviour
     [SerializeField] expBar expBar;
     [SerializeField] UpgradeMenu upgradeMenu;
 
+    private GameController gameController;
+
+    void Start()
+    {
+        gameController = FindAnyObjectByType<GameController>();
+    }
     void Update()
     {
-        expBar.UpdateExpBar(exp, expRequired);
+        if(gameController.gameActive)
+        {
+            expBar.UpdateExpBar(exp, expRequired);
+        }
+
     }
 
     int expRequired //this is to get the amount of exp required to level up for each level

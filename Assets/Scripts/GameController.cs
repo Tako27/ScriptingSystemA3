@@ -58,13 +58,12 @@ public class GameController : MonoBehaviour
         {
             playerScript.Initialize(this);
         }
-
         inputHandler.SetInputReceiver(player.GetComponent<playerMovement>());
-
     }
 
     public void EndGame()
     {
+        gameActive = false;
         Debug.Log("Game Ended");
         dialogueScene.OpenDialogue();
     }
