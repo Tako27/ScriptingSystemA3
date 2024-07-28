@@ -10,7 +10,6 @@ public class StartMenuScript : MonoBehaviour
     public GameController gameController;
     public ManageScene manageScene;
 
-    public DialogueScene dialogueScene;
     void Awake()
     {
         manageScene = FindAnyObjectByType<ManageScene>();
@@ -28,6 +27,6 @@ public class StartMenuScript : MonoBehaviour
     public void CloseStartMenu() //this is when player presses on start
     {
         manageScene.CloseScene("StartScene");
-        dialogueScene.OpenDialogue(); //open dialogue after starting the game
+
     }
 }

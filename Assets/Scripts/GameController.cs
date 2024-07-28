@@ -43,6 +43,7 @@ public class GameController : MonoBehaviour
 
         manageScene = FindAnyObjectByType<ManageScene>();
         OpenStartMenu(); //open start menu when game starts
+        dialogueScene.OpenDialogue(); //open dialogue after starting the game
 
     }
 
@@ -73,6 +74,7 @@ public class GameController : MonoBehaviour
     {
         gameActive = false;
         Game.SetTime(timeTracker.endText);
+        dataManager.SaveSessionData(Game.ConstructDataInfoForSaving());
         dialogueScene.OpenDialogue();
     }
 

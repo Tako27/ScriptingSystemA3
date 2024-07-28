@@ -151,7 +151,7 @@ public class DialogueScene : MonoBehaviour
                 }
                 else if(npcDialogues[nextNPCdialogue].id == "D1025" || npcDialogues[nextNPCdialogue].id == "D1034")
                 {
-                    tempDialogue = String.Format(npcDialogues[nextNPCdialogue].dialogue, Game.GetTotalEnemiesKilled(), Game.GetTotalEnemiesKilled());
+                    tempDialogue = String.Format(npcDialogues[nextNPCdialogue].dialogue, Game.DisplayGetTypeOfEnemiesKilled(), Game.GetTotalEnemiesKilled());
                 }
                 else
                 {
