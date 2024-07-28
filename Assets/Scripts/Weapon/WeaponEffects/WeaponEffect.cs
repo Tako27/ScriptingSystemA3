@@ -2,9 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Code Done By: Celest Goh Zi Xuan
+// ================================
+// This script is the base class of weapon effects
+
+// struct hold the information of the weapon effects
+public struct WeaponEffectData
+{
+    public float damage;
+    public float weaponRadius;
+    public float weaponRangeMultipler;
+}
+
 public abstract class WeaponEffect : MonoBehaviour
 {
-    public float damage = 20f;
+    public float damage;
     public float lifetime = 0.5f;
 
     private void OnEnable()
@@ -20,9 +32,9 @@ public abstract class WeaponEffect : MonoBehaviour
     }
 
 
-    public void InitializeWeaponEffect(float damage)
+    public virtual void InitializeWeaponEffect(WeaponEffectData weaponEffectData)
     {
-        this.damage = damage;
+        this.damage = weaponEffectData.damage;
     }
 
     protected abstract void HandleWeaponEffectTrigger(Collider2D collision);

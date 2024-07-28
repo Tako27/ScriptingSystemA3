@@ -40,6 +40,7 @@ public static class Game
     private static string mapIDSelected;
 
     private static int totalEnemiesKilled;
+    private static Dictionary<string, int> typeOfEnemiesKilled = new Dictionary<string, int>();
 
     public static Character GetChar()
     {
@@ -257,5 +258,25 @@ public static class Game
     public static int GetTotalEnemiesKilled() 
     {  
         return totalEnemiesKilled; 
+    }
+
+    public static void AddTypeOfEnemiesKilled(string enemyID)
+    {
+        string key = enemyID;
+        // if key exist just add 1
+        if (typeOfEnemiesKilled.ContainsKey(key))
+        {
+            typeOfEnemiesKilled[key]++;
+        }
+        // if key doesnt exist set to 1
+        else
+        {
+            typeOfEnemiesKilled[key] = 1;
+        }
+    }
+
+    public static Dictionary<string, int> GetTypeOfEnemiesKilled()
+    {
+        return typeOfEnemiesKilled;
     }
 }

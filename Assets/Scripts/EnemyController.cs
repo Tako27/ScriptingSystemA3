@@ -151,6 +151,7 @@ public class EnemyController : MonoBehaviour
         SpawnExp();
         EnemySpawner enemySpawnerScript = gameController.GetComponent<EnemySpawner>();
         enemySpawnerScript.DestroyEnemyPrefab(this.gameObject);
+        Game.AddTypeOfEnemiesKilled(stats.enemyID);
         Game.AddTotalEnemiesKilled();
         // Debug.Log(Game.GetTotalEnemiesKilled());
     }

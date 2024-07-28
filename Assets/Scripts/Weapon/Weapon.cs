@@ -25,6 +25,10 @@ public class Weapon
 
     public float fireRate;
 
+    public float weaponRangeMultiplier = 1;
+    public float RegenProbability = 0;
+    public float RecoveryMultiplier = 0;
+
     public string imageFilePath {get; set;}
 
     public Weapon(string id, string name, float damage,string weaponType, string basicDesc, bool isGeneric, string imageFilePath)

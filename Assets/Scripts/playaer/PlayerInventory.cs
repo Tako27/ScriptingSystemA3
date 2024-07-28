@@ -18,14 +18,7 @@ public class PlayerInventory : MonoBehaviour
 
     private WeaponUpgrades nextLevelWeapon;
 
-    private PlayerAttack playerAttackController;
-
     public List<WeaponController> weaponControllerList;
-
-    public void Start()
-    {
-        playerAttackController = GetComponent<PlayerAttack>();
-    }
 
     public void InitializaWeaponStats(Weapon weapon) //this is to handle initialization of weapons 
     {
@@ -109,6 +102,7 @@ public class PlayerInventory : MonoBehaviour
             weapon.dmgMultiplier = nextLevelWeapon.dmgMultiplier;
             weapon.fireRate = nextLevelWeapon.fireRate;
             weapon.basicDesc = nextLevelWeapon.upgradeDesc;
+            weapon.weaponRangeMultiplier = nextLevelWeapon.weaponRangeMultiplier;
         }
     }
 
@@ -131,7 +125,9 @@ public class PlayerInventory : MonoBehaviour
     public void ReplaceWeaponInInventory(int index, Weapon weapon)  //handle weapon replacement
     {
         InitializaWeaponStats(weapon); //get the default state of the new weapon from upgrades menu --> level 1
+        DisableWeapon(weaponInventory[index]);
         weaponInventory[index] = weapon; //based on index of selected inventory slot, replace the weapon in the selected slot with the new weapon
+        EnableWeapon(weaponInventory[index]);
     }
 
     public void ReplaceItemInInvetory(int index, item item) //handle item replacement
@@ -145,7 +141,7 @@ public class PlayerInventory : MonoBehaviour
 
     public void EnableWeapon(Weapon weaponRef)
     {
-        int weaponID = int.Parse(weaponRef.id.Substring(1));
+        int weaponID = int.Parse(weaponRef.id.Substring(1)) - 1;
 
         try
         {
@@ -154,6 +150,24 @@ public class PlayerInventory : MonoBehaviour
         catch (NullReferenceException)
         {
             Debug.Log("Weapon controller not found");
+
+
+            //weaponControllerList[2].InitializeWeapon(weaponRef);
+        }
+    }
+
+    public void DisableWeapon(Weapon weaponRef)
+    {
+        int weaponID = int.Parse(weaponRef.id.Substring(1)) - 1;
+
+        try
+        {
+            weaponControllerList[weaponID].DisableWeapon();
+        }
+        catch (NullReferenceException)
+        {
+            Debug.Log("Weapon controller not found");
+
         }
     }
 

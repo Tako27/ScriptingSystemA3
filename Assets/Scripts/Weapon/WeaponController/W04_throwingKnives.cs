@@ -5,9 +5,9 @@ using UnityEngine;
 // Code Done By: Celest Goh Zi Xuan
 // ================================
 // This script is the sub class of weapon and overrides the behaviour of the base
-public class W01_Staff : WeaponController
+
+public class W04_throwingKnives : WeaponController
 {
-    [Header("Staff Stats")]
     public float projectileSpeed = 10f;
     public float spreadAngle = 30f; // Angle between projectiles
 
@@ -18,7 +18,6 @@ public class W01_Staff : WeaponController
 
         for (int i = 0; i < projectileCount; i++)
         {
-            // spread projectile into 3
             float angle = (i - (projectileCount - 1) / 2f) * spreadAngle;
             Vector2 direction = Quaternion.Euler(0, 0, angle) * InputHandler.instance.GetMousePosition();
 
