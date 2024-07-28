@@ -18,14 +18,7 @@ public class PlayerInventory : MonoBehaviour
 
     private WeaponUpgrades nextLevelWeapon;
 
-    private PlayerAttack playerAttackController;
-
     public List<WeaponController> weaponControllerList;
-
-    public void Start()
-    {
-        playerAttackController = GetComponent<PlayerAttack>();
-    }
 
     public void InitializaWeaponStats(Weapon weapon) //this is to handle initialization of weapons 
     {
