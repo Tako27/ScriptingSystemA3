@@ -25,6 +25,8 @@ public class DataManager : MonoBehaviour
     public List<EnemyStats> enemyStatsList = new List<EnemyStats>();
     public List<EnemySpawnInfo> enemySpawnInfoList = new List<EnemySpawnInfo>();
 
+
+
     public void LoadAllData() //method to load all data from csv files
     {
         LoadCharacterData();
