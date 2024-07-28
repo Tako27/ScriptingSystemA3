@@ -31,9 +31,16 @@ public class DialogueScene : MonoBehaviour
 
     public EnemySpawner enemySpawner;
 
+    public CameraBounds cameraBounds;
+
     private int nextNPCdialogue;
 
     public bool dialogueOpen;
+
+    void Start()
+    {
+        cameraBounds  = FindAnyObjectByType<CameraBounds>();
+    }
 
     public void InitializeDialogues()
     {
@@ -163,8 +170,9 @@ public class DialogueScene : MonoBehaviour
                 {
                     if (mapPrefab.name == mapID)
                     {
-                        Instantiate(mapPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                        GameObject mapInstance = Instantiate(mapPrefab, new Vector3(0, 0, 0), Quaternion.identity);
                         enemySpawner.GetSpawnPointsByMap(mapID);
+                        cameraBounds.AssignCameraBounds(mapInstance); //assign camera boundary accoring to map
                     }
                 }
             }

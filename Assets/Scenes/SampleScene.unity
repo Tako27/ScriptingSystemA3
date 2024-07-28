@@ -724,7 +724,6 @@ MonoBehaviour:
   inputHandler: {fileID: 482162247}
   dialogueScene: {fileID: 116283949}
   dataManager: {fileID: 116283945}
-  manageScenes: {fileID: 0}
   playerInventory: {fileID: 405414990}
   mapPrefabs:
   - {fileID: 6040414349826761410, guid: 0cae10856b5b79046ad990684bf384bb, type: 3}
@@ -839,6 +838,7 @@ MonoBehaviour:
   - {fileID: 714412644}
   - {fileID: 1974856364}
   enemySpawner: {fileID: 116283950}
+  cameraBounds: {fileID: 851709712}
   dialogueOpen: 0
 --- !u!114 &116283950
 MonoBehaviour:
@@ -1942,6 +1942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUpgrading: 0
+  weaponControllerList: []
 --- !u!58 &405414991
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2035,12 +2036,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c6a5eef7697f64ca333204f9a488b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 1
-  attackPoint: {fileID: 405414986}
-  attackRange: 1
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!1 &425342734
 GameObject:
   m_ObjectHideFlags: 0
@@ -4365,6 +4360,7 @@ GameObject:
   - component: {fileID: 851709710}
   - component: {fileID: 851709709}
   - component: {fileID: 851709711}
+  - component: {fileID: 851709712}
   m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -4442,6 +4438,19 @@ MonoBehaviour:
   m_BoundingShape2D: {fileID: 0}
   m_Damping: 0.5
   m_MaxWindowSize: -1
+--- !u!114 &851709712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851709708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d4333b79c78a748add2a5234e85870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cinemachine: {fileID: 851709711}
 --- !u!1 &860512221
 GameObject:
   m_ObjectHideFlags: 0

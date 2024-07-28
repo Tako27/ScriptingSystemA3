@@ -38,9 +38,9 @@ public class Player : MonoBehaviour
         healthBar.UpdateHealthBar(currentHealth, maxHealth);
     }
 
-    public void TakeDamage(int damage) //handle taking damage
+    public void TakeDamage(float damage) //handle taking damage
     {
-        
+        damage*=reduceDamage;
         currentHealth -= damage;
         
         if(currentHealth<=0)
