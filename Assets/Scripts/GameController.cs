@@ -61,11 +61,6 @@ public class GameController : MonoBehaviour
 
         inputHandler.SetInputReceiver(player.GetComponent<playerMovement>());
 
-        PlayerAttack attackScript = player.GetComponent<PlayerAttack>();
-        if (attackScript != null)
-        {
-            inputHandler.SetAttackReceiver(attackScript);
-        }
     }
 
 

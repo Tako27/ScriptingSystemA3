@@ -1,10 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-// Code Done By: Lee Ying Jie
+// Code Done By: Lee Ying Jie, Celest Goh Zi Xuan
 // ================================
-// This script handles the player inventory, as well as addition or replacement of weapons or items 
+// This script handles the player inventory, as well as addition or replacement of weapons or items.
+// This script also handles the activation of the different weapons controller.
+
 public class PlayerInventory : MonoBehaviour
 {
     public List<Weapon> weaponInventory = new List<Weapon>();
@@ -13,6 +17,15 @@ public class PlayerInventory : MonoBehaviour
     public bool isUpgrading;
 
     private WeaponUpgrades nextLevelWeapon;
+
+    private PlayerAttack playerAttackController;
+
+    public List<WeaponController> weaponControllerList;
+
+    public void Start()
+    {
+        playerAttackController = GetComponent<PlayerAttack>();
+    }
 
     public void InitializaWeaponStats(Weapon weapon) //this is to handle initialization of weapons 
     {
@@ -51,7 +64,7 @@ public class PlayerInventory : MonoBehaviour
 
             InitializaWeaponStats(weapon);
             weaponInventory.Add(weapon);
-
+            EnableWeapon(weapon);
         }      
     }
 
@@ -126,4 +139,23 @@ public class PlayerInventory : MonoBehaviour
         InitializaItemStats(item); //get default state of the new item from uupgrades menu --> level 1
         itemInventory[index] = item; //based on index of selected inventory slot, repplace item in selected slot with new item
     }
+
+
+    #region Weapon Controller Section
+
+    public void EnableWeapon(Weapon weaponRef)
+    {
+        int weaponID = int.Parse(weaponRef.id.Substring(1));
+
+        try
+        {
+            weaponControllerList[weaponID].InitializeWeapon(weaponRef);
+        }
+        catch (NullReferenceException)
+        {
+            Debug.Log("Weapon controller not found");
+        }
+    }
+
+    #endregion
 }
