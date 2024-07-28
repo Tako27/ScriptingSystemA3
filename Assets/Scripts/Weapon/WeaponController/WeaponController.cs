@@ -66,7 +66,7 @@ public abstract class WeaponController : MonoBehaviour
         if (attackTimer <= 0f)
         {
             FireWeapon(attackPoint.position);
-            attackTimer = 1 / weaponRef.fireRate;
+            attackTimer = 1 / (weaponRef.fireRate * Game.GetChar().atkSpd);
             return;
         }
 

@@ -9353,6 +9353,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: player
       objectReference: {fileID: 0}
+    - target: {fileID: 6522172190425673559, guid: 9b2c06c061ef5c64694b22c5b5553966, type: 3}
+      propertyPath: attackRange
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7572909244291275491, guid: 9b2c06c061ef5c64694b22c5b5553966, type: 3}
       propertyPath: healthBar
       value: 

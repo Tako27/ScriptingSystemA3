@@ -28,16 +28,29 @@ public class EnemySpawner : MonoBehaviour
     private Dictionary<string, Queue<GameObject>> objectPool = new Dictionary<string, Queue<GameObject>>();
 
     private int currentWaveNo = 0;
+
     private bool waveIsDone = true;
+
     // Control flag for spawning
     private bool isSpawningActive = false;
+
     // Coroutine wrapper
     private List<CoroutineWrapper> enemySpawnerCoroutineList = new List<CoroutineWrapper>();
+
     // constant 5 minustes in seconds assuming each wave duration is always 5 minutes [5 * 60f]
-    private const float waveDuration = 5 * 60f;
+    private const float waveDuration = 5 * 60f; // 5 * 60f;
+
+    // for checking if all enemies have died after wave finish spawning
+    private int activeEnemiesCount = 0;
+    private bool allWavesSpawned = false;
 
     void Update()
     {
+        if (allWavesSpawned && activeEnemiesCount == 0)
+        {
+            Debug.Log("All enemies have died. All waves completed.");
+            // Start End Game Victory Dialogue
+        }
         // Do nothing if spawning is not active
         if (!isSpawningActive) return;
 
@@ -48,14 +61,16 @@ public class EnemySpawner : MonoBehaviour
         {
             currentWaveNo++;
 
-            Debug.Log(currentWaveNo);
+            Debug.Log("current wave number is:" + currentWaveNo);
             // if all waves finish spawning exit spawn loop
             if (currentWaveNo > GetTotalWaveCount())
             {
                 Debug.Log("All waves completed.");
+                allWavesSpawned = true;
                 StopSpawning();
                 return;
             }
+
 
             // current wave 
             List<EnemySpawnInfo> enemySpawnInfos = waveIDToEnemySpawnDict[currentWaveNo];
@@ -254,6 +269,8 @@ public class EnemySpawner : MonoBehaviour
                 enemyCloneScript.InitializeEnemy(Game.GetEnemyByID(enemyID));
             }
 
+            activeEnemiesCount++;
+
             // return the obj
             return obj;
         }
@@ -278,6 +295,7 @@ public class EnemySpawner : MonoBehaviour
         {
             enemyCloneScript.ResetEnemy();
         }
+        activeEnemiesCount--;
 
         objectPool[key].Enqueue(obj);
     }
@@ -360,6 +378,7 @@ public class EnemySpawner : MonoBehaviour
     {
         // initialize the wave number and set the spawning flag
         currentWaveNo = 0;
+        activeEnemiesCount = 0;
         waveIsDone = true;
         isSpawningActive = true;
     }
