@@ -143,11 +143,15 @@ public class DialogueScene : MonoBehaviour
                 {
                     PlayerResponseButton();
                 }
-                if(npcDialogues[nextNPCdialogue].id == "D1024" || npcDialogues[nextNPCdialogue].id == "D1032")
+                if(npcDialogues[nextNPCdialogue].id == "D1024" || npcDialogues[nextNPCdialogue].id == "D1033")
                 {
                     List<Weapon> weaponList = Game.GetWeaponList();
                     Weapon defaultWeapon = weaponList.Find(x => x.id == Game.GetChar().weaponID);
-                    tempDialogue = String.Format(npcDialogues[nextNPCdialogue].dialogue, Game.GetTime(), Game.GetmapID(), Game.GetTotalEnemiesKilled(), Game.GetTotalEnemiesKilled(), defaultWeapon.name, Game.GetChar().charName, Game.GetLevel());
+                    tempDialogue = String.Format(npcDialogues[nextNPCdialogue].dialogue, Game.GetTime(), Game.GetmapID(), defaultWeapon.name, Game.GetChar().charName, Game.GetLevel());
+                }
+                else if(npcDialogues[nextNPCdialogue].id == "D1025" || npcDialogues[nextNPCdialogue].id == "D1034")
+                {
+                    tempDialogue = String.Format(npcDialogues[nextNPCdialogue].dialogue, Game.GetTotalEnemiesKilled(), Game.GetTotalEnemiesKilled());
                 }
                 else
                 {
