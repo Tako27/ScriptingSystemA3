@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    private GameObject gameController;
+
     public string selectedMapID;
 
     public float spawnRate;
@@ -38,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
     private List<CoroutineWrapper> enemySpawnerCoroutineList = new List<CoroutineWrapper>();
 
     // constant 5 minustes in seconds assuming each wave duration is always 5 minutes [5 * 60f]
-    private const float waveDuration = 5 * 60f; // 5 * 60f;
+    private const float waveDuration = 3f; // 5 * 60f;
 
     // for checking if all enemies have died after wave finish spawning
     private int activeEnemiesCount = 0;
@@ -49,7 +51,16 @@ public class EnemySpawner : MonoBehaviour
         if (allWavesSpawned && activeEnemiesCount == 0)
         {
             Debug.Log("All enemies have died. All waves completed.");
-            // Start End Game Victory Dialogue
+
+            gameController = GameObject.FindWithTag("GameController");
+
+            if (gameController != null)
+            {
+                if (gameController.TryGetComponent<GameController>(out var gcScript))
+                {
+                    gcScript.EndGame();
+                }
+            }
         }
         // Do nothing if spawning is not active
         if (!isSpawningActive) return;

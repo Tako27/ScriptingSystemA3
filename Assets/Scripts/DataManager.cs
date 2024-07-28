@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static Cinemachine.DocumentationSortingAttribute;
 
 // Code Done By: Lee Ying Jie, Celest Goh Zi Xuan
 // ================================
@@ -25,7 +26,7 @@ public class DataManager : MonoBehaviour
     public List<EnemyStats> enemyStatsList = new List<EnemyStats>();
     public List<EnemySpawnInfo> enemySpawnInfoList = new List<EnemySpawnInfo>();
 
-
+    public List<SessionDataInfo> sessionDataInfoList = new List<SessionDataInfo>();
 
     public void LoadAllData() //method to load all data from csv files
     {
@@ -38,7 +39,98 @@ public class DataManager : MonoBehaviour
         LoadPlayerDialogues();
         LoadEnemyStatsData();
         LoadWaveData();
+        LoadSessionData();
     }
+
+    #region Session Data Related
+    private string SerializeEnemyKills(Dictionary<string, int> typeOfEnemiesKilled)
+    {
+        List<string> serialized = new List<string>();
+        if (typeOfEnemiesKilled.Count > 0)
+        {
+            foreach (var entry in typeOfEnemiesKilled)
+            {
+                serialized.Add($"{entry.Key}:{entry.Value}");
+            }
+            return string.Join(";", serialized);
+        }
+        return "null";
+    }
+
+    private Dictionary<string, int> DeserializeEnemyKills(string serializedData)
+    {
+        Dictionary<string, int> typeOfEnemiesKilled = new Dictionary<string, int>();
+        string[] entries = serializedData.Split(';');
+        foreach (string entry in entries)
+        {
+            string[] keyValue = entry.Split(':');
+            typeOfEnemiesKilled[keyValue[0]] = int.Parse(keyValue[1]);
+        }
+        return typeOfEnemiesKilled;
+    }
+
+    public void LoadSessionData()
+    {
+        try
+        {
+            string filePath = Path.Combine(Application.dataPath, "Data/A3 - Sessions - Dynamic.csv");
+            if (File.Exists(filePath))
+            {
+                string[] fileData = File.ReadAllLines(filePath);
+                for (int i = 1; i < fileData.Length; i++)
+                {
+                    string[] columnData = fileData[i].Split(new char[] { ',' });
+                    Dictionary<string, int> typeOfEnemiesKilled = new Dictionary<string, int>();
+
+                    SessionDataInfo sessionDataInfo = new SessionDataInfo
+                    {
+                        sessionID = columnData[0],
+                        characterID = columnData[1],
+                        timeSurvived = columnData[2],
+                        totalEnemiesKilled = int.Parse(columnData[3]),
+                        level = int.Parse(columnData[4]),
+                        typeOfEnemiesKilled = DeserializeEnemyKills(columnData[5])
+                    };
+                    sessionDataInfoList.Add(sessionDataInfo);
+                }
+                Game.SetSessionDataInfoList(sessionDataInfoList);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Exception caught: " + ex.Message);
+        }
+    }
+
+    public void SaveSessionData(List<SessionDataInfo> sessionDataList)
+    {
+        string filePath = Path.Combine(Application.dataPath, "Data/A3 - Sessions - Dynamic.csv");
+
+        List<string> csvLines = new List<string>();
+
+        // if file exists, read all existing lines and add to temp list
+        if (File.Exists(filePath))
+        {
+            string[] existingLines = File.ReadAllLines(filePath);
+            csvLines.AddRange(existingLines);
+        }
+        else
+        {
+            // add header of the file
+            csvLines.Add("sessionID,characterID,timeSurvived,totalEnemiesKilled,level,enemyKills");
+        }
+        // Add new session data
+        foreach (SessionDataInfo data in sessionDataList)
+        {
+            string typeOfEnemiesKilledSerialized = SerializeEnemyKills(data.typeOfEnemiesKilled);
+            string line = $"{data.sessionID},{data.characterID},{data.timeSurvived},{data.totalEnemiesKilled},{data.level},{typeOfEnemiesKilledSerialized}";
+            csvLines.Add(line);
+        }
+
+        File.WriteAllLines(filePath, csvLines);
+        Debug.Log("Session data saved to CSV.");
+    }
+    #endregion Session Data Related
 
     #region Load Wave Data
     public void LoadWaveData()

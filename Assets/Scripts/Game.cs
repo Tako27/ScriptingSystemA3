@@ -46,6 +46,8 @@ public static class Game
     private static int totalEnemiesKilled;
     private static Dictionary<string, int> typeOfEnemiesKilled = new Dictionary<string, int>();
 
+    private static List<SessionDataInfo> sessionDataInfoList;
+
     public static Character GetChar()
     {
         return chara;
@@ -290,6 +292,24 @@ public static class Game
         return typeOfEnemiesKilled;
     }
 
+    // to display game stats in the dialogue
+    // DO NOT use this function to add into CSV
+    public static string DisplayGetTypeOfEnemiesKilled()
+    {
+        Dictionary<string, int> readTypeOfEnemiesKilled = Game.GetTypeOfEnemiesKilled();
+
+        // create temp list of string
+        List<string> stringList = new List<string>();
+        // populate the list of string with [no. of each type of enemy killed] [name of enemy type]
+        foreach(KeyValuePair<string, int> entry in readTypeOfEnemiesKilled)
+        {
+            string enemyName = Game.GetEnemyByID(entry.Key).enemyName;
+            string rows = string.Format("{0} {1} were killed",entry.Value, enemyName);
+            stringList.Add(rows);
+        }
+        return string.Join(",", stringList);
+    }
+
     public static void SetTime(string atime)
     {
         time = atime;
@@ -308,5 +328,74 @@ public static class Game
     public static string GetLevel()
     {
         return playerLevel;
+    }
+
+    public static void SetSessionDataInfoList(List<SessionDataInfo> aList)
+    {
+        sessionDataInfoList = aList;
+    }
+
+    // this is to get the full csv of the enemy spawn info
+    public static List<SessionDataInfo> GetSessionDataInfoList()
+    {
+        return sessionDataInfoList;
+    }
+
+    public static List<SessionDataInfo> ConstructDataInfoForSaving()
+    {
+        List<SessionDataInfo> sessionDatas = GetSessionDataInfoList();
+
+        // if there is no data - missing files/no existing file
+        if (sessionDatas == null)
+        {
+            // set the data session id to S00001
+            SessionDataInfo newSessionDataInfo = new SessionDataInfo
+            {
+                sessionID = "S00001",
+                characterID = Game.GetChar().id,
+                timeSurvived = Game.GetTime(),
+                totalEnemiesKilled = Game.GetTotalEnemiesKilled(),
+                level = int.Parse(Game.GetLevel()),
+                typeOfEnemiesKilled = Game.GetTypeOfEnemiesKilled()
+            };
+
+            sessionDatas.Add(newSessionDataInfo);
+
+            return sessionDatas;
+
+        }
+        // if there is data, read the existing, get the last row id +1
+        // then construct and return the session data info
+        else
+        {
+
+            string currentSessionID = GenerateNewSessionID(sessionDatas[sessionDatas.Count - 1].sessionID);
+            SessionDataInfo newSessionDataInfo = new SessionDataInfo
+            {
+                sessionID = currentSessionID,
+                characterID = Game.GetChar().id,
+                timeSurvived = Game.GetTime(),
+                totalEnemiesKilled = Game.GetTotalEnemiesKilled(),
+                level = int.Parse(Game.GetLevel()),
+                typeOfEnemiesKilled = Game.GetTypeOfEnemiesKilled()
+            };
+            sessionDatas.Add(newSessionDataInfo);
+            return sessionDatas;
+        }
+    }
+    public static string GenerateNewSessionID(string previousSessionID)
+    {
+        // Extract the numeric part from the previous session ID
+        string prefix = previousSessionID.Substring(0, 1); // Assuming the prefix is always "S"
+        string numericPart = previousSessionID.Substring(1);
+
+        // Convert the numeric part to an integer and increment it
+        int numericValue = int.Parse(numericPart);
+        numericValue++;
+
+        // Format the new session ID with leading zeros
+        string newSessionID = prefix + numericValue.ToString("D5");
+
+        return newSessionID;
     }
 }
