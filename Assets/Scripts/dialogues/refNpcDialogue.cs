@@ -14,5 +14,7 @@ public class refNpcDialogue
     public string dialogueBy;
     public bool isDialogueSelection;
     public string optionResponseID;
+
+    public string sceneID;
     
 }

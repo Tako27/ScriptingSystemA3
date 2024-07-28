@@ -16,20 +16,25 @@ public class Player : MonoBehaviour
     public float playerAttack;
     public float expGain;
     public float reduceDamage;
-   private List<item> items = Game.GetItemList();
+
+    public bool dead;
+    private List<item> items = Game.GetItemList();
 
     private ittemManager ittemManager;
+
+    private GameController gameController;
 
     private PlayerInventory playerInventory;
 
     [SerializeField] UpgradeMenu upgradeMenu;
     [SerializeField] HealthBar healthBar;
 
-    private void Start()
+    void Start()
     {
         ittemManager = FindObjectOfType<ittemManager>();
         playerInventory = FindObjectOfType<PlayerInventory>(); 
-
+        gameController = FindAnyObjectByType<GameController>();
+        dead = false;
 
     }
 
@@ -52,7 +57,8 @@ public class Player : MonoBehaviour
 
     public void Die() //handle death
     {
-
+        dead = true;
+        gameController.EndGame();
     }
 
     public void ApplyItemEffects() //apply effects of items to player

@@ -1,18 +1,37 @@
-dialogueID,dialogue,dialogueBy,isDialogueSelection,optionResponseID
-D1001,...,Villager A,FALSE,null
-D1002,Oh! Hello!,Villager A,FALSE,null
-D1003,You're new around here aren't you?,Villager A,FALSE,null
-D1004,What brings you to our humble little town?,Villager A,TRUE,null
-D1005,Oh! So you're the brave adventurer that I've been hearing about!,Villager A,FALSE,PD1001
-D1006,A quiet one I see! No matter! From what I gather from your attire you must be the brave adventurer who've accepted the town's commission!,Villager A,FALSE,PD1002
-D1007,Well! I guess today's your lucky day!,Villager A,FALSE,null
-D1008,As a small thanks for helping our town out with the commission I would like to give you these hand-crafted by yours truly! ,Villager A,FALSE,null
-D1009,It looks like you've only got space for one so choose carefully!,Villager A,TRUE,null
-D1010,Hm! Now you look stronger than before!,Villager A,FALSE,PD1003
-D1011,I'll take that as a compliment!,Villager A,FALSE,PD1004
-D1012,Why thank you for your high praise!,Villager A,FALSE,PD1005
-D1013,Ah! Before you go let me tell you a shortcut to where you're going!,Villager A,FALSE,null
-D1014,You can either go by that path further down the road or simply slide down a steep slope that you encounter on that path on the left.,Villager A,FALSE,null
-D1015,Which way would you go?,Villager A,TRUE,null
-D1016,Goodluck! We await your good news!,Villager A,FALSE,PD1006
-D1017,I see! Safe travels! We await your good news!,Villager A,FALSE,PD1007
+dialogueID,dialogue,dialogueBy,isDialogueSelection,optionResponseID,sceneID
+D1001,...,Villager A,FALSE,null,DS001
+D1002,Oh! Hello!,Villager A,FALSE,null,DS001
+D1003,You're new around here aren't you?,Villager A,FALSE,null,DS001
+D1004,What brings you to our humble little town?,Villager A,TRUE,null,DS001
+D1005,Oh! So you're the brave adventurer that I've been hearing about!,Villager A,FALSE,PD1001,DS001
+D1006,A quiet one I see! No matter! From what I gather from your attire you must be the brave adventurer who've accepted the town's commission!,Villager A,FALSE,PD1002,DS001
+D1007,Well! I guess today's your lucky day!,Villager A,FALSE,null,DS001
+D1008,As a small thanks for helping our town out with the commission I would like to give you these hand-crafted by yours truly! ,Villager A,FALSE,null,DS001
+D1009,It looks like you've only got space for one so choose carefully!,Villager A,TRUE,null,DS001
+D1010,Hm! Now you look stronger than before!,Villager A,FALSE,PD1003,DS001
+D1011,I'll take that as a compliment!,Villager A,FALSE,PD1004,DS001
+D1012,Why thank you for your high praise!,Villager A,FALSE,PD1005,DS001
+D1013,Ah! Before you go let me tell you a shortcut to where you're going!,Villager A,FALSE,null,DS001
+D1014,You can either go by that path further down the road or simply slide down a steep slope that you encounter on that path on the left.,Villager A,FALSE,null,DS001
+D1015,Which way would you go?,Villager A,TRUE,null,DS001
+D1016,Goodluck! We await your good news!,Villager A,FALSE,PD1006,DS001
+D1017,I see! Safe travels! We await your good news!,Villager A,FALSE,PD1007,DS001
+D1018,...,Villager A,FALSE,null,DS002
+D1019,Oh! You're finally awake!,Villager A,FALSE,null,DS002
+D1020,You had us worried for a moment there!,Villager A,FALSE,null,DS002
+D1021,You were taking quite a while so we decided to send some people to check things out.,Villager A,FALSE,null,DS002
+D1022,Imagine our surprise to see you passed out in there!,Villager A,FALSE,null,DS002
+D1023,You didn't manage to fully complete the commisssion but you've worked hard!,Villager A,FALSE,null,DS002
+D1024,In total you spent {timeElapsed} doing the commission and successfully eliminated a total of {number} enemies!,Villager A,FALSE,null,DS002
+D1025,Thanks for your hard work!,Villager A,FALSE,null,DS002
+D1026,Before you leave why don't you rest up first?,Villager A,TRUE,null,DS002
+D1027,Have a good rest!,Villager A,FALSE,PD1008,DS002
+D1028,Oh alright. Hope to see you again!,Villager A,FALSE,PD1009,DS002
+D1029,Welcome back!,Villager A,FALSE,null,DS003
+D1030,Wow! You really completed our commission effortlessly!,Villager A,FALSE,null,DS003
+D1031,I knew that you're the guy to do it the moment I set my eyes on you!,Villager A,FALSE,null,DS003
+D1032,In total you spent {timeElapsed} doing the commission and successfully eliminated a total of {number} enemies!,Villager A,FALSE,null,DS003
+D1033,Thanks for your hard work!,Villager A,FALSE,null,DS003
+D1034,Before you leave why don't you rest up first?,Villager A,TRUE,null,DS003
+D1035,Have a good rest!,Villager A,FALSE,PD1008,DS003
+D1036,Oh alright. Hope to see you again!,Villager A,FALSE,PD1009,DS003
