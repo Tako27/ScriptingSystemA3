@@ -6,11 +6,12 @@ public struct WeaponEffectData
 {
     public float damage;
     public float weaponRadius;
+    public float weaponRangeMultipler;
 }
 
 public abstract class WeaponEffect : MonoBehaviour
 {
-    public float damage = 20f;
+    public float damage;
     public float lifetime = 0.5f;
 
     private void OnEnable()

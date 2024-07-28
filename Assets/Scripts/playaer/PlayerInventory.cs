@@ -102,6 +102,7 @@ public class PlayerInventory : MonoBehaviour
             weapon.dmgMultiplier = nextLevelWeapon.dmgMultiplier;
             weapon.fireRate = nextLevelWeapon.fireRate;
             weapon.basicDesc = nextLevelWeapon.upgradeDesc;
+            weapon.weaponRangeMultiplier = nextLevelWeapon.weaponRangeMultiplier;
         }
     }
 

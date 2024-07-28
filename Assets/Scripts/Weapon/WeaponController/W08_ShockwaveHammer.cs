@@ -7,7 +7,8 @@ public class W08_ShockwaveHammer : WeaponController
     protected override WeaponEffectData CalculateWeaponEffectData()
     {
         WeaponEffectData newEffectData = base.CalculateWeaponEffectData();
-        newEffectData.weaponRadius = 1.25f; // * weaponRef.weaponRangeMultipler;
+        Debug.Log(weaponRef.weaponRangeMultiplier);
+        newEffectData.weaponRadius = weaponRef.weaponRangeMultiplier;
 
         return newEffectData;
     }
@@ -16,8 +17,8 @@ public class W08_ShockwaveHammer : WeaponController
     {
         Vector3 mouseDirection = InputHandler.instance.GetMousePosition();
 
-        return base.FireWeapon(firePosition + (mouseDirection * attackRange * 1.25f)); // * weaponRef.weaponRangeMultipler
+        return base.FireWeapon(firePosition + (mouseDirection * attackRange * weaponRef.weaponRangeMultiplier));
     }
-
+    // need check if the range multiplier works properly
     
 }
