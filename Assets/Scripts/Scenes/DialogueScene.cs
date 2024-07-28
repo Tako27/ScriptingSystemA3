@@ -132,6 +132,7 @@ public class DialogueScene : MonoBehaviour
             currentSceneID = npcDialogues[nextNPCdialogue].sceneID;
             dialogue.text = npcDialogues[nextNPCdialogue].dialogue; //this is normal npc dialogue --> player does not have to  choose response
             nextNPCdialogue++; //increment by 1 to access the next dialogue on the next click
+            Debug.LogWarning(nextNPCdialogue + "Count:" + npcDialogues.Count);
         }
         else if (currentSceneID != npcDialogues[nextNPCdialogue].sceneID)//if current dialogue is the last dialogue of the cutscene, upon pressing on the next button, close the interface and start the game
         {
