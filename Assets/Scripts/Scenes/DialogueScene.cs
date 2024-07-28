@@ -40,8 +40,6 @@ public class DialogueScene : MonoBehaviour
 
     public bool dialogueOpen;
 
-    public bool toRestart;
-
     public bool toReturnToStartMenu;
 
     public bool gameStart;
@@ -125,15 +123,9 @@ public class DialogueScene : MonoBehaviour
             gameController.StartGame();
             enemySpawner.StartSpawning();
         }
-        else if(toRestart) //if player has chosen to restart the game
-        {
-            gameController.RestartGame(); //restart the game at the first dialogue cutscene
-            toRestart = false; 
-        }
         else if(toReturnToStartMenu) //if player has chosen to return to start menu
         {
             gameController.OpenStartMenu();
-            gameController.RestartGame();
             gameStart = true;
             toReturnToStartMenu = false;
         }
@@ -153,7 +145,9 @@ public class DialogueScene : MonoBehaviour
                 }
                 if(npcDialogues[nextNPCdialogue].id == "D1024" || npcDialogues[nextNPCdialogue].id == "D1032")
                 {
-                    tempDialogue = String.Format(npcDialogues[nextNPCdialogue].dialogue, Game.GetTime(), Game.GetTotalEnemiesKilled());
+                    List<Weapon> weaponList = Game.GetWeaponList();
+                    Weapon defaultWeapon = weaponList.Find(x => x.id == Game.GetChar().weaponID);
+                    tempDialogue = String.Format(npcDialogues[nextNPCdialogue].dialogue, Game.GetTime(), Game.GetmapID(), Game.GetTotalEnemiesKilled(), Game.GetTotalEnemiesKilled(), defaultWeapon.name, Game.GetChar().charName, Game.GetLevel());
                 }
                 else
                 {
@@ -210,16 +204,8 @@ public class DialogueScene : MonoBehaviour
         }
         else if(response.dialogueType == "endGameSelection") //either restart the game or bring the player back to start menu
         {
-            if(response.id == "PD1008") //this is restart
-            {
-                //restart game after dialogue scene ends
-                toRestart = true;
-            }
-            else if (response.id == "PD1009" ) //this is return to start menu
-            {
-                //return to start menu after dialogue scene ends
-                toReturnToStartMenu = true;
-            }
+            //return to start menu after dialogue scene ends
+            toReturnToStartMenu = true;
         }
 
         for(int i = 0; i<responseOptions.Count; i++)

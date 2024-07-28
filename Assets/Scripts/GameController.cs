@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject player;
+    public GameObject playerObj;
     public InputHandler inputHandler;
 
     private List<Weapon> weaponInventory;
@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
     public DataManager dataManager;
 
     public PlayerInventory playerInventory;
+
+    public Player player;
 
     public List<GameObject> mapPrefabs;
 
@@ -32,16 +34,16 @@ public class GameController : MonoBehaviour
 
     public bool gameActive;
     
-
     // Start is called before the first frame update
     void Start()
     {
         gameActive = false;
         dataManager.LoadAllData();
+        player = FindObjectOfType<Player>();
 
         manageScene = FindAnyObjectByType<ManageScene>();
         OpenStartMenu();
-        
+
         dialogueScene.OpenDialogue();
 
     }
@@ -76,10 +78,9 @@ public class GameController : MonoBehaviour
         dialogueScene.OpenDialogue();
     }
 
-    public void RestartGame()
+    public void Surrender()
     {
-        Game.ResetEnemiesKilledCounters();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        player.Die();
     }
 
     public void ReOpenStartMenu()

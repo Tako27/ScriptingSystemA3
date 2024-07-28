@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,6 +48,8 @@ public class Player : MonoBehaviour
     {
         damage*=reduceDamage;
         currentHealth -= damage;
+        float rounded = (float)Math.Round(currentHealth, 2); //round off float value for current health
+        currentHealth = rounded; //set currentHealth to rounded value
         
         if(currentHealth<=0)
         {

@@ -11,7 +11,10 @@ using UnityEngine.UI;
 public class GameUI : MonoBehaviour
 {
     [SerializeField] List<Image> weaponInvetoryImage;
+
+    [SerializeField] List<TextMeshProUGUI> weaponInvetoryLevelText;
     [SerializeField] List<Image> itemInventoryImage;
+    [SerializeField] List<TextMeshProUGUI> itemInventoryLevelText;
 
     [SerializeField] TextMeshProUGUI enemiesKilledText;
 
@@ -29,6 +32,7 @@ public class GameUI : MonoBehaviour
             string spriteFilePath = playerInventory.weaponInventory[i].imageFilePath;
             Sprite weaponImage = AssetDatabase.LoadAssetAtPath<Sprite>(spriteFilePath);
             weaponInvetoryImage[i].sprite = weaponImage;
+            weaponInvetoryLevelText[i].text = "Lv: " + playerInventory.weaponInventory[i].initialLevel.ToString();
         }
 
         for(int i =0; i<playerInventory.itemInventory.Count;i++)
@@ -36,6 +40,7 @@ public class GameUI : MonoBehaviour
             string spriteFilePath = playerInventory.itemInventory[i].imageFilePath;
             Sprite itemImage = AssetDatabase.LoadAssetAtPath<Sprite>(spriteFilePath);
             itemInventoryImage[i].sprite = itemImage;
+            itemInventoryLevelText[i].text = "Lv: " + playerInventory.itemInventory[i].initiallevel.ToString();
         }
 
         enemiesKilledText.text = "Total Enemies killed: " + Game.GetTotalEnemiesKilled();
