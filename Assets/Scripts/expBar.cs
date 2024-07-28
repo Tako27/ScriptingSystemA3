@@ -12,12 +12,7 @@ public class expBar : MonoBehaviour
     [SerializeField] Slider slider;
     [SerializeField] TextMeshProUGUI levelText;
 
-    private Level levelscript;
-
-    void Start()
-    {
-        levelscript = FindAnyObjectByType<Level>();
-    }
+    public Level levelscript;
 
     public void UpdateExpBar(int currentExp, int limit)
     {

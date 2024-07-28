@@ -26,7 +26,7 @@ public class Level : MonoBehaviour
         {
             expBar.UpdateExpBar(exp, expRequired);
         }
-
+        Game.SetLevel(level.ToString());
     }
 
     int expRequired //this is to get the amount of exp required to level up for each level

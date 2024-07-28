@@ -8,10 +8,12 @@ using UnityEngine;
 // This script is for handling tracker for total time elapsed in the game
 public class TimeTracker : MonoBehaviour
 {
-    private float timeElapsed;
+    public float timeElapsed;
 
     [SerializeField] GameController gameController;
     [SerializeField] private TextMeshProUGUI timeText;
+
+    public string endText;
     
     // Start is called before the first frame update
     void Start()
@@ -32,18 +34,17 @@ public class TimeTracker : MonoBehaviour
 
     private string Timer(float time) //handle timer text
     {
-        string text = null;
         int minutes = Mathf.FloorToInt(time/60); //get minutes passed
         int seconds = Mathf.FloorToInt(time%60); //get seconds passed
         if(minutes<10)
         {
             if(seconds<10)
             {
-                text = "0"+ minutes + ":" + "0" + seconds;
+                endText = "0"+ minutes + ":" + "0" + seconds;
             }
             else
             {
-                text = "0"+ minutes + ":" + seconds;
+                endText = "0"+ minutes + ":" + seconds;
             }
             
         }
@@ -51,16 +52,17 @@ public class TimeTracker : MonoBehaviour
         {
             if(seconds<10)
             {
-                text = minutes + ":" + "0" + seconds;
+                endText = minutes + ":" + "0" + seconds;
             }
             else
             {
-                text = minutes + ":" + seconds;
+                endText = minutes + ":" + seconds;
             }
             
         }
 
 
-        return text;
+        return endText;
     }
+
 }

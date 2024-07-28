@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -140,16 +141,25 @@ public class DialogueScene : MonoBehaviour
     {
         if(nextNPCdialogue < npcDialogues.Count) //check if dialogue is not at the end of list
         {
+            string tempDialogue = null;
             if (currentSceneID == npcDialogues[nextNPCdialogue].sceneID) //if the current dialogue is not the last dialogue of the cutscene
             {
                 if(npcDialogues[nextNPCdialogue].isDialogueSelection) //if the current npc dialogue is a trigger event where the player has to choose a response
                 {
                     PlayerResponseButton();
                 }
-                
+                if(npcDialogues[nextNPCdialogue].id == "D1024" || npcDialogues[nextNPCdialogue].id == "D1032")
+                {
+                    tempDialogue = String.Format(npcDialogues[nextNPCdialogue].dialogue, Game.GetTime(), Game.GetTotalEnemiesKilled());
+                }
+                else
+                {
+                    tempDialogue = npcDialogues[nextNPCdialogue].dialogue;
+                }
                 dialogueBy.text = npcDialogues[nextNPCdialogue].dialogueBy + ":";
-                dialogue.text = npcDialogues[nextNPCdialogue].dialogue; //this is normal npc dialogue --> player does not have to choose response
+                dialogue.text = tempDialogue; //this is normal npc dialogue --> player does not have to choose response
                 nextNPCdialogue++; //increment by 1 to access the next dialogue on the next click
+                
                 Debug.LogWarning(nextNPCdialogue + " Count:" + npcDialogues.Count);
             }
             else //if current dialogue is the last dialogue of the cutscene, upon pressing on the next button, close the interface
@@ -265,5 +275,4 @@ public class DialogueScene : MonoBehaviour
             }
         }
     }
-    
 }

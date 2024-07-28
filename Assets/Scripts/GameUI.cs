@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,10 +8,12 @@ using UnityEngine.UI;
 // Code Done By: Lee Ying Jie
 // ================================
 // This script is handles the display of inventory ui during gameplay
-public class InventoryUI : MonoBehaviour
+public class GameUI : MonoBehaviour
 {
     [SerializeField] List<Image> weaponInvetoryImage;
     [SerializeField] List<Image> itemInventoryImage;
+
+    [SerializeField] TextMeshProUGUI enemiesKilledText;
 
     private PlayerInventory playerInventory;
 
@@ -34,5 +37,7 @@ public class InventoryUI : MonoBehaviour
             Sprite itemImage = AssetDatabase.LoadAssetAtPath<Sprite>(spriteFilePath);
             itemInventoryImage[i].sprite = itemImage;
         }
+
+        enemiesKilledText.text = "Total Enemies killed: " + Game.GetTotalEnemiesKilled();
     }
 }
