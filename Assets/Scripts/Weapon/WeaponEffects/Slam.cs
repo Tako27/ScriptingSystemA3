@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Slam : WeaponEffect
 {
+    public override void InitializeWeaponEffect(WeaponEffectData weaponEffectData)
+    {
+        base.InitializeWeaponEffect(weaponEffectData);
+
+        transform.localScale *= weaponEffectData.weaponRadius;
+    }
+
     protected override void HandleWeaponEffectTrigger(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))

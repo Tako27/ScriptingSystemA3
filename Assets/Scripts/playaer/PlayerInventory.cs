@@ -154,6 +154,9 @@ public class PlayerInventory : MonoBehaviour
         catch (NullReferenceException)
         {
             Debug.Log("Weapon controller not found");
+
+
+            weaponControllerList[7].InitializeWeapon(weaponRef);
         }
     }
 

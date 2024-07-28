@@ -2537,7 +2537,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 632637250}
 --- !u!58 &405414991
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3873,11 +3873,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 1
   attackRadius: 0.05
-  attackPoint: {fileID: 0}
+  attackPoint: {fileID: 405414986}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 0
-  weaponEffectPrefab: {fileID: 0}
+  weaponEffectPrefab: {fileID: 5779061417983594586, guid: a2e9ac1e49c772641ade06152431a7d6, type: 3}
   attackTimer: 0
 --- !u!1 &634400608
 GameObject:

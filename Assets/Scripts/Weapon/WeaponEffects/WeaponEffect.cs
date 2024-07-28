@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct WeaponEffectData
+{
+    public float damage;
+    public float weaponRadius;
+}
+
 public abstract class WeaponEffect : MonoBehaviour
 {
     public float damage = 20f;
@@ -20,9 +26,9 @@ public abstract class WeaponEffect : MonoBehaviour
     }
 
 
-    public void InitializeWeaponEffect(float damage)
+    public virtual void InitializeWeaponEffect(WeaponEffectData weaponEffectData)
     {
-        this.damage = damage;
+        this.damage = weaponEffectData.damage;
     }
 
     protected abstract void HandleWeaponEffectTrigger(Collider2D collision);

@@ -35,7 +35,7 @@ public abstract class WeaponController : MonoBehaviour
 
         if (weaponEffectObject.TryGetComponent<WeaponEffect>(out var weaponEffect))
         {
-            weaponEffect.InitializeWeaponEffect(CalculateDamage());
+            weaponEffect.InitializeWeaponEffect(CalculateWeaponEffectData());
         }
 
         return weaponEffectObject;
@@ -61,9 +61,12 @@ public abstract class WeaponController : MonoBehaviour
         attackTimer -= Time.deltaTime;
     }
 
-    protected float CalculateDamage()
+    protected virtual WeaponEffectData CalculateWeaponEffectData()
     {
-        return weaponRef.damage * weaponRef.dmgMultiplier * Game.GetChar().atkMultiplier;
+        WeaponEffectData newEffectData = new WeaponEffectData();
+        newEffectData.damage = weaponRef.damage * weaponRef.dmgMultiplier * Game.GetChar().atkMultiplier;
+
+        return newEffectData;
     }
 
 }
