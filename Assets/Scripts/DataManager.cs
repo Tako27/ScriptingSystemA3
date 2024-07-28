@@ -288,8 +288,9 @@ public class DataManager : MonoBehaviour
             refDialogue.dialogueBy = columnData[2];
             refDialogue.isDialogueSelection = columnData[3].ToLower() == "true";
             refDialogue.optionResponseID = columnData[4];
+            refDialogue.sceneID = columnData[5];
 
-            npcDialogue dialogue = new npcDialogue(refDialogue.id, refDialogue.dialogue,  refDialogue.dialogueBy,  refDialogue.isDialogueSelection,  refDialogue.optionResponseID);
+            npcDialogue dialogue = new npcDialogue(refDialogue.id, refDialogue.dialogue,  refDialogue.dialogueBy,  refDialogue.isDialogueSelection,  refDialogue.optionResponseID, refDialogue.sceneID);
 
             npcDialoguesList.Add(dialogue);
             //add all initialized npc dialogue ddata into this list
@@ -320,9 +321,13 @@ public class DataManager : MonoBehaviour
             refDialogue.dialogueType = columnData[4];
             refDialogue.typeID = columnData[5];
 
-            PlayerDialogue dialogue = new PlayerDialogue(refDialogue.triggerID, refDialogue.id, refDialogue.dialogue,  refDialogue.dialogueBy,  refDialogue.dialogueType,  refDialogue.typeID);
+            string[] triggerIDs = refDialogue.triggerID.Split('@');
+            foreach (string triggerID in triggerIDs)
+            {
+                PlayerDialogue dialogue = new PlayerDialogue(triggerID.Trim(), refDialogue.id, refDialogue.dialogue, refDialogue.dialogueBy, refDialogue.dialogueType, refDialogue.typeID);
+                playerDialoguesList.Add(dialogue);
+            }
 
-            playerDialoguesList.Add(dialogue);
             //add all initialized player dialogue data into this list
             //this list acts as the main list of player dialogues, which contains all available plaer dialogue in game
             //which will be referenced by the game script to set the player dialogue list in game

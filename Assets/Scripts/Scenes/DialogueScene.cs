@@ -33,13 +33,29 @@ public class DialogueScene : MonoBehaviour
 
     public CameraBounds cameraBounds;
 
+    private Player player ;
+
     private int nextNPCdialogue;
 
     public bool dialogueOpen;
 
+    public bool toRestart;
+
+    public bool toReturnToStartMenu;
+
+    public string currentSceneID;
+
+
     void Start()
     {
         cameraBounds  = FindAnyObjectByType<CameraBounds>();
+        nextNPCdialogue = 0;
+        player = FindAnyObjectByType<Player>();
+    }
+
+    void Update()
+    {
+        Debug.Log(currentSceneID);
     }
 
     public void InitializeDialogues()
@@ -51,44 +67,77 @@ public class DialogueScene : MonoBehaviour
 
     public void OpenDialogue() //this opens up the dialogue interface
     {
-        nextNPCdialogue = 1; //start at 1 since we want to go to the next dialogue made by the npc after clicking on next button
+        gameUI.SetActive(false);
         dialogueOpen = true;
         InitializeDialogues();
         Time.timeScale = 0f; //game is paused during the dialogue
         dialogueInterface.SetActive(true);
 
-        dialogueBy.text = npcDialogues[0].dialogueBy + ":";
-        dialogue.text = npcDialogues[0].dialogue; //this is the first dialogue made by the npc
- 
+        
+        currentSceneID = npcDialogues[nextNPCdialogue].sceneID;
+
+        if(!player.dead)
+        {
+            string temp = currentSceneID;
+
+            while(temp == currentSceneID)
+            {
+                currentSceneID = npcDialogues[nextNPCdialogue].sceneID;
+                nextNPCdialogue++;
+            }
+        }
+
+
+        dialogueBy.text = npcDialogues[nextNPCdialogue].dialogueBy + ":";
+        dialogue.text = npcDialogues[nextNPCdialogue].dialogue; //this is the first dialogue made by the npc
+
+        
     }
 
     public void CloseDialogue() //this closes the dialogue interface
     {
         Time.timeScale = 1f; //unpause the game
         dialogueInterface.SetActive(false);
-        gameUI.SetActive(true);
+
         dialogueOpen = false;
+
+        if(currentSceneID == npcDialogues[0].sceneID)
+        {
+            gameUI.SetActive(true);
+            gameController.StartGame();
+            enemySpawner.StartSpawning();
+        }
+        else if(toRestart)
+        {
+            gameController.RestartGame();
+            toRestart = false;
+        }
+        else if(toReturnToStartMenu)
+        {
+            
+            toReturnToStartMenu = false;
+        }
 
     }
 
     public void NextButton() //this handles the dialogue progression
     {
         
-        if(nextNPCdialogue<npcDialogues.Count) //if the current dialogue is not the last dialogue of the cutscene
+        if(currentSceneID == npcDialogues[nextNPCdialogue].sceneID && nextNPCdialogue<npcDialogues.Count) //if the current dialogue is not the last dialogue of the cutscene
         {
             if(npcDialogues[nextNPCdialogue].isDialogueSelection) //if the current npc dialogue is a trigger event where the player has to choose a response
             {
                 PlayerResponseButton();
             }
+            currentSceneID = npcDialogues[nextNPCdialogue].sceneID;
             dialogue.text = npcDialogues[nextNPCdialogue].dialogue; //this is normal npc dialogue --> player does not have to  choose response
             nextNPCdialogue++; //increment by 1 to access the next dialogue on the next click
         }
-        else //if current dialogue is the last dialogue of the cutscene, upon pressing on the next button, close the interface and start the game
+        else if (currentSceneID != npcDialogues[nextNPCdialogue].sceneID)//if current dialogue is the last dialogue of the cutscene, upon pressing on the next button, close the interface and start the game
         {
-            gameController.StartGame();
-            enemySpawner.StartSpawning();
+            CloseDialogue();
+            currentSceneID = npcDialogues[nextNPCdialogue].sceneID;
         }
-        
     }
 
     public void PlayerResponseButton() //this handles display of player response options
@@ -122,6 +171,19 @@ public class DialogueScene : MonoBehaviour
         {
             //add set map based on dialogue
             SetMapFromDialogue(response.typeID);
+        }
+        else if(response.dialogueType == "endGameSelection") //either restart the game or bring the player back to start menu
+        {
+            if(response.id == "PD1008") //this is restart
+            {
+                //restart game after dialogue scene ends
+                toRestart = true;
+            }
+            else if (response.id == "PD1009" ) //this is return to start menu
+            {
+                //return to start menu after dialogue scene ends
+                toReturnToStartMenu = true;
+            }
         }
 
         for(int i = 0; i<responseOptions.Count; i++)

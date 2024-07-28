@@ -16,9 +16,13 @@ public class Player : MonoBehaviour
     public float playerAttack;
     public float expGain;
     public float reduceDamage;
+
+    public bool dead;
    private List<item> items = Game.GetItemList();
 
     private ittemManager ittemManager;
+
+    private GameController gameController;
 
     private PlayerInventory playerInventory;
 
@@ -29,7 +33,8 @@ public class Player : MonoBehaviour
     {
         ittemManager = FindObjectOfType<ittemManager>();
         playerInventory = FindObjectOfType<PlayerInventory>(); 
-
+        gameController = FindAnyObjectByType<GameController>();
+        dead = false;
 
     }
 
@@ -46,13 +51,14 @@ public class Player : MonoBehaviour
         if(currentHealth<=0)
         {
             Die();
+            dead =true;
         }
         
     }
 
     public void Die() //handle death
     {
-
+        gameController.EndGame();
     }
 
     public void ApplyItemEffects() //apply effects of items to player

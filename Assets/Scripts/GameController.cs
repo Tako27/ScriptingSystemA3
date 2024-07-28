@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // Code Done By: Lee Ying Jie, Celest Goh Zi Xuan
 // ================================
@@ -46,7 +47,6 @@ public class GameController : MonoBehaviour
     public void StartGame()
     {
         gameActive = true;
-        dialogueScene.CloseDialogue();
         
         //set corresponding sprite image for chosen character class
         string spriteFilePath = Game.GetChar().spriteImage;
@@ -61,6 +61,17 @@ public class GameController : MonoBehaviour
 
         inputHandler.SetInputReceiver(player.GetComponent<playerMovement>());
 
+    }
+
+    public void EndGame()
+    {
+        Debug.Log("Game Ended");
+        dialogueScene.OpenDialogue();
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 

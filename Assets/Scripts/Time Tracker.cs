@@ -24,7 +24,7 @@ public class TimeTracker : MonoBehaviour
     {
         if(gameController.gameActive)
         {
-            timeElapsed+= Time.unscaledDeltaTime; //total time elapsed in seconds
+            timeElapsed+= Time.deltaTime; //total time elapsed in seconds
             timeText.text = "Time Elapsed:" + "\n" + Timer(timeElapsed); //set timer text
         }
         
