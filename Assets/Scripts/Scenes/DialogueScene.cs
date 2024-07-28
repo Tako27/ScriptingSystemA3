@@ -132,6 +132,9 @@ public class DialogueScene : MonoBehaviour
         }
         else if(toReturnToStartMenu) //if player has chosen to return to start menu
         {
+            gameController.OpenStartMenu();
+            gameController.RestartGame();
+            gameStart = true;
             toReturnToStartMenu = false;
         }
 

@@ -702,6 +702,7 @@ GameObject:
   - component: {fileID: 116283950}
   - component: {fileID: 116283951}
   - component: {fileID: 116283952}
+  - component: {fileID: 116283953}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: GameController
@@ -731,6 +732,7 @@ MonoBehaviour:
   - {fileID: 9119067728623934035, guid: 4d06b4850b70c4949852465711443a94, type: 3}
   expDrop: {fileID: 1642018538323562546, guid: ea888b8a2d4b42d4a913bd5cfde42b7b, type: 3}
   timeTracker: {fileID: 116283951}
+  manageScene: {fileID: 0}
   gameActive: 0
 --- !u!4 &116283944
 Transform:
@@ -908,6 +910,18 @@ MonoBehaviour:
   - {fileID: 1181907377}
   - {fileID: 907988325}
   enemiesKilledText: {fileID: 213151551}
+--- !u!114 &116283953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116283942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc9a0472a59738045857ba314b8deceb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &117476595
 GameObject:
   m_ObjectHideFlags: 0

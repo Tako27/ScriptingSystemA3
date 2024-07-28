@@ -28,6 +28,8 @@ public class GameController : MonoBehaviour
 
     public TimeTracker timeTracker;
 
+    public ManageScene manageScene;
+
     public bool gameActive;
     
 
@@ -36,8 +38,12 @@ public class GameController : MonoBehaviour
     {
         gameActive = false;
         dataManager.LoadAllData();
-        dialogueScene.OpenDialogue();
+
+        manageScene = FindAnyObjectByType<ManageScene>();
+        OpenStartMenu();
         
+        dialogueScene.OpenDialogue();
+
     }
 
     // Update is called once per frame
@@ -76,5 +82,21 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    public void ReOpenStartMenu()
+    {
+        Game.ResetEnemiesKilledCounters(); //reset eveything
+        OpenStartMenu();
+    }
+
+
+    public void OpenStartMenu()
+    {
+        manageScene.OpenScene("StartScene", () =>
+            {
+                //initialize scene after scene finishes loading
+                StartMenuScript menuScript = FindObjectOfType<StartMenuScript>();
+                menuScript.InitializeScene(this);
+            });
+    }
 
 }
