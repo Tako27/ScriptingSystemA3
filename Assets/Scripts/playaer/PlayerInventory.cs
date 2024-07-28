@@ -145,7 +145,7 @@ public class PlayerInventory : MonoBehaviour
 
     public void EnableWeapon(Weapon weaponRef)
     {
-        int weaponID = int.Parse(weaponRef.id.Substring(1));
+        int weaponID = int.Parse(weaponRef.id.Substring(1)) - 1;
 
         try
         {
