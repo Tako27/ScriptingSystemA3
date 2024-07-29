@@ -173,7 +173,9 @@ public class UpgradeMenu : MonoBehaviour
     {
         //set weapon button image
         string spriteFilePath = newWeapon.imageFilePath;
+        #if UNITY_EDITOR
         Sprite weaponImage = AssetDatabase.LoadAssetAtPath<Sprite>(spriteFilePath);
+        #endif
         weaponButtonImage.sprite = weaponImage;
 
         if(playerInventory.GetWeaponInventory().Contains(newWeapon)) //if weapon is in inventory --> set info to next level
@@ -251,7 +253,9 @@ public class UpgradeMenu : MonoBehaviour
     {
         //set item image for item button
         string spriteFilePath = newItem.imageFilePath;
+        #if UNITY_EDITOR
         Sprite itemImage = AssetDatabase.LoadAssetAtPath<Sprite>(spriteFilePath);
+        #endif
         itemButtonImage.sprite = itemImage;
         
         //set item text for item button
@@ -282,7 +286,9 @@ public class UpgradeMenu : MonoBehaviour
         {
             //set weapon image
             string weaponSprite = newWeapon2.imageFilePath;
+            #if UNITY_EDITOR
             Sprite weaponImage = AssetDatabase.LoadAssetAtPath<Sprite>(weaponSprite);
+            #endif
             randomButtonImage.sprite = weaponImage;
 
             if(playerInventory.GetWeaponInventory().Contains(newWeapon2)) //set weapon upgrade text --> if weapon is in invenotry, set text to next level info
@@ -303,7 +309,9 @@ public class UpgradeMenu : MonoBehaviour
         {
             //set item image
             string itemSprite = newItem2.imageFilePath;
+            #if UNITY_EDITOR
             Sprite itemImage = AssetDatabase.LoadAssetAtPath<Sprite>(itemSprite);
+            #endif
             randomButtonImage.sprite = itemImage;
 
             if(playerInventory.GetItemInventory().Contains(newItem2)) //set item upgrade text --> next level info if item is in inventory
@@ -424,7 +432,9 @@ public class UpgradeMenu : MonoBehaviour
 
         //set weapon image
         string weaponSprite = weapon.imageFilePath;
+        #if UNITY_EDITOR
         Sprite weaponImage = AssetDatabase.LoadAssetAtPath<Sprite>(weaponSprite);
+        #endif
         weaponInventoryImages[index].sprite = weaponImage;
         
         if(weapon.initialLevel == 1) //weapon is currently level 1
@@ -479,7 +489,9 @@ public class UpgradeMenu : MonoBehaviour
 
         //set item image
         string itemSprite = item.imageFilePath;
+        #if UNITY_EDITOR
         Sprite itemImage = AssetDatabase.LoadAssetAtPath<Sprite>(itemSprite);
+        #endif
         itemInventoryImages[index].sprite = itemImage;
 
 

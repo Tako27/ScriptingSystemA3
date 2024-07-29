@@ -59,7 +59,9 @@ public class GameController : MonoBehaviour
         
         //set corresponding sprite image for chosen character class
         string spriteFilePath = Game.GetChar().spriteImage;
+        #if UNITY_EDITOR
         Sprite playerSprite = AssetDatabase.LoadAssetAtPath<Sprite>(spriteFilePath);
+        #endif
         player.GetComponent<SpriteRenderer>().sprite = playerSprite;
 
         player.transform.position = Vector2.zero;

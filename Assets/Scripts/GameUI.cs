@@ -30,7 +30,9 @@ public class GameUI : MonoBehaviour
         for(int i =0; i<playerInventory.weaponInventory.Count;i++)
         {
             string spriteFilePath = playerInventory.weaponInventory[i].imageFilePath;
+            #if UNITY_EDITOR
             Sprite weaponImage = AssetDatabase.LoadAssetAtPath<Sprite>(spriteFilePath);
+            #endif
             weaponInvetoryImage[i].sprite = weaponImage; //set weapon image
             weaponInvetoryLevelText[i].text = "Lv: " + playerInventory.weaponInventory[i].initialLevel.ToString(); //set weapon level text
         }
@@ -38,7 +40,9 @@ public class GameUI : MonoBehaviour
         for(int i =0; i<playerInventory.itemInventory.Count;i++)
         {
             string spriteFilePath = playerInventory.itemInventory[i].imageFilePath;
+            #if UNITY_EDITOR
             Sprite itemImage = AssetDatabase.LoadAssetAtPath<Sprite>(spriteFilePath);
+            #endif
             itemInventoryImage[i].sprite = itemImage; //set item image
             itemInventoryLevelText[i].text = "Lv: " + playerInventory.itemInventory[i].initiallevel.ToString(); //set item level text
         }
