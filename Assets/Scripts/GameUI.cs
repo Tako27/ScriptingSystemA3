@@ -42,8 +42,8 @@ public class GameUI : MonoBehaviour
             string spriteFilePath = playerInventory.itemInventory[i].imageFilePath;
             #if UNITY_EDITOR
             Sprite itemImage = AssetDatabase.LoadAssetAtPath<Sprite>(spriteFilePath);
-            #endif
             itemInventoryImage[i].sprite = itemImage; //set item image
+            #endif
             itemInventoryLevelText[i].text = "Lv: " + playerInventory.itemInventory[i].initiallevel.ToString(); //set item level text
         }
 

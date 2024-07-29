@@ -175,10 +175,10 @@ public class UpgradeMenu : MonoBehaviour
         string spriteFilePath = newWeapon.imageFilePath;
         #if UNITY_EDITOR
         Sprite weaponImage = AssetDatabase.LoadAssetAtPath<Sprite>(spriteFilePath);
-        #endif
         weaponButtonImage.sprite = weaponImage;
+        #endif
 
-        if(playerInventory.GetWeaponInventory().Contains(newWeapon)) //if weapon is in inventory --> set info to next level
+        if (playerInventory.GetWeaponInventory().Contains(newWeapon)) //if weapon is in inventory --> set info to next level
         {
             List<WeaponUpgrades> upgradeList = Game.GetWeaponUpgradesList().FindAll(upgrade => upgrade.refID == newWeapon.id); //this is to find all levels for this specific weapon
             WeaponUpgrades nextLevelWeapon = upgradeList.Find(upgrade => upgrade.level == newWeapon.initialLevel + 1); //get the stats of next level for this weapon
@@ -255,11 +255,11 @@ public class UpgradeMenu : MonoBehaviour
         string spriteFilePath = newItem.imageFilePath;
         #if UNITY_EDITOR
         Sprite itemImage = AssetDatabase.LoadAssetAtPath<Sprite>(spriteFilePath);
-        #endif
         itemButtonImage.sprite = itemImage;
-        
+        #endif
+
         //set item text for item button
-        if(playerInventory.GetItemInventory().Contains(newItem)) //if item is in inventory, set the text of item button to the next level stats of the item
+        if (playerInventory.GetItemInventory().Contains(newItem)) //if item is in inventory, set the text of item button to the next level stats of the item
         {
             List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == newItem.id); //this is to find all levels for this specific item
             ItemUpgrades nextLevelItem = upgradeList.Find(upgrade => upgrade.level == newItem.initiallevel + 1); //get the stats of next level for this weapon
@@ -288,10 +288,10 @@ public class UpgradeMenu : MonoBehaviour
             string weaponSprite = newWeapon2.imageFilePath;
             #if UNITY_EDITOR
             Sprite weaponImage = AssetDatabase.LoadAssetAtPath<Sprite>(weaponSprite);
-            #endif
             randomButtonImage.sprite = weaponImage;
+            #endif
 
-            if(playerInventory.GetWeaponInventory().Contains(newWeapon2)) //set weapon upgrade text --> if weapon is in invenotry, set text to next level info
+            if (playerInventory.GetWeaponInventory().Contains(newWeapon2)) //set weapon upgrade text --> if weapon is in invenotry, set text to next level info
             {
                 List<WeaponUpgrades> upgradeList = Game.GetWeaponUpgradesList().FindAll(upgrade => upgrade.refID == newWeapon2.id); //this is to find all levels for this specific weapon
                 WeaponUpgrades nextLevelWeapon = upgradeList.Find(upgrade => upgrade.level == newWeapon2.initialLevel + 1); //get the stats of next level for this weapon
@@ -311,10 +311,10 @@ public class UpgradeMenu : MonoBehaviour
             string itemSprite = newItem2.imageFilePath;
             #if UNITY_EDITOR
             Sprite itemImage = AssetDatabase.LoadAssetAtPath<Sprite>(itemSprite);
-            #endif
             randomButtonImage.sprite = itemImage;
+            #endif
 
-            if(playerInventory.GetItemInventory().Contains(newItem2)) //set item upgrade text --> next level info if item is in inventory
+            if (playerInventory.GetItemInventory().Contains(newItem2)) //set item upgrade text --> next level info if item is in inventory
             {
                 List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == newItem2.id); //this is to find all levels for this specific item
                 ItemUpgrades nextLevelItem = upgradeList.Find(upgrade => upgrade.level == newItem2.initiallevel + 1); //get the stats of next level for this weapon
@@ -434,10 +434,10 @@ public class UpgradeMenu : MonoBehaviour
         string weaponSprite = weapon.imageFilePath;
         #if UNITY_EDITOR
         Sprite weaponImage = AssetDatabase.LoadAssetAtPath<Sprite>(weaponSprite);
-        #endif
         weaponInventoryImages[index].sprite = weaponImage;
-        
-        if(weapon.initialLevel == 1) //weapon is currently level 1
+        #endif
+
+        if (weapon.initialLevel == 1) //weapon is currently level 1
         {
             weaponText.text = weapon.name + "\n" +"\nLevel: " + weapon.initialLevel.ToString() + "\n" + "\n" + weapon.basicDesc;
         }
@@ -491,11 +491,10 @@ public class UpgradeMenu : MonoBehaviour
         string itemSprite = item.imageFilePath;
         #if UNITY_EDITOR
         Sprite itemImage = AssetDatabase.LoadAssetAtPath<Sprite>(itemSprite);
-        #endif
         itemInventoryImages[index].sprite = itemImage;
+        #endif
 
-
-        if(item.initiallevel == 1) //item is currently level 1
+        if (item.initiallevel == 1) //item is currently level 1
         {
             itemText.text = item.name + "\n" +"\nLevel: " + item.initiallevel.ToString() + "\n" + "\n" + item.basicDesc;
         }

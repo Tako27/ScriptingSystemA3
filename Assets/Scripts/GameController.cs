@@ -61,8 +61,8 @@ public class GameController : MonoBehaviour
         string spriteFilePath = Game.GetChar().spriteImage;
         #if UNITY_EDITOR
         Sprite playerSprite = AssetDatabase.LoadAssetAtPath<Sprite>(spriteFilePath);
-        #endif
         player.GetComponent<SpriteRenderer>().sprite = playerSprite;
+        #endif
 
         player.transform.position = Vector2.zero;
         foreach(PlayerScript playerScript in player.GetComponents<PlayerScript>())
