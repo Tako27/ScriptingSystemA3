@@ -32,8 +32,8 @@ public class GameUI : MonoBehaviour
             string spriteFilePath = playerInventory.weaponInventory[i].imageFilePath;
             #if UNITY_EDITOR
             Sprite weaponImage = AssetDatabase.LoadAssetAtPath<Sprite>(spriteFilePath);
-            #endif
             weaponInvetoryImage[i].sprite = weaponImage; //set weapon image
+            #endif
             weaponInvetoryLevelText[i].text = "Lv: " + playerInventory.weaponInventory[i].initialLevel.ToString(); //set weapon level text
         }
 
