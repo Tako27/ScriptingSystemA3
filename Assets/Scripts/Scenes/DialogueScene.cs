@@ -147,6 +147,7 @@ public class DialogueScene : MonoBehaviour
                 {
                     List<Weapon> weaponList = Game.GetWeaponList();
                     Weapon defaultWeapon = weaponList.Find(x => x.id == Game.GetChar().weaponID);
+
                     tempDialogue = String.Format(npcDialogues[nextNPCdialogue].dialogue, Game.GetTime(), Game.GetmapID(), defaultWeapon.name, Game.GetChar().charName, Game.GetLevel());
                 }
                 else if(npcDialogues[nextNPCdialogue].id == "D1025" || npcDialogues[nextNPCdialogue].id == "D1034")
@@ -161,7 +162,7 @@ public class DialogueScene : MonoBehaviour
                 dialogue.text = tempDialogue; //this is normal npc dialogue --> player does not have to choose response
                 nextNPCdialogue++; //increment by 1 to access the next dialogue on the next click
                 
-                Debug.LogWarning(nextNPCdialogue + " Count:" + npcDialogues.Count);
+                //Debug.LogWarning(nextNPCdialogue + " Count:" + npcDialogues.Count);
             }
             else //if current dialogue is the last dialogue of the cutscene, upon pressing on the next button, close the interface
             {
