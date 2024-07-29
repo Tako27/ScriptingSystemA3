@@ -73,7 +73,7 @@ public class DataManager : MonoBehaviour
     {
         try
         {
-            string filePath = Path.Combine(Application.dataPath, "Data/A3 - Sessions - Dynamic.csv");
+            string filePath = Path.Combine(Application.streamingAssetsPath, "Data/A3 - Sessions - Dynamic.csv");
             if (File.Exists(filePath))
             {
                 string[] fileData = File.ReadAllLines(filePath);
@@ -105,7 +105,7 @@ public class DataManager : MonoBehaviour
 
     public void SaveSessionData(List<SessionDataInfo> sessionDataList)
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/A3 - Sessions - Dynamic.csv");
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Data/A3 - Sessions - Dynamic.csv");
 
         List<string> csvLines = new List<string>();
 
@@ -136,7 +136,7 @@ public class DataManager : MonoBehaviour
     #region Load Wave Data
     public void LoadWaveData()
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/A3 - Waves - Static.csv");
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Data/A3 - Waves - Static.csv");
         string[] fileData = File.ReadAllLines(filePath);
         for (int i = 1; i < fileData.Length; i++)
         {
@@ -171,7 +171,7 @@ public class DataManager : MonoBehaviour
     #region Load Enemy Stats Data
     public void LoadEnemyStatsData()
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/A3 - Enemy - Static.csv");
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Data/A3 - Enemy - Static.csv");
         string[] fileData = File.ReadAllLines(filePath);
         for (int i = 1; i < fileData.Length; i++)
         {
@@ -208,7 +208,7 @@ public class DataManager : MonoBehaviour
     #region Load Character Data
     public void LoadCharacterData() //load character data
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/Character.csv"); //find file from unity project menu
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Data/Character.csv"); //find file from unity project menu
         string[] fileData = File.ReadAllLines(filePath); //pull data from file
         //currently, fileData consists of data from each row, but is not separated by column
         for(int i =1; i<fileData.Length;i++) 
@@ -242,7 +242,7 @@ public class DataManager : MonoBehaviour
 
     public void LoadWeaponData() //load weapon data
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/Weapons.csv"); //find file from unity project menu
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Data/Weapons.csv"); //find file from unity project menu
         string[] fileData = File.ReadAllLines(filePath); //pull data from file
         for(int i =1; i<fileData.Length;i++) 
         {
@@ -272,7 +272,7 @@ public class DataManager : MonoBehaviour
 
     public void LoadItemData() //load item daata
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/Items.csv"); //find file from unity project menu
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Data/Items.csv"); //find file from unity project menu
         string[] fileData = File.ReadAllLines(filePath); //pull data from file
         for(int i =1; i<fileData.Length;i++)
         {
@@ -305,7 +305,7 @@ public class DataManager : MonoBehaviour
 
     public void LoadWeaponUpgrades() //load weapon upgrades
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/Weapon Upgrades.csv"); //find file from unity project menu
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Data/Weapon Upgrades.csv"); //find file from unity project menu
         string[] fileData = File.ReadAllLines(filePath); //pull data from file
         for(int i =1; i<fileData.Length;i++)
         {
@@ -340,7 +340,7 @@ public class DataManager : MonoBehaviour
 
     public void LoadItemUpgrades() //load item upgrades 
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/Item Upgrades.csv"); //find file from unity project menu
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Data/Item Upgrades.csv"); //find file from unity project menu
         string[] fileData = File.ReadAllLines(filePath); //pull data from file
         for(int i =1; i<fileData.Length;i++)
         {
@@ -371,7 +371,7 @@ public class DataManager : MonoBehaviour
 
     public void LoadNpcDialogues() //load npc dialogue
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/NPC Dialogue.csv"); //find file from unity project menu
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Data/NPC Dialogue.csv"); //find file from unity project menu
         string[] fileData = File.ReadAllLines(filePath); //pull data from file
         for(int i =1; i<fileData.Length;i++)
         {
@@ -402,7 +402,7 @@ public class DataManager : MonoBehaviour
 
     public void LoadPlayerDialogues() //load player dialogue
     {
-        string filePath = Path.Combine(Application.dataPath, "Data/Player Dialogue.csv"); //find file 
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Data/Player Dialogue.csv"); //find file 
         string[] fileData = File.ReadAllLines(filePath); //pull data from file
         for(int i =1; i<fileData.Length;i++)
         {

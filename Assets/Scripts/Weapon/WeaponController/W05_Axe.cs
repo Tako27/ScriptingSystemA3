@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// Code Done By: Celest Goh Zi Xuan
+// ================================
+// This script controls the subclass of weapon Controller
 public class W05_Axe : WeaponController
 {
     protected override WeaponEffectData CalculateWeaponEffectData()

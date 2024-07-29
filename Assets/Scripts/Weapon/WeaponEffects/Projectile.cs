@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Code Done By: Celest Goh Zi Xuan
+// ================================
+// This script controls the subclass of weapon effect
 public class Projectile : WeaponEffect
 {
     protected override void HandleWeaponEffectTrigger(Collider2D collision)

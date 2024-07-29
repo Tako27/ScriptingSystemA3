@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Code Done By: Celest Goh Zi Xuan
+// ================================
+// This script controls the subclass of enemyController
 public class E05_Slimtoto : EnemyController
 {
     protected override void EnemyAttack()

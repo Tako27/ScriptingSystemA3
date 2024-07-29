@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// Code Done By: Celest Goh Zi Xuan
+// ================================
+// holds data for game stats
 public class SessionDataInfo
 {
     public string sessionID;
