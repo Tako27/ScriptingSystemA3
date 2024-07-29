@@ -9,6 +9,6 @@ public class SessionDataInfo
     public string timeSurvived;
     public int totalEnemiesKilled;
     public int level;
-    public int mapChosen;
+    public string mapChosen;
     public Dictionary<string, int> typeOfEnemiesKilled;
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // Code Done By: Celest Goh Zi Xuan
@@ -45,10 +46,11 @@ public class EnemySpawner : MonoBehaviour
     // for checking if all enemies have died after wave finish spawning
     private int activeEnemiesCount = 0;
     private bool allWavesSpawned = false;
+    private bool hasGameEnded = false;
 
     void Update()
     {
-        if (allWavesSpawned && activeEnemiesCount == 0)
+        if (!hasGameEnded && allWavesSpawned && activeEnemiesCount == 0)
         {
             Debug.Log("All enemies have died. All waves completed.");
 
@@ -59,6 +61,7 @@ public class EnemySpawner : MonoBehaviour
                 if (gameController.TryGetComponent<GameController>(out var gcScript))
                 {
                     gcScript.EndGame();
+                    hasGameEnded = true;
                 }
             }
         }
@@ -392,6 +395,7 @@ public class EnemySpawner : MonoBehaviour
         activeEnemiesCount = 0;
         waveIsDone = true;
         isSpawningActive = true;
+        hasGameEnded = false;
     }
     public void StopSpawning()
     {

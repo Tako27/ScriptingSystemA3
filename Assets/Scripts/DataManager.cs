@@ -89,7 +89,8 @@ public class DataManager : MonoBehaviour
                         timeSurvived = columnData[2],
                         totalEnemiesKilled = int.Parse(columnData[3]),
                         level = int.Parse(columnData[4]),
-                        typeOfEnemiesKilled = DeserializeEnemyKills(columnData[5])
+                        mapChosen = columnData[5],
+                        typeOfEnemiesKilled = DeserializeEnemyKills(columnData[6])
                     };
                     sessionDataInfoList.Add(sessionDataInfo);
                 }
@@ -117,13 +118,13 @@ public class DataManager : MonoBehaviour
         else
         {
             // add header of the file
-            csvLines.Add("sessionID,characterID,timeSurvived,totalEnemiesKilled,level,enemyKills");
+            csvLines.Add("sessionID,characterID,timeSurvived,totalEnemiesKilled,level,mapChosen,enemyKills");
         }
         // Add new session data
         foreach (SessionDataInfo data in sessionDataList)
         {
             string typeOfEnemiesKilledSerialized = SerializeEnemyKills(data.typeOfEnemiesKilled);
-            string line = $"{data.sessionID},{data.characterID},{data.timeSurvived},{data.totalEnemiesKilled},{data.level},{typeOfEnemiesKilledSerialized}";
+            string line = $"{data.sessionID},{data.characterID},{data.timeSurvived},{data.totalEnemiesKilled},{data.level},{data.mapChosen},{typeOfEnemiesKilledSerialized}";
             csvLines.Add(line);
         }
 
