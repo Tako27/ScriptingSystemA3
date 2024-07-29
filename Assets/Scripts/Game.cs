@@ -343,15 +343,20 @@ public static class Game
 
     public static List<SessionDataInfo> ConstructDataInfoForSaving()
     {
-        List<SessionDataInfo> sessionDatas = GetSessionDataInfoList();
+        bool isThereExistingData;
+        if (GetSessionDataInfoList() == null || GetSessionDataInfoList().Count == 0)
+        {
+            isThereExistingData = false;
+        }
+        else
+        {
+            isThereExistingData = true;
+        }
 
         // if there is no data - missing files/no existing file
-        if (sessionDatas == null || sessionDatas.Count == 0)
+        if (isThereExistingData == false)
         {
-            if (sessionDatas == null)
-            {
-                sessionDatas = new List<SessionDataInfo>();
-            }
+            List<SessionDataInfo> sessionDatas = new List<SessionDataInfo>();
 
             // set the data session id to S00001
             SessionDataInfo newSessionDataInfo = new SessionDataInfo
@@ -361,6 +366,7 @@ public static class Game
                 timeSurvived = Game.GetTime(),
                 totalEnemiesKilled = Game.GetTotalEnemiesKilled(),
                 level = int.Parse(Game.GetLevel()),
+                mapChosen = Game.GetmapID(),
                 typeOfEnemiesKilled = Game.GetTypeOfEnemiesKilled()
             };
 
@@ -373,8 +379,11 @@ public static class Game
         // then construct and return the session data info
         else
         {
+            List<SessionDataInfo> sessionDatas = new List<SessionDataInfo>();
 
-            string currentSessionID = GenerateNewSessionID(sessionDatas[sessionDatas.Count - 1].sessionID);
+            List<SessionDataInfo> existingData = GetSessionDataInfoList();
+            string currentSessionID = GenerateNewSessionID(existingData[existingData.Count - 1].sessionID);
+
             SessionDataInfo newSessionDataInfo = new SessionDataInfo
             {
                 sessionID = currentSessionID,
@@ -382,6 +391,7 @@ public static class Game
                 timeSurvived = Game.GetTime(),
                 totalEnemiesKilled = Game.GetTotalEnemiesKilled(),
                 level = int.Parse(Game.GetLevel()),
+                mapChosen = Game.GetmapID(),
                 typeOfEnemiesKilled = Game.GetTypeOfEnemiesKilled()
             };
             sessionDatas.Add(newSessionDataInfo);
