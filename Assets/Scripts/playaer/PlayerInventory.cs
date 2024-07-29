@@ -20,7 +20,7 @@ public class PlayerInventory : MonoBehaviour
 
     public List<WeaponController> weaponControllerList;
 
-    public void InitializaWeaponStats(Weapon weapon) //this is to handle initialization of weapons 
+    public void InitializaWeaponStats(Weapon weapon) //this is to handle initialization of weapons --> get level 1 stats of weapon
     {
         List<WeaponUpgrades> upgradeList = Game.GetWeaponUpgradesList().FindAll(upgrade => upgrade.refID == weapon.id); //this is to find all levels for this specific weapon
         WeaponUpgrades levelOneWeapon = upgradeList.Find(upgrade => upgrade.level == weapon.initialLevel); //find level 1 data for this weapon
@@ -33,7 +33,7 @@ public class PlayerInventory : MonoBehaviour
         weapon.basicDesc = levelOneWeapon.upgradeDesc;
     }
 
-    public void InitializaItemStats(item item) //handle initialization of items
+    public void InitializaItemStats(item item) //handle initialization of items --> get level 1 stats of items
     {
         List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == item.id); //this is to find all levels for this specific item
         ItemUpgrades levelOneItem = upgradeList.Find(upgrade => upgrade.level == item.initiallevel); //find level 1 data for item

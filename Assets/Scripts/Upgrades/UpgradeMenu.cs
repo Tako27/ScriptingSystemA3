@@ -88,7 +88,13 @@ public class UpgradeMenu : MonoBehaviour
         SetRandomButton();
         
     }
+    public void CloseUpgradeMenu() //close upgrade menu
+    {
+        upgrade.SetActive(false);
+        Time.timeScale = 1f; //unpause game
+    }
 
+    #region weapon upgrades
     public void InitializeWeaponUpgradeOptions() //initialize weapon upgrades options
     {
         List<Weapon> weapons = Game.GetWeaponList();
@@ -148,46 +154,6 @@ public class UpgradeMenu : MonoBehaviour
         
     }
 
-    public void InitializaItemUpgradeOptions() //initialize item upgrade options
-    {
-        
-        List<item> items = Game.GetItemList();
-        List<item> itemOptions = new List<item>();
-
-        foreach(item item in items)
-        {
-            itemOptions.Add(item);
-        }
-        Debug.Log(itemOptions.Count);
-        Debug.Log("Game list:" + items.Count);
-
-        List<item> itemsInInventory = new List<item>();
-
-        foreach(item item in playerInventory.itemInventory)
-        {
-            itemsInInventory.Add(item);
-        }
-
-        foreach(item item in itemsInInventory)
-        {
-            if(item.initiallevel==3)
-            {
-                itemOptions.Remove(item); //if any item in the inventory is at max level (level 3), remove from list so that there is no chance of getting the same item as upgrade option
-            }
-        }
-
-        newItem = itemOptions[Random.Range(0, itemOptions.Count)]; //get a random item from list
-        itemOptions.Remove(newItem); //remove the item from the list so that there is no chance of the rrandom upgrade option being the same thing
-        newItem2 = itemOptions[Random.Range(0, itemOptions.Count)]; //this is for the random upgrade option
-        
-    }
-
-    public void CloseUpgradeMenu() //close upgrade menu
-    {
-        upgrade.SetActive(false);
-        Time.timeScale = 1f; //unpause game
-    }
-
     public void ChooseWeapon() //this is to handle weapon upgrade button
     {
         if(playerInventory.weaponInventory.Count<3 || playerInventory.weaponInventory.Contains(newWeapon)) //check if inventory is not full --> add weapon to inventory, or inventory already contains the weapon --> upgrade weapon
@@ -223,6 +189,43 @@ public class UpgradeMenu : MonoBehaviour
             weaponDetails.text = newWeapon.name + "\n" +"\nLevel: " + newWeapon.initialLevel.ToString() + "\n" + "\n" + newWeapon.basicDesc;
             
         }
+    }
+
+    #endregion weapon upgrades
+
+    #region item upgrades
+    public void InitializaItemUpgradeOptions() //initialize item upgrade options
+    {
+        
+        List<item> items = Game.GetItemList();
+        List<item> itemOptions = new List<item>();
+
+        foreach(item item in items)
+        {
+            itemOptions.Add(item);
+        }
+        Debug.Log(itemOptions.Count);
+        Debug.Log("Game list:" + items.Count);
+
+        List<item> itemsInInventory = new List<item>();
+
+        foreach(item item in playerInventory.itemInventory)
+        {
+            itemsInInventory.Add(item);
+        }
+
+        foreach(item item in itemsInInventory)
+        {
+            if(item.initiallevel==3)
+            {
+                itemOptions.Remove(item); //if any item in the inventory is at max level (level 3), remove from list so that there is no chance of getting the same item as upgrade option
+            }
+        }
+
+        newItem = itemOptions[Random.Range(0, itemOptions.Count)]; //get a random item from list
+        itemOptions.Remove(newItem); //remove the item from the list so that there is no chance of the rrandom upgrade option being the same thing
+        newItem2 = itemOptions[Random.Range(0, itemOptions.Count)]; //this is for the random upgrade option
+        
     }
 
     public void ChooseItem() //handle item upgrade button
@@ -268,6 +271,9 @@ public class UpgradeMenu : MonoBehaviour
         }
     }
 
+    #endregion item upgrades
+
+    #region random upgrades
     public void SetRandomButton() //set random upgrade option button text and image
     {
         
@@ -354,110 +360,7 @@ public class UpgradeMenu : MonoBehaviour
 
     }
 
-   public void OpenWeaponReplacementPrompt() //open weapon replacement prompt
-   {
-
-        upgrade.SetActive(false);
-        weaponReplacementMenu.SetActive(true);
-        replacingWeapon = true;
-        for(int i=0; i<playerInventory.weaponInventory.Count;i++) //set weapon details text
-        {
-            SetWeaponReplacementButton(i);
-        }
-
-   }
-
-   public void OpenItemReplacementPrompt() //open item replacement prompt
-   {
-        upgrade.SetActive(false);
-        itemReplacementMenu.SetActive(true);
-        replacingWeapon = false;
-        for(int i =0; i<playerInventory.itemInventory.Count; i++) //set item details text
-        {
-            SetItemReplacementButton(i);
-        }
-   }
-
-   public void ReplaceWeapon(int index) //handle weapon replacement
-   {
-       if(!replacingFromRandomButton) //weapon is from the weapon upgrade option button
-       {
-            playerInventory.ReplaceWeaponInInventory(index, newWeapon);
-            
-       }
-       else //weapon is from the radom upgrade option button
-       {
-            playerInventory.ReplaceWeaponInInventory(index, newWeapon2);
-            
-       }
-        
-        
-   }
-
-   public void SetWeaponReplacementButton(int index) //set text for stats of weapons in inventory, and image of weapons
-   {
-        Weapon weapon = playerInventory.weaponInventory[index];
-        TextMeshProUGUI weaponText =  weaponInventoryDetails[index];
-
-        //set weapon image
-        string weaponSprite = weapon.imageFilePath;
-        Sprite weaponImage = AssetDatabase.LoadAssetAtPath<Sprite>(weaponSprite);
-        weaponInventoryImages[index].sprite = weaponImage;
-        
-        if(weapon.initialLevel == 1) //weapon is currently level 1
-        {
-            weaponText.text = weapon.name + "\n" +"\nLevel: " + weapon.initialLevel.ToString() + "\n" + "\n" + weapon.basicDesc;
-        }
-        else //weapon is level 2 and above
-        {
-            List<WeaponUpgrades> upgradeList = Game.GetWeaponUpgradesList().FindAll(upgrade => upgrade.refID == newWeapon2.id); //this is to find all levels for this specific weapon
-            WeaponUpgrades weaponStats = upgradeList.Find(upgrade => upgrade.level == weapon.initialLevel); //get the stats of current level for this weapon
-            weaponText.text = weapon.name + "\n" +"\nLevel: " + weapon.initialLevel.ToString() + "\n" + "\n" + weaponStats.upgradeDesc;
-        }
-
-   }
-
-   public void SetItemReplacementButton(int index) //set text for stats of items in inventory, and image of the items in inventory
-   {
-        item item = playerInventory.itemInventory[index];
-        TextMeshProUGUI itemText = itemInventoryDetails[index];
-
-        //set item image
-        string itemSprite = item.imageFilePath;
-        Sprite itemImage = AssetDatabase.LoadAssetAtPath<Sprite>(itemSprite);
-        itemInventoryImages[index].sprite = itemImage;
-
-
-        if(item.initiallevel == 1) //item is currently level 1
-        {
-            itemText.text = item.name + "\n" +"\nLevel: " + item.initiallevel.ToString() + "\n" + "\n" + item.basicDesc;
-        }
-        else //item is level 2 and above
-        {
-            List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == item.id); //this is to find all levels for this specific item
-            ItemUpgrades itemStats = upgradeList.Find(upgrade => upgrade.level == item.initiallevel); //get the stats of current level for this item
-            itemText.text = item.name + "\n" +"\nLevel: " + item.initiallevel.ToString() + "\n" + "\n" + itemStats.upgradeDesc;
-        }
-   }
-
-   public void ReplaceItem(int index) //handle item replacement
-   {    
-        replacingItem = true;
-        if(!replacingFromRandomButton) //if item is from the item upgrade option button
-        {
-            playerInventory.ReplaceItemInInvetory(index, newItem);
-            
-            player.ApplyItemEffects(); //apply effect of items
-            
-        }
-        else //item is from the random upgrade option button 
-        {
-            playerInventory.ReplaceItemInInvetory(index, newItem2);
-            player.ApplyItemEffects(); //apply effect of items
-        }
-        
-        
-   }
+    #endregion random upgrades
 
     public void OnReplacement(int index) //close replacement menu upon selection
     {
@@ -483,5 +386,118 @@ public class UpgradeMenu : MonoBehaviour
         weaponReplacementMenu.SetActive(false);
         upgrade.SetActive(true);
     }
+
+
+    #region weapon replacement
+   public void OpenWeaponReplacementPrompt() //open weapon replacement prompt
+   {
+
+        upgrade.SetActive(false);
+        weaponReplacementMenu.SetActive(true);
+        replacingWeapon = true;
+        for(int i=0; i<playerInventory.weaponInventory.Count;i++) //set weapon details text
+        {
+            SetWeaponReplacementButton(i);
+        }
+   }
+
+      public void ReplaceWeapon(int index) //handle weapon replacement
+    {
+       if(!replacingFromRandomButton) //weapon is from the weapon upgrade option button
+       {
+            playerInventory.ReplaceWeaponInInventory(index, newWeapon);
+            
+       }
+       else //weapon is from the radom upgrade option button
+       {
+            playerInventory.ReplaceWeaponInInventory(index, newWeapon2);
+            
+       }
+        
+        
+    }
+
+       public void SetWeaponReplacementButton(int index) //set text for stats of weapons in inventory, and image of weapons
+    {
+        Weapon weapon = playerInventory.weaponInventory[index];
+        TextMeshProUGUI weaponText =  weaponInventoryDetails[index];
+
+        //set weapon image
+        string weaponSprite = weapon.imageFilePath;
+        Sprite weaponImage = AssetDatabase.LoadAssetAtPath<Sprite>(weaponSprite);
+        weaponInventoryImages[index].sprite = weaponImage;
+        
+        if(weapon.initialLevel == 1) //weapon is currently level 1
+        {
+            weaponText.text = weapon.name + "\n" +"\nLevel: " + weapon.initialLevel.ToString() + "\n" + "\n" + weapon.basicDesc;
+        }
+        else //weapon is level 2 and above
+        {
+            List<WeaponUpgrades> upgradeList = Game.GetWeaponUpgradesList().FindAll(upgrade => upgrade.refID == newWeapon2.id); //this is to find all levels for this specific weapon
+            WeaponUpgrades weaponStats = upgradeList.Find(upgrade => upgrade.level == weapon.initialLevel); //get the stats of current level for this weapon
+            weaponText.text = weapon.name + "\n" +"\nLevel: " + weapon.initialLevel.ToString() + "\n" + "\n" + weaponStats.upgradeDesc;
+        }
+
+    }
+    #endregion weapon replacement
+
+    #region item replacement
+
+   public void OpenItemReplacementPrompt() //open item replacement prompt
+   {
+        upgrade.SetActive(false);
+        itemReplacementMenu.SetActive(true);
+        replacingWeapon = false;
+        for(int i =0; i<playerInventory.itemInventory.Count; i++) //set item details text
+        {
+            SetItemReplacementButton(i);
+        }
+   }
+
+    public void ReplaceItem(int index) //handle item replacement
+    {    
+        replacingItem = true;
+        if(!replacingFromRandomButton) //if item is from the item upgrade option button
+        {
+            playerInventory.ReplaceItemInInvetory(index, newItem);
+            
+            player.ApplyItemEffects(); //apply effect of items
+            
+        }
+        else //item is from the random upgrade option button 
+        {
+            playerInventory.ReplaceItemInInvetory(index, newItem2);
+            player.ApplyItemEffects(); //apply effect of items
+        }
+        
+    }
+
+       public void SetItemReplacementButton(int index) //set text for stats of items in inventory, and image of the items in inventory
+    {
+        item item = playerInventory.itemInventory[index];
+        TextMeshProUGUI itemText = itemInventoryDetails[index];
+
+        //set item image
+        string itemSprite = item.imageFilePath;
+        Sprite itemImage = AssetDatabase.LoadAssetAtPath<Sprite>(itemSprite);
+        itemInventoryImages[index].sprite = itemImage;
+
+
+        if(item.initiallevel == 1) //item is currently level 1
+        {
+            itemText.text = item.name + "\n" +"\nLevel: " + item.initiallevel.ToString() + "\n" + "\n" + item.basicDesc;
+        }
+        else //item is level 2 and above
+        {
+            List<ItemUpgrades> upgradeList = Game.GetItemUpgradesList().FindAll(upgrade => upgrade.itemID == item.id); //this is to find all levels for this specific item
+            ItemUpgrades itemStats = upgradeList.Find(upgrade => upgrade.level == item.initiallevel); //get the stats of current level for this item
+            itemText.text = item.name + "\n" +"\nLevel: " + item.initiallevel.ToString() + "\n" + "\n" + itemStats.upgradeDesc;
+        }
+    }
+
+   #endregion item replacement
+
+
+
     
 }

@@ -40,7 +40,7 @@ public class Level : MonoBehaviour
     public void AddExperience(int amount) ///this handles the addition of experience when player picks up a exp drop
     {
         exp += amount;
-        LevelUp();
+        LevelUp();                              
         
     }
 
